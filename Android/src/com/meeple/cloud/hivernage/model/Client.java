@@ -10,12 +10,18 @@ public class Client {
 	private String observation;
 	private Caravane caravane;
 	
-	public Client(String nom, String prenom) {
+	
+	public Client(String nom, String prenom, String adresse, String mail,
+			String observation, Caravane caravane) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
+		this.adresse = adresse;
+		this.mail = mail;
+		this.observation = observation;
+		this.caravane = caravane;
 	}
-	
+
 	public Client(String jsonString) {
 		//TODO
 	}
@@ -74,7 +80,9 @@ public class Client {
 
 	public void setCaravane(Caravane caravane) {
 		this.caravane = caravane;
-		this.caravane.setClient(this);
+		if(caravane.getClient() == null) {
+			this.caravane.setClient(this);
+		}
 	}
 	
 	

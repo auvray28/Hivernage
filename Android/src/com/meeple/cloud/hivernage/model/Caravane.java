@@ -1,5 +1,6 @@
 package com.meeple.cloud.hivernage.model;
 
+import com.meeple.cloud.hivernage.model.enums.CaravaneSens;
 import com.meeple.cloud.hivernage.model.enums.CaravaneStatus;
 
 public class Caravane {
@@ -9,16 +10,21 @@ public class Caravane {
 	private CaravaneStatus status;
 	private String observation;
 	private Gabari gabari;
-	
+	private CaravaneSens sens;
 	private Client client;
 
-	public Caravane(String plaque, Client client) {
+	
+	public Caravane(String plaque, String observation, Gabari gabari,
+			Client client, CaravaneSens sens) {
 		super();
 		this.plaque = plaque;
-		this.status = CaravaneStatus.ATTENTE;
+		this.observation = observation;
+		this.gabari = gabari;
 		this.client = client;
+		this.sens = sens;
+		this.status = CaravaneStatus.ATTENTE;
 	}
-	
+
 	public Caravane(String jsonObject) {
 		//TODO 
 	}
@@ -69,6 +75,51 @@ public class Caravane {
 
 	public void setClient(Client client) {
 		this.client = client;
+		if(client.getCaravane() == null) {
+			client.setCaravane(this);
+		}
+	}
+
+	public CaravaneSens getSens() {
+		return sens;
+	}
+
+	public void setSens(CaravaneSens sens) {
+		this.sens = sens;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + caravaneId;
+		result = prime * result + ((plaque == null) ? 0 : plaque.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Caravane other = (Caravane) obj;
+		if (caravaneId != other.caravaneId) {
+			return false;
+		}
+		if (plaque == null) {
+			if (other.plaque != null) {
+				return false;
+			}
+		} else if (!plaque.equals(other.plaque)) {
+			return false;
+		}
+		return true;
 	}
 	
 	
