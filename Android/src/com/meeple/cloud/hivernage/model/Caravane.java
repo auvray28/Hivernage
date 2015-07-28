@@ -1,6 +1,9 @@
 package com.meeple.cloud.hivernage.model;
 
-import com.meeple.cloud.hivernage.model.enums.CaravaneSens;
+import java.util.ArrayList;
+
+import android.graphics.Point;
+
 import com.meeple.cloud.hivernage.model.enums.CaravaneStatus;
 
 public class Caravane {
@@ -9,20 +12,25 @@ public class Caravane {
 	private String plaque;
 	private CaravaneStatus status;
 	private String observation;
-	private Gabari gabari;
-	private CaravaneSens sens;
+	private Gabarit gabari;
 	private Client client;
-
+	private Point coord;
+	private float angle;
+	private Hangar hangar;
+	private ArrayList<EmplacementCamping> emplacementCamping;
 	
-	public Caravane(String plaque, String observation, Gabari gabari,
-			Client client, CaravaneSens sens) {
+	public Caravane(String plaque, String observation, Gabarit gabari,
+			Client client) {
 		super();
 		this.plaque = plaque;
 		this.observation = observation;
 		this.gabari = gabari;
 		this.client = client;
-		this.sens = sens;
 		this.status = CaravaneStatus.ATTENTE;
+		this.coord = new Point(0, 0);
+		this.angle = 0;
+		this.hangar = null;
+		this.emplacementCamping = new ArrayList<EmplacementCamping>();
 	}
 
 	public Caravane(String jsonObject) {
@@ -61,11 +69,11 @@ public class Caravane {
 		this.observation = observation;
 	}
 
-	public Gabari getGabari() {
+	public Gabarit getGabari() {
 		return gabari;
 	}
 
-	public void setGabari(Gabari gabari) {
+	public void setGabari(Gabarit gabari) {
 		this.gabari = gabari;
 	}
 
@@ -78,14 +86,6 @@ public class Caravane {
 		if(client.getCaravane() == null) {
 			client.setCaravane(this);
 		}
-	}
-
-	public CaravaneSens getSens() {
-		return sens;
-	}
-
-	public void setSens(CaravaneSens sens) {
-		this.sens = sens;
 	}
 
 	@Override
@@ -120,6 +120,34 @@ public class Caravane {
 			return false;
 		}
 		return true;
+	}
+
+	public Point getCoord() {
+		return coord;
+	}
+
+	public void setCoord(Point coord) {
+		this.coord = coord;
+	}
+
+	public float getAngle() {
+		return angle;
+	}
+
+	public void setAngle(float angle) {
+		this.angle = angle;
+	}
+
+	public Hangar getHangar() {
+		return hangar;
+	}
+
+	public void setHangar(Hangar hangar) {
+		this.hangar = hangar;
+	}
+
+	public ArrayList<EmplacementCamping> getEmplacementCamping() {
+		return emplacementCamping;
 	}
 	
 	

@@ -1,5 +1,7 @@
 package com.meeple.cloud.hivernage.model;
 
+import java.util.ArrayList;
+
 public class Client {
 
 	private int clientId;
@@ -9,7 +11,7 @@ public class Client {
 	private String mail;
 	private String observation;
 	private Caravane caravane;
-	
+	private ArrayList<Hivernage> hivernages;
 	
 	public Client(String nom, String prenom, String adresse, String mail,
 			String observation, Caravane caravane) {
@@ -20,6 +22,7 @@ public class Client {
 		this.mail = mail;
 		this.observation = observation;
 		this.caravane = caravane;
+		this.hivernages = new ArrayList<Hivernage>();
 	}
 
 	public Client(String jsonString) {
@@ -83,6 +86,10 @@ public class Client {
 		if(caravane.getClient() == null) {
 			this.caravane.setClient(this);
 		}
+	}
+
+	public ArrayList<Hivernage> getHivernages() {
+		return hivernages;
 	}
 	
 	
