@@ -22,4 +22,46 @@ public class Hivernage {
 	public Hivernage(String jsonObject) {
 		//TODO
 	}
+
+	public int getHivernageId() {
+		return hivernageId;
+	}
+
+	public void setHivernageId(int hivernageId) {
+		this.hivernageId = hivernageId;
+	}
+
+	public HivernageStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(HivernageStatus status) {
+		this.status = status;
+	}
+
+	public int getAcompte() {
+		return acompte;
+	}
+
+	public void setAcompte(int acompte) {
+		this.acompte = acompte;
+	}
+
+	public Date getDebut() {
+		return debut;
+	}
+
+	public void setDebut(Date debut) {
+		this.debut = debut;
+	}
+
+	public Date getFin() {
+		return fin;
+	}
+
+	public void setFin(Date fin) {
+		this.fin = fin;
+	}
+	
+	
 }

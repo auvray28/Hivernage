@@ -1,34 +1,28 @@
 package com.meeple.cloud.hivernage.model;
 
-import java.util.ArrayList;
+public class Gabarit {
 
-public class Hangar {
-
-	private int hangarId;
+	private int gabarittttttttttttttttId;
 	private String nom;
 	private int longueur;
 	private int largeur;
 	
-	private ArrayList<Caravane> caravanes;
-
-	public Hangar(String nom, int longueur, int largeur) {
-		super();
+	public Gabarit(String nom, int longueur, int largeur) {
 		this.nom = nom;
 		this.longueur = longueur;
 		this.largeur = largeur;
-		this.caravanes = new ArrayList<Caravane>();
 	}
-	
-	public Hangar(String jsonObject) {
+
+	public Gabarit(String jsonObject) {
 		//TODO
 	}
 
-	public int getHangarId() {
-		return hangarId;
+	public int getGabarittttttttttttttttId() {
+		return gabarittttttttttttttttId;
 	}
 
-	public void setHangarId(int hangarId) {
-		this.hangarId = hangarId;
+	public void setGabarittttttttttttttttId(int gabarittttttttttttttttId) {
+		this.gabarittttttttttttttttId = gabarittttttttttttttttId;
 	}
 
 	public String getNom() {
@@ -54,15 +48,6 @@ public class Hangar {
 	public void setLargeur(int largeur) {
 		this.largeur = largeur;
 	}
-
-	public ArrayList<Caravane> getCaravanes() {
-		return caravanes;
-	}
-
-	public void setCaravanes(ArrayList<Caravane> caravanes) {
-		this.caravanes = caravanes;
-	}
-	
 	
 	
 }
