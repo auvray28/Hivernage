@@ -39,7 +39,7 @@ public class HangarService implements IHangarService {
 	}
 
 	@Override
-	public ArrayList<Hangar> getAllHangar() {
+	public ArrayList<Hangar> getAllHangars() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -13,7 +13,7 @@ public interface IGabaritService {
 	public Gabarit findGabaritById(int gabarit_id);
 	public Gabarit findGabaritByName(String gabarit_name);
 	
-	public ArrayList<Gabarit> getAllGabarit();
+	public ArrayList<Gabarit> getAllGabarits();
 	
 	
 	

@@ -13,7 +13,7 @@ public interface ICampingService {
 	public Camping findCampingById(int camping_id);
 	public Camping findCampingByName(String camping_name);
 	
-	public ArrayList<Camping> getAllCamping();
+	public ArrayList<Camping> getAllCampings();
 
 
 }

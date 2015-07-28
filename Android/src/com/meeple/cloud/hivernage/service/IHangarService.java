@@ -13,7 +13,7 @@ public interface IHangarService {
 	public Hangar findHangarById(int hangar_id);
 	public Hangar findHangarByName(String hangar_name);
 	
-	public ArrayList<Hangar> getAllHangar();
+	public ArrayList<Hangar> getAllHangars();
 	
 
 	

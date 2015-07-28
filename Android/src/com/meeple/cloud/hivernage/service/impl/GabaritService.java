@@ -38,7 +38,7 @@ public class GabaritService implements IGabaritService {
 	}
 
 	@Override
-	public ArrayList<Gabarit> getAllGabarit() {
+	public ArrayList<Gabarit> getAllGabarits() {
 		// TODO Auto-generated method stub
 		return null;
 	}
