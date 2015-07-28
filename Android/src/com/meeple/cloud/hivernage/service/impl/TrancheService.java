@@ -33,13 +33,13 @@ public class TrancheService implements ITrancheService {
 	}
 
 	@Override
-	public Camping findTrancheByName(String tranche_name) {
+	public ArrayList<Tranche> getAllTranches() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<Tranche> getAllTranches() {
+	public Camping findTrancheByLongueur(int tranche_longueur) {
 		// TODO Auto-generated method stub
 		return null;
 	}

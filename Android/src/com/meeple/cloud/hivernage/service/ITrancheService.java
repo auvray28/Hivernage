@@ -12,9 +12,7 @@ public interface ITrancheService {
 	public void removeTranche(Tranche tranche);
 	
 	public Camping findTrancheById(int tranche_id);
-	public Camping findTrancheByName(String tranche_name);
+	public Camping findTrancheByLongueur(int tranche_longueur);
 	
 	public ArrayList<Tranche> getAllTranches();
-
-
 }
