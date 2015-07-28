@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    android:weightSum="100" >
+
+    <include
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        layout="@layout/menu_barre" />
+
+    <RelativeLayout
+        android:id="@+id/panel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="93" >
+
+        <LinearLayout
+            android:id="@+id/two_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+          	android:baselineAligned="false"
+            android:weightSum="3" >
+
+            <FrameLayout
+                android:id="@+id/little_frame"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <FrameLayout
+                android:id="@+id/big_frame"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+        </LinearLayout>
+        
+        
+         <LinearLayout
+            android:id="@+id/one_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <FrameLayout
+                android:id="@+id/only_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+            
+            </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

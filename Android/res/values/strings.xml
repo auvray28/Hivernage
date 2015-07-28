@@ -3,5 +3,12 @@
 
     <string name="app_name">Hivernage</string>
     <string name="hello_world">Hello world!</string>
+    <string name="recherche">Recherche Client</string>
+    <string name="order_by">Trier Client par :</string>
+    <string name="fiche_client">"Fiche client : "</string>
+    <string name="infos_perso">Informations client :</string>
+    <string name="infos_caravane">"Informations caravane : "</string>
+    <string name="fiche_camping">Fiche Camping :</string>
+    <string name="details_camping">Details camping :</string>
 
 </resources>
