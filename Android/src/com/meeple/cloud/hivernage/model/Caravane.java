@@ -31,6 +31,10 @@ public class Caravane {
 		this.angle = 0;
 		this.hangar = null;
 		this.emplacementCamping = new ArrayList<EmplacementCamping>();
+		
+		if(client.getCaravane() == null ) {
+			client.setCaravane(this);
+		}
 	}
 
 	public Caravane(String jsonObject) {

@@ -3,6 +3,7 @@ package com.meeple.cloud.hivernage.service;
 import java.util.ArrayList;
 
 import com.meeple.cloud.hivernage.model.Client;
+import com.meeple.cloud.hivernage.model.Hivernage;
 
 public interface IClientService {
 
@@ -18,4 +19,7 @@ public interface IClientService {
 	
 	public void delete(Client client);
 	
+	public void addHivernage(Client client, Hivernage hivernage);
+
+	public void removeHivernage(Client client, Hivernage hivernage);
 }

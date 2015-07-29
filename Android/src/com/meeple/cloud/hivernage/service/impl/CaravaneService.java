@@ -83,4 +83,10 @@ public class CaravaneService implements ICaravaneService {
 
 	}
 
+	@Override
+	public void removeFromCamping(Caravane caravane) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -11,8 +11,8 @@ public interface ITrancheService {
 	public void updateTranche(Tranche tranche);
 	public void removeTranche(Tranche tranche);
 	
-	public Camping findTrancheById(int tranche_id);
-	public Camping findTrancheByLongueur(int tranche_longueur);
+	public Tranche findTrancheById(int tranche_id);
+	public Tranche findTrancheByLongueur(int tranche_longueur);
 	
 	public ArrayList<Tranche> getAllTranches();
 }

@@ -2,7 +2,6 @@ package com.meeple.cloud.hivernage.service.impl;
 
 import java.util.ArrayList;
 
-import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.model.Tranche;
 import com.meeple.cloud.hivernage.service.ITrancheService;
 
@@ -27,7 +26,7 @@ public class TrancheService implements ITrancheService {
 	}
 
 	@Override
-	public Camping findTrancheById(int tranche_id) {
+	public Tranche findTrancheById(int tranche_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -39,7 +38,7 @@ public class TrancheService implements ITrancheService {
 	}
 
 	@Override
-	public Camping findTrancheByLongueur(int tranche_longueur) {
+	public Tranche findTrancheByLongueur(int tranche_longueur) {
 		// TODO Auto-generated method stub
 		return null;
 	}

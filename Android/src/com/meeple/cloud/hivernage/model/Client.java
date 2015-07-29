@@ -23,6 +23,10 @@ public class Client {
 		this.observation = observation;
 		this.caravane = caravane;
 		this.hivernages = new ArrayList<Hivernage>();
+		
+		if(caravane.getClient() == null) {
+			this.caravane.setClient(this);
+		}
 	}
 
 	public Client(String jsonString) {

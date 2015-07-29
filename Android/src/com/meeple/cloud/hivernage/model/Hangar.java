@@ -1,6 +1,7 @@
 package com.meeple.cloud.hivernage.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Hangar {
 
@@ -63,6 +64,15 @@ public class Hangar {
 		this.caravanes = caravanes;
 	}
 	
+	public void removeCaravane(Caravane caravane) {
+		Iterator<Caravane> it = caravanes.iterator();
+		while(it.hasNext()) {
+			Caravane c = it.next();
+			if(c.getPlaque().equalsIgnoreCase(caravane.getPlaque())) {
+				it.remove();
+			}
+		}
+	}
 	
 	
 }

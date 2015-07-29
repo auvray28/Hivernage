@@ -33,5 +33,6 @@ public interface ICaravaneService {
 	
 	public void addEmplacementCamping(Caravane caravane, EmplacementCamping eplacement);
 	
+	public void removeFromCamping(Caravane caravane);
 	
 }
