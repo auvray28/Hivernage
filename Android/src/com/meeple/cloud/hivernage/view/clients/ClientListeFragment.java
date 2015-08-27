@@ -1,8 +1,5 @@
 package com.meeple.cloud.hivernage.view.clients;
 
-import java.util.ArrayList;
-
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -13,12 +10,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Client;
+import com.meeple.cloud.hivernage.db.DBMock;
 import com.meeple.cloud.hivernage.view.clients.adapter.ListeClientAdapter;
-import com.meeple.cloud.hivernage.view.clients.adapter.SpinnerClientAdapter;
 
 
 /**
@@ -68,11 +63,15 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
     	
     	listeClients  = (ListView) v.findViewById(R.id.client_liste_listview);
     	
-    	listeClientAdapter = new ListeClientAdapter(getActivity().getApplicationContext(), new ArrayList<Client>());
-    	listeClients.setAdapter(listeClientAdapter);
-    	
-    	orderBy       = (Spinner) v.findViewById(R.id.client_liste_spinner);
+//    	orderBy       = (Spinner) v.findViewById(R.id.client_liste_spinner);
 //    	orderBy.setAdapter(new SpinnerClientAdapter());
+    	
+    	//MOCK
+//    	listeClientAdapter = new ListeClientAdapter(getActivity().getApplicationContext(), new ArrayList<Client>());
+    	listeClientAdapter = new ListeClientAdapter(getActivity().getApplicationContext(), DBMock.DB.getClients());
+    	//
+    	listeClients.setAdapter(listeClientAdapter);
+
     }
 
 	@Override

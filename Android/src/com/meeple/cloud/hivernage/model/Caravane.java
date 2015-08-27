@@ -32,7 +32,7 @@ public class Caravane {
 		this.hangar = null;
 		this.emplacementCamping = new ArrayList<EmplacementCamping>();
 		
-		if(client.getCaravane() == null ) {
+		if(client != null && client.getCaravane() == null ) {
 			client.setCaravane(this);
 		}
 	}

@@ -24,7 +24,6 @@ public class MenuActivity extends FragmentActivity {
 		SIMPLE, DOUBLE;
 	}
 	
-	
 	private View btn_Client, btn_Hangar, btn_Lavage, btn_Camping, btn_Agenda, btn_Waiting;
 	
 	private LinearLayout one_panel, two_panel;
@@ -39,7 +38,6 @@ public class MenuActivity extends FragmentActivity {
 		setContentView(R.layout.activity_menu_layout);
 		
 		initView();
-		
 		
 		// Check whether the activity is using the layout version with
         // the fragment_container FrameLayout. If so, we must add the first fragment

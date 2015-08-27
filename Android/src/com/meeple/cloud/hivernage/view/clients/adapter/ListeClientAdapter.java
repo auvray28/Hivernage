@@ -65,17 +65,17 @@ public class ListeClientAdapter  extends BaseAdapter {
 		
 		holder.txt_name.setText(getItem(position).getNom());
 		
-		switch (orderBy) {
-		case CAMPING : 
-		case HANGAR : 
-		case RESTEDU :
-			holder.txt_infoSup.setText("Reste : " + (Math.random()*500) + "€" ) ;
-		case ALPHABETIC:
-		default :
-			holder.txt_infoSup.setVisibility(View.GONE);
-			break;
-
-		}
+//		switch (orderBy) {
+//		case CAMPING : 
+//		case HANGAR : 
+//		case RESTEDU :
+//			holder.txt_infoSup.setText("Reste : " + (Math.random()*500) + "€" ) ;
+//		case ALPHABETIC:
+//		default :
+//			holder.txt_infoSup.setVisibility(View.GONE);
+//			break;
+//
+//		}
 		
 //		holder.txt_infoSup.setText(""+getItem(position).getNb_partie_played());
 		

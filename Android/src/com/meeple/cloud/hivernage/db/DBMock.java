@@ -52,13 +52,14 @@ public class DBMock {
 		emplacements = new ArrayList<EmplacementCamping>();
 		campings = new ArrayList<Camping>();
 		factures = new ArrayList<Facture>();
+		tranches = new ArrayList<Tranche>();
 
 		lastIds = new HashMap<Class<? extends Object>, Integer>();
 
-		fill();
+//		fill();
 	}
 	
-	private void fill() {
+	public void fill() {
 		Services.gabaritService.createGabarit(new Gabarit("g1", 250, 170));
 		Services.gabaritService.createGabarit(new Gabarit("g2", 300, 170));
 		Services.gabaritService.createGabarit(new Gabarit("g3", 400, 170));
