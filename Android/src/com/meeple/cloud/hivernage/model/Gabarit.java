@@ -2,7 +2,7 @@ package com.meeple.cloud.hivernage.model;
 
 public class Gabarit {
 
-	private int gabarittttttttttttttttId;
+	private int gabaritId;
 	private String nom;
 	private int longueur;
 	private int largeur;
@@ -17,12 +17,12 @@ public class Gabarit {
 		//TODO
 	}
 
-	public int getGabarittttttttttttttttId() {
-		return gabarittttttttttttttttId;
+	public int getGabaritId() {
+		return gabaritId;
 	}
 
-	public void setGabarittttttttttttttttId(int gabarittttttttttttttttId) {
-		this.gabarittttttttttttttttId = gabarittttttttttttttttId;
+	public void setGabaritId(int gabaritId) {
+		this.gabaritId = gabaritId;
 	}
 
 	public String getNom() {
