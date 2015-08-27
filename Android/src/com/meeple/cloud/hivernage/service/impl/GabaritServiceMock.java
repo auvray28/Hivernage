@@ -10,13 +10,13 @@ public class GabaritServiceMock implements IGabaritService {
 
 	@Override
 	public void createGabarit(Gabarit gabarit) {
-		gabarit.setGabarittttttttttttttttId(DBMock.DB.getNextId(Gabarit.class));
+		gabarit.setGabaritId(DBMock.DB.getNextId(Gabarit.class));
 		DBMock.DB.getGabarits().add(gabarit);
 	}
 
 	@Override
 	public void updateGabarit(Gabarit gabarit) {
-		Gabarit g = findGabaritById(gabarit.getGabarittttttttttttttttId());
+		Gabarit g = findGabaritById(gabarit.getGabaritId());
 		g.setLargeur(gabarit.getLargeur());
 		g.setLongueur(gabarit.getLongueur());
 		g.setNom(gabarit.getNom());
@@ -24,14 +24,14 @@ public class GabaritServiceMock implements IGabaritService {
 
 	@Override
 	public void removeGabarit(Gabarit gabarit) {
-		Gabarit g = findGabaritById(gabarit.getGabarittttttttttttttttId());
+		Gabarit g = findGabaritById(gabarit.getGabaritId());
 		DBMock.DB.getGabarits().remove(g);
 	}
 
 	@Override
 	public Gabarit findGabaritById(int gabaritId) {
 		for(Gabarit g : getAllGabarits()) {
-			if(g.getGabarittttttttttttttttId() == gabaritId) {
+			if(g.getGabaritId() == gabaritId) {
 				return g;
 			}
 		}
