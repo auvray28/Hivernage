@@ -1,7 +1,9 @@
 package com.meeple.cloud.hivernage.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import com.meeple.cloud.hivernage.model.enums.FactureMdp;
 import com.meeple.cloud.hivernage.model.enums.HivernageStatus;
 
 public class Hivernage {
@@ -12,11 +14,15 @@ public class Hivernage {
 	private Date debut;
 	private Date fin;
 	
+	private ArrayList<String> historiquePayement;
+	
 	public Hivernage(HivernageStatus status, int acompte) {
 		super();
 		this.status = status;
 		this.acompte = acompte;
 		debut = new Date();
+		
+		historiquePayement = new ArrayList<String>();
 	}
 	
 	public Hivernage(String jsonObject) {
@@ -46,7 +52,13 @@ public class Hivernage {
 	public void setAcompte(int acompte) {
 		this.acompte = acompte;
 	}
-
+	
+	public void addPayement(Date d, FactureMdp type, int value) {
+		acompte += value;
+		
+		historiquePayement.add("Le "+ d.toString() + " payment de " + value + " par " + type);
+	}
+	
 	public Date getDebut() {
 		return debut;
 	}
@@ -62,6 +74,4 @@ public class Hivernage {
 	public void setFin(Date fin) {
 		this.fin = fin;
 	}
-	
-	
 }
