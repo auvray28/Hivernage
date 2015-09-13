@@ -155,4 +155,13 @@ public class Caravane {
 	}
 	
 	
+	public Camping getCurrentCamping(){
+		//NICO comme nous avons une arrayliste d'emplacement camping comment on sait dans qu'elle camping on est a une date d ?
+		//
+		// il faut check toute les emplacementCamping au load et recup le currentCamping 
+		
+		
+		return null;
+	}
+	
 }
