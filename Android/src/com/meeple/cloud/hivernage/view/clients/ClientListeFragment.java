@@ -1,5 +1,8 @@
 package com.meeple.cloud.hivernage.view.clients;
 
+import java.util.Comparator;
+import java.util.Locale;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -7,12 +10,16 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.db.DBMock;
+import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.view.clients.adapter.ListeClientAdapter;
 
 
@@ -27,7 +34,19 @@ import com.meeple.cloud.hivernage.view.clients.adapter.ListeClientAdapter;
 public class ClientListeFragment extends Fragment implements TextWatcher{
 
 	public enum OrderClientBy {
-		ALPHABETIC, RESTEDU, CAMPING, HANGAR; 
+		ALPHABETIC(Client.Comparators.ALPHABETIC), RESTEDU(Client.Comparators.RESTEDU),
+		CAMPING(Client.Comparators.CAMPING), HANGAR(Client.Comparators.HANGAR);
+		
+		private Comparator<Client> comparator;
+		
+		private OrderClientBy(Comparator<Client> comparator){
+			this.comparator = comparator;
+		}
+		
+		public Comparator<Client> getComparator() {
+			return this.comparator;
+		}
+		
 	}
 	
 	
@@ -49,9 +68,6 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
         View v = inflater.inflate(R.layout.client_liste_layout, container, false); 
         
         initView(v);
-        
-        
-        
         // Inflate the layout for this fragment
         return v;
     }
@@ -63,8 +79,22 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
     	
     	listeClients  = (ListView) v.findViewById(R.id.client_liste_listview);
     	
-//    	orderBy       = (Spinner) v.findViewById(R.id.client_liste_spinner);
-//    	orderBy.setAdapter(new SpinnerClientAdapter());
+    	orderBy       = (Spinner) v.findViewById(R.id.client_liste_spinner);
+    	
+    	orderBy.setAdapter(new ArrayAdapter<OrderClientBy>(getActivity().getApplicationContext(), R.layout.spinner_layout, OrderClientBy.values()));
+    	
+    	orderBy.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+				listeClientAdapter.reorderClientsBy((OrderClientBy) parent.getItemAtPosition(pos));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) { 
+				// Nothing Todo
+			}
+		});
     	
     	//MOCK
 //    	listeClientAdapter = new ListeClientAdapter(getActivity().getApplicationContext(), new ArrayList<Client>());
@@ -75,7 +105,10 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
     }
 
 	@Override
-	public void afterTextChanged(Editable arg0) {}
+	public void afterTextChanged(Editable arg0) {
+		String text = searchClients.getText().toString().toLowerCase(Locale.getDefault());
+		listeClientAdapter.filter(text);
+	}
 
 	@Override
 	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}

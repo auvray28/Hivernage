@@ -1,6 +1,7 @@
 package com.meeple.cloud.hivernage.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Client {
 
@@ -96,7 +97,59 @@ public class Client {
 		return hivernages;
 	}
 	
+	public void addHivernage(Hivernage newHivernage) {
+		hivernages.add(newHivernage);
+	}
 	
-
+	public int getCurrentAcompte() {
+		int currentAcompte = 0;
+		
+		for (Hivernage h : getHivernages()) {
+			currentAcompte += h.getAcompte();
+		}
+		return currentAcompte;
+	}
+	
+	
+	public static class Comparators {
+        public static Comparator<Client> ALPHABETIC = new Comparator<Client>() {
+            @Override
+            public int compare(Client o1, Client o2) {
+                int name_result = o1.nom.compareTo(o2.nom);
+                
+                if (name_result == 0) return o1.prenom.compareTo(o2.prenom);
+                else 				  return name_result;
+            }
+        };
+        public static Comparator<Client> RESTEDU = new Comparator<Client>() {
+            @Override
+            public int compare(Client o1, Client o2) {
+                return o1.getCurrentAcompte() - o2.getCurrentAcompte();
+            }
+        };
+        public static Comparator<Client> CAMPING = new Comparator<Client>() {
+            @Override
+            public int compare(Client o1, Client o2) {
+            	
+            	if (o1.caravane.getCurrentCamping() == null && o2.caravane.getCurrentCamping() == null) return 0; 
+            	if (o2.caravane.getCurrentCamping() == null) return  1; 
+            	if (o1.caravane.getCurrentCamping() == null) return -1; 
+            	
+                return o1.caravane.getCurrentCamping().getNom().compareTo(o2.caravane.getCurrentCamping().getNom());
+            }
+        };
+        
+        public static Comparator<Client> HANGAR = new Comparator<Client>() {
+            @Override
+            public int compare(Client o1, Client o2) {
+            	
+            	if (o1.caravane.getHangar() == null && o2.caravane.getHangar() == null) return 0; 
+            	if (o2.caravane.getHangar() == null) return  1; 
+            	if (o1.caravane.getHangar() == null) return -1; 
+            	
+                return o1.caravane.getHangar().getNom().compareTo(o2.caravane.getHangar().getNom());
+            }
+        };
+    }
 	
 }
