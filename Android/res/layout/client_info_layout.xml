@@ -18,7 +18,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/camping_name"
+            android:id="@+id/client_info_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dupont Jean"
@@ -38,14 +38,112 @@
             android:text="@string/infos_perso"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/camping_details"
-            android:layout_width="match_parent"
+            android:id="@+id/TextView03"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Numero de tel, adresse, observation (hidden) (on toggle)"
+            android:text="@string/adresses"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/client_info_adresse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupont Jean"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/TextView04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/telephone"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/client_info_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupont Jean"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mail"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/client_info_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupont Jean"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/TextView08"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/compte"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/client_info_acompte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupont Jean"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/TextView06"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/observation"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/client_info_obs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupont Jean"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,12 +158,90 @@
             android:text="@string/infos_caravane"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/client_caravane_info"
-            android:layout_width="match_parent"
+            android:id="@+id/TextView09"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="num dimmat,camping et/ou hangar..."
+            android:text="@string/immatriculation"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/caravane_info_immat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupont Jean"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/TextView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gabarit"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/caravane_info_gabarit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupont Jean"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_position"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/caravane_info_label_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hangar"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/caravane_info_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupont Jean"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/TextView07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/observation"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/caravane_info_obs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupont Jean"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 

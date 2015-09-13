@@ -18,7 +18,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/camping_name"
+            android:id="@+id/client_info_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Camping Paradis"
@@ -40,7 +40,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/camping_details"
+            android:id="@+id/client_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Numero de tel, adresse, observation (hidden) (on toggle)"

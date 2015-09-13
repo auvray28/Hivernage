@@ -82,7 +82,7 @@ public class ListeClientAdapter  extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
-		holder.txt_name.setText(getItem(position).getNom() + " " + getItem(position).getPrenom());
+		holder.txt_name.setText(getItem(position).getFullName());
 		
 		switch (orderBy) {
 		case CAMPING : 

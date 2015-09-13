@@ -1,5 +1,6 @@
 package com.meeple.cloud.hivernage.view;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,14 +8,18 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
+import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
+import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInterface;
 
-public class MenuActivity extends FragmentActivity {
+public class MenuActivity extends FragmentActivity implements ClientListInterface{
 
 	private enum MenuBarBtn {
 		CLIENT, HANGAR, LAVAGE, CAMPING, AGENDA, WAITING;
@@ -175,10 +180,8 @@ public class MenuActivity extends FragmentActivity {
 	public void onArticleSelected(MenuBarBtn position) {
 		Fragment newFrag;
 		
-		
 		// TODO faudra regarder le new instance de tes Fragments a Diagonal
 		//
-		
 		switch(position){
 		case CLIENT  : newFrag = new ClientListeFragment(); break;// pas bon a changer
 		case HANGAR  : 
@@ -201,7 +204,6 @@ public class MenuActivity extends FragmentActivity {
         // Commit the transaction
         transaction.commit();
     }
-	
 	
 	public void setSelectedBtn(View btnSelected) {
 		btn_Agenda.setBackgroundColor(Color.BLUE);
@@ -231,6 +233,36 @@ public class MenuActivity extends FragmentActivity {
 		
 		currentPanelMode = newPanelMode;
 	}
+
+	/*************  ClientListInterface  **********/
 	
+	@Override
+	public void displayClientInfo(int clientId) {
+		// On ferme le clavier dans un premier temps
+		//
+		View view = this.getCurrentFocus();
+		if (view != null) {  
+		    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}
+		
+		Fragment newFrag = ClientInfoFragment.newInstance(clientId);
+		
+		if (two_panel != null) {
+			
+	        // Create fragment and give it an argument for the selected article
+	        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+	        // Replace whatever is in the fragment_container view with this fragment,
+	        // and add the transaction to the back stack so the user can navigate back
+	        transaction.replace(R.id.big_frame, newFrag);
+	        transaction.addToBackStack(null);
+
+	        // Commit the transaction
+	        transaction.commit();
+			
+		}
+	}
 	
+	/**********************************************/
 }
