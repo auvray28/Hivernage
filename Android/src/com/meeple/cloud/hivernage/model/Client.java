@@ -9,17 +9,19 @@ public class Client {
 	private String nom;
 	private String prenom;
 	private String adresse;
+	private String telephone;
 	private String mail;
 	private String observation;
 	private Caravane caravane;
 	private ArrayList<Hivernage> hivernages;
 	
-	public Client(String nom, String prenom, String adresse, String mail,
+	public Client(String nom, String prenom, String adresse, String telephone, String mail,
 			String observation, Caravane caravane) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.adresse = adresse;
+		this.telephone = telephone;
 		this.mail = mail;
 		this.observation = observation;
 		this.caravane = caravane;
@@ -29,6 +31,7 @@ public class Client {
 			this.caravane.setClient(this);
 		}
 	}
+	
 
 	public Client(String jsonString) {
 		//TODO
@@ -64,6 +67,14 @@ public class Client {
 
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public String getMail() {
@@ -111,6 +122,8 @@ public class Client {
 	}
 	
 	
+	/********************* Comparators Implémentation ****************************/
+	
 	public static class Comparators {
         public static Comparator<Client> ALPHABETIC = new Comparator<Client>() {
             @Override
@@ -151,5 +164,9 @@ public class Client {
             }
         };
     }
-	
+
+
+	public CharSequence getFullName() {
+		return nom + " " + prenom; 
+	}	
 }
