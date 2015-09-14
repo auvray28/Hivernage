@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -14,10 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.dao.GabaritDao;
 import com.meeple.cloud.hivernage.model.Client;
-import com.meeple.cloud.hivernage.model.Gabarit;
-import com.meeple.cloud.hivernage.service.impl.GabaritService;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
@@ -40,18 +36,9 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	
 	private PanelMode currentPanelMode = PanelMode.DOUBLE;
 	
-	public static final String TAG = "POUET";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		Log.i(TAG, "add new Gabarit");
-		GabaritDao gabaritDao = new GabaritDao();
-		Gabarit entity = new Gabarit("aa", 12, 13);
-		entity.setGabaritId(123);
-		gabaritDao.create(entity);
-		Log.i(TAG, "gabarit created");
-		Log.i(TAG, "Find gabarit : "+gabaritDao.find(123));
 		
 		setContentView(R.layout.activity_menu_layout);
 		
