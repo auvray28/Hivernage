@@ -4,6 +4,7 @@ package com.meeple.cloud.hivernage;
 import android.app.Application;
 
 import com.meeple.cloud.hivernage.db.DBMock;
+import com.meeple.cloud.hivernage.db.DbHelper;
 
 public class HivernageApplication extends Application {
 
@@ -17,6 +18,7 @@ public class HivernageApplication extends Application {
 	
 	protected void initMock() {
 		DBMock.DB.fill();
+		DbHelper.instance = new DbHelper(getApplicationContext());
 	}
 	
 }

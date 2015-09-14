@@ -6,7 +6,7 @@ import com.meeple.cloud.hivernage.db.DBMock;
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.model.EmplacementCamping;
-import com.meeple.cloud.hivernage.model.Hangar;
+import com.meeple.cloud.hivernage.model.EmplacementHangar;
 import com.meeple.cloud.hivernage.model.enums.CaravaneStatus;
 import com.meeple.cloud.hivernage.service.ICaravaneService;
 
@@ -57,11 +57,9 @@ public class CaravaneServiceMock implements ICaravaneService {
 	@Override
 	public void update(Caravane caravane) {
 		Caravane c = findById(caravane.getCaravaneId());
-		c.setAngle(caravane.getAngle());
 		c.setClient(caravane.getClient());
-		c.setCoord(caravane.getCoord());
 		c.setGabari(caravane.getGabari());
-		c.setHangar(caravane.getHangar());
+		c.setEmplacementHangar(caravane.getEmplacementHangar());
 		c.setObservation(caravane.getObservation());
 		c.setPlaque(caravane.getPlaque());
 		c.setStatus(caravane.getStatus());
@@ -74,22 +72,22 @@ public class CaravaneServiceMock implements ICaravaneService {
 	}
 
 	@Override
-	public void move(Caravane caravane, Hangar hangar) {
+	public void move(Caravane caravane, EmplacementHangar emplacementHangar) {
 		removeFromHangar(caravane);
-		putInHangar(caravane, hangar);
+		putInHangar(caravane, emplacementHangar);
 	}
 
 	@Override
-	public void putInHangar(Caravane caravane, Hangar hangar) {
-		hangar.getCaravanes().add(caravane);
-		caravane.setHangar(hangar);
+	public void putInHangar(Caravane caravane, EmplacementHangar emplacementHangar) {
+		emplacementHangar.getHangar().getCaravanes().add(caravane);
+		caravane.setEmplacementHangar(emplacementHangar);
 		caravane.setStatus(CaravaneStatus.HANGAR);
 	}
 
 	@Override
 	public void removeFromHangar(Caravane caravane) {
-		caravane.getHangar().removeCaravane(caravane);
-		caravane.setHangar(null);
+		caravane.getEmplacementHangar().getHangar().removeCaravane(caravane);
+		caravane.setEmplacementHangar(null);
 	}
 
 	@Override

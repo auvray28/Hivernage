@@ -2,14 +2,28 @@ package com.meeple.cloud.hivernage.model;
 
 import java.util.Date;
 
-public class Facture {
-	private int factureId;
-	private Client client;
-	private int ttc;
-	private int ht;
-	private Date dateEdition;
-	private int remise;
+import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.Id;
+import com.meeple.cloud.hivernage.db.annotation.OneToOne;
+
+public class Facture extends Entity<Facture>{
 	
+	@Id
+	@Column
+	private int factureId;
+	@Column
+	private int ttc;
+	@Column
+	private int ht;
+	@Column
+	private Date dateEdition;
+	@Column
+	private int remise;
+
+	@OneToOne(colName = "CLIENT_ID")
+	private Client client;
+	
+	public Facture() {}
 	
 	public Facture(int factureId, Client client, int ttc, int ht,
 			Date dateEdition, int remise) {

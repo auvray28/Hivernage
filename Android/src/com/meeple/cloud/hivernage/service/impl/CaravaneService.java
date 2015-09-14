@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.model.EmplacementCamping;
-import com.meeple.cloud.hivernage.model.Hangar;
+import com.meeple.cloud.hivernage.model.EmplacementHangar;
 import com.meeple.cloud.hivernage.service.ICaravaneService;
 
 public class CaravaneService implements ICaravaneService {
@@ -37,50 +37,51 @@ public class CaravaneService implements ICaravaneService {
 	@Override
 	public void create(Caravane caravane) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void update(Caravane caravane) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void delete(Caravane caravane) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void move(Caravane caravane, Hangar hangar) {
+	public void move(Caravane caravane, EmplacementHangar emplacementHangar) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void putInHangar(Caravane caravane, Hangar hangard) {
+	public void putInHangar(Caravane caravane,
+			EmplacementHangar emplacementHangar) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void removeFromHangar(Caravane caravane) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void putToCamping(Caravane caravane, EmplacementCamping eplacement) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void addEmplacementCamping(Caravane caravane,
 			EmplacementCamping eplacement) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -88,5 +89,6 @@ public class CaravaneService implements ICaravaneService {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

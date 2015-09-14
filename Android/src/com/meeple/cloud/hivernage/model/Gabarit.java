@@ -1,11 +1,21 @@
 package com.meeple.cloud.hivernage.model;
 
-public class Gabarit {
+import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.Id;
 
+public class Gabarit extends Entity<Gabarit>{
+
+	@Id
+	@Column
 	private int gabaritId;
+	@Column
 	private String nom;
+	@Column
 	private int longueur;
+	@Column
 	private int largeur;
+	
+	public Gabarit() {}
 	
 	public Gabarit(String nom, int longueur, int largeur) {
 		this.nom = nom;

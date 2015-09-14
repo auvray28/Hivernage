@@ -3,15 +3,25 @@ package com.meeple.cloud.hivernage.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Hangar {
+import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.Transient;
 
+public class Hangar extends Entity<Hangar>{
+
+	@Column
 	private int hangarId;
+	@Column
 	private String nom;
+	@Column
 	private int longueur;
+	@Column
 	private int largeur;
 	
+	@Transient
 	private ArrayList<Caravane> caravanes;
 
+	public Hangar() {}
+	
 	public Hangar(String nom, int longueur, int largeur) {
 		super();
 		this.nom = nom;

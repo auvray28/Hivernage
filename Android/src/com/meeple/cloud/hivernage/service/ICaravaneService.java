@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.model.EmplacementCamping;
-import com.meeple.cloud.hivernage.model.Hangar;
+import com.meeple.cloud.hivernage.model.EmplacementHangar;
 
 public interface ICaravaneService {
 	
@@ -23,9 +23,9 @@ public interface ICaravaneService {
 	
 	public void delete(Caravane caravane);
 	
-	public void move(Caravane caravane, Hangar hangar);
+	public void move(Caravane caravane, EmplacementHangar emplacementHangar);
 	
-	public void putInHangar(Caravane caravane, Hangar hangard);
+	public void putInHangar(Caravane caravane, EmplacementHangar emplacementHangar);
 	
 	public void removeFromHangar(Caravane caravane);
 	

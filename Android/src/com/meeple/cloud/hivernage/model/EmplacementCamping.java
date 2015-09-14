@@ -2,13 +2,26 @@ package com.meeple.cloud.hivernage.model;
 
 import java.util.Date;
 
-public class EmplacementCamping {
+import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.Id;
+import com.meeple.cloud.hivernage.db.annotation.ManyToOne;
 
+public class EmplacementCamping extends Entity<EmplacementCamping>{
+
+	@Id
+	@Column
 	private int emplacementId;
+	@Column
 	private String emplacement;
+	@Column
 	private Date entree;
+	@Column
 	private Date sortie;
+	
+	@ManyToOne(colName = "CAMPING_ID")
 	private Camping camping;
+	
+	public EmplacementCamping() {}
 	
 	public EmplacementCamping(String emplacement, Caravane caravane) {
 		this.emplacement = emplacement;

@@ -2,22 +2,37 @@ package com.meeple.cloud.hivernage.model;
 
 import java.util.ArrayList;
 
-import android.graphics.Point;
-
+import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.Id;
+import com.meeple.cloud.hivernage.db.annotation.OneToMany;
+import com.meeple.cloud.hivernage.db.annotation.OneToOne;
 import com.meeple.cloud.hivernage.model.enums.CaravaneStatus;
 
-public class Caravane {
+public class Caravane extends Entity<Caravane>{
 
+	@Id
+	@Column
 	private int caravaneId;
+	@Column
 	private String plaque;
+	@Column
 	private CaravaneStatus status;
+	@Column
 	private String observation;
+	
+	@OneToOne(colName="GABARAIT_ID")
 	private Gabarit gabari;
+	
+	@OneToOne(ref="caravane")
 	private Client client;
-	private Point coord;
-	private float angle;
-	private Hangar hangar;
+	
+	@OneToOne(colName="EMP_HANGAR_ID")
+	private EmplacementHangar emplacementHangar;
+	
+	@OneToMany(colName="EMP_CAMPING_ID")
 	private ArrayList<EmplacementCamping> emplacementCamping;
+	
+	public Caravane() {}
 	
 	public Caravane(String plaque, String observation, Gabarit gabari,
 			Client client) {
@@ -27,9 +42,7 @@ public class Caravane {
 		this.gabari = gabari;
 		this.client = client;
 		this.status = CaravaneStatus.ATTENTE;
-		this.coord = new Point(0, 0);
-		this.angle = 0;
-		this.hangar = null;
+		this.emplacementHangar = null;
 		this.emplacementCamping = new ArrayList<EmplacementCamping>();
 		
 		if(client != null && client.getCaravane() == null ) {
@@ -126,29 +139,6 @@ public class Caravane {
 		return true;
 	}
 
-	public Point getCoord() {
-		return coord;
-	}
-
-	public void setCoord(Point coord) {
-		this.coord = coord;
-	}
-
-	public float getAngle() {
-		return angle;
-	}
-
-	public void setAngle(float angle) {
-		this.angle = angle;
-	}
-
-	public Hangar getHangar() {
-		return hangar;
-	}
-
-	public void setHangar(Hangar hangar) {
-		this.hangar = hangar;
-	}
 
 	public ArrayList<EmplacementCamping> getEmplacementCamping() {
 		return emplacementCamping;
@@ -162,6 +152,19 @@ public class Caravane {
 		
 		
 		return null;
+	}
+
+	public EmplacementHangar getEmplacementHangar() {
+		return emplacementHangar;
+	}
+
+	public void setEmplacementHangar(EmplacementHangar hangar) {
+		this.emplacementHangar = hangar;
+	}
+
+	public void setEmplacementCamping(
+			ArrayList<EmplacementCamping> emplacementCamping) {
+		this.emplacementCamping = emplacementCamping;
 	}
 	
 }

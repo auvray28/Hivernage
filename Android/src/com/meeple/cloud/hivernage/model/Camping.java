@@ -2,16 +2,30 @@ package com.meeple.cloud.hivernage.model;
 
 import java.util.ArrayList;
 
-public class Camping {
+import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.Id;
+import com.meeple.cloud.hivernage.db.annotation.ManyToOne;
+import com.meeple.cloud.hivernage.db.annotation.OneToMany;
 
+public class Camping extends Entity<Camping>{
+
+	@Id
+	@Column
 	private int CampingId;
+	@Column
 	private String nom;
+	@Column
 	private String mail;
+	@Column
 	private String tel;
+	@Column
 	private double prix;
 	
+	@OneToMany(ref="camping", isDouble=true)
 	private ArrayList<EmplacementCamping> emplacements;
 
+	public Camping() {}
+	
 	public Camping(String nom, String mail, String tel, double prix) {
 		this.nom = nom;
 		this.mail = mail;

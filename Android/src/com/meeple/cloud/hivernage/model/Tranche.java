@@ -1,11 +1,22 @@
 package com.meeple.cloud.hivernage.model;
 
-public class Tranche {
+import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.Id;
 
+public class Tranche extends Entity<Tranche>{
+
+	@Id
+	@Column
 	private int trancheId;
+	@Column
 	private int longueurMin;
+	@Column
 	private int longueurMax;
+	@Column
 	private double prix;
+	
+	public Tranche() {}
+	
 	public Tranche(int trancheId, int longueurMin, int longueurMax, double prix) {
 		super();
 		this.trancheId = trancheId;

@@ -112,7 +112,7 @@ public class ClientInfoFragment extends Fragment {
 			txt_caravane_position.setVisibility(View.VISIBLE);
 			txt_caravane_label_position.setVisibility(View.VISIBLE);
     		
-    		txt_caravane_position.setText(displayClient.getCaravane().getHangar().getNom());
+    		txt_caravane_position.setText(displayClient.getCaravane().getEmplacementHangar().getHangar().getNom());
     		txt_caravane_label_position.setText(R.string.hangar);
     		break;
 //    	case LAVEE : 

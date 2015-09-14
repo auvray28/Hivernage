@@ -95,8 +95,8 @@ public class ListeClientAdapter  extends BaseAdapter {
 			holder.txt_infoSup.setVisibility(View.VISIBLE);
 			break;
 		case HANGAR : 
-			if (getItem(position).getCaravane().getHangar() != null) {
-				holder.txt_infoSup.setText(getItem(position).getCaravane().getHangar().getNom());
+			if (getItem(position).getCaravane().getEmplacementHangar() != null) {
+				holder.txt_infoSup.setText(getItem(position).getCaravane().getEmplacementHangar().getHangar().getNom());
 			}
 			else {
 				holder.txt_infoSup.setText("No Hangar");

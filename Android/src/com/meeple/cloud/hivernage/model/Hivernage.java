@@ -3,18 +3,30 @@ package com.meeple.cloud.hivernage.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.Id;
+import com.meeple.cloud.hivernage.db.annotation.OneToMany;
 import com.meeple.cloud.hivernage.model.enums.FactureMdp;
 import com.meeple.cloud.hivernage.model.enums.HivernageStatus;
 
-public class Hivernage {
+public class Hivernage extends Entity<Hivernage>{
 
+	@Id
+	@Column
 	private int hivernageId;
+	@Column
 	private HivernageStatus status;
+	@Column
 	private int acompte;
+	@Column
 	private Date debut;
+	@Column
 	private Date fin;
 	
-	private ArrayList<String> historiquePayement;
+	@OneToMany(colName="HIVERNAGE_ID")
+	private ArrayList<Paiement> historiquePayement;
+	
+	public Hivernage() {}
 	
 	public Hivernage(HivernageStatus status, int acompte) {
 		super();
@@ -22,7 +34,7 @@ public class Hivernage {
 		this.acompte = acompte;
 		debut = new Date();
 		
-		historiquePayement = new ArrayList<String>();
+		historiquePayement = new ArrayList<Paiement>();
 	}
 	
 	public Hivernage(String jsonObject) {
@@ -55,8 +67,8 @@ public class Hivernage {
 	
 	public void addPayement(Date d, FactureMdp type, int value) {
 		acompte += value;
-		
-		historiquePayement.add("Le "+ d.toString() + " payment de " + value + " par " + type);
+		Paiement p = new Paiement(d, type, value);
+		historiquePayement.add(p);
 	}
 	
 	public Date getDebut() {

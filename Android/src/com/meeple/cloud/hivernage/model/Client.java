@@ -3,17 +3,35 @@ package com.meeple.cloud.hivernage.model;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Client {
+import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.Id;
+import com.meeple.cloud.hivernage.db.annotation.OneToMany;
 
+public class Client extends Entity<Client>{
+
+	@Id
+	@Column
 	private int clientId;
+	@Column
 	private String nom;
+	@Column
 	private String prenom;
+	@Column
 	private String adresse;
+	@Column
 	private String telephone;
+	@Column
 	private String mail;
+	@Column
 	private String observation;
+	
+	@Column(colName="CARAVANE_ID")
 	private Caravane caravane;
+	
+	@OneToMany(colName="CLIENT_ID")
 	private ArrayList<Hivernage> hivernages;
+	
+	public Client() {}
 	
 	public Client(String nom, String prenom, String adresse, String telephone, String mail,
 			String observation, Caravane caravane) {
@@ -156,11 +174,11 @@ public class Client {
             @Override
             public int compare(Client o1, Client o2) {
             	
-            	if (o1.caravane.getHangar() == null && o2.caravane.getHangar() == null) return 0; 
-            	if (o2.caravane.getHangar() == null) return  1; 
-            	if (o1.caravane.getHangar() == null) return -1; 
+            	if (o1.caravane.getEmplacementHangar() == null && o2.caravane.getEmplacementHangar() == null) return 0; 
+            	if (o2.caravane.getEmplacementHangar() == null) return  1; 
+            	if (o1.caravane.getEmplacementHangar() == null) return -1; 
             	
-                return o1.caravane.getHangar().getNom().compareTo(o2.caravane.getHangar().getNom());
+                return o1.caravane.getEmplacementHangar().getHangar().getNom().compareTo(o2.caravane.getEmplacementHangar().getHangar().getNom());
             }
         };
     }
