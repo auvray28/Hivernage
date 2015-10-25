@@ -18,6 +18,7 @@ import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInterface;
+import com.meeple.cloud.hivernage.view.hangar.HangarMainFragment;
 
 public class MenuActivity extends FragmentActivity implements ClientListInterface{
 
@@ -46,7 +47,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		
 		// Check whether the activity is using the layout version with
         // the fragment_container FrameLayout. If so, we must add the first fragment
-        if (findViewById(R.id.little_frame) != null) {
+        if (little_frame != null) {
 
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
@@ -55,7 +56,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
                 return;
             }
             
-            clickForClientView();
+            clickForHangarView();
             
 //
 //            // Create an instance of ExampleFragment
@@ -143,38 +144,38 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	
 	private void clickForClientView() {
 		setSelectedBtn(btn_Client);
-		onArticleSelected(MenuBarBtn.CLIENT);
 		switchPanelMode(PanelMode.DOUBLE);
+		onArticleSelected(MenuBarBtn.CLIENT);
 	}
 	
 	private void clickForHangarView() {
 		setSelectedBtn(btn_Hangar);
-		onArticleSelected(MenuBarBtn.HANGAR);
 		switchPanelMode(PanelMode.SIMPLE);
+		onArticleSelected(MenuBarBtn.HANGAR);
 	}
 	
 	private void clickForLavageView() {
 		setSelectedBtn(btn_Lavage);
-		onArticleSelected(MenuBarBtn.LAVAGE);
 		switchPanelMode(PanelMode.DOUBLE);
+		onArticleSelected(MenuBarBtn.LAVAGE);
 	}
 	
 	private void clickForCampingView() {
 		setSelectedBtn(btn_Camping);
-		onArticleSelected(MenuBarBtn.CAMPING);
 		switchPanelMode(PanelMode.DOUBLE);
+		onArticleSelected(MenuBarBtn.CAMPING);
 	}
 	
 	private void clickForAgendaView() {
 		setSelectedBtn(btn_Agenda);
-		onArticleSelected(MenuBarBtn.AGENDA);
 		switchPanelMode(PanelMode.SIMPLE);
+		onArticleSelected(MenuBarBtn.AGENDA);
 	}
 	
 	private void clickForWaitingView() {
 		setSelectedBtn(btn_Waiting);
-		onArticleSelected(MenuBarBtn.WAITING);
 		switchPanelMode(PanelMode.DOUBLE);
+		onArticleSelected(MenuBarBtn.WAITING);
 	}
 	
 	public void onArticleSelected(MenuBarBtn position) {
@@ -184,7 +185,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		//
 		switch(position){
 		case CLIENT  : newFrag = new ClientListeFragment(); break;// pas bon a changer
-		case HANGAR  : 
+		case HANGAR  : newFrag = new HangarMainFragment(); break;
 		case LAVAGE  :
 		case CAMPING : newFrag = new CampingListeFragment();break;
 		case AGENDA  :
@@ -198,7 +199,12 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.little_frame, newFrag);
+        if ( currentPanelMode == PanelMode.DOUBLE) {
+        	transaction.replace(R.id.little_frame, newFrag);
+        }
+        else {
+        	transaction.replace(R.id.only_frame, newFrag);
+        }
         transaction.addToBackStack(null);
 
         // Commit the transaction
