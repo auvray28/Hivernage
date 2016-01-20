@@ -11,10 +11,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Hangar;
 import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.component.CaravaneView;
 import com.meeple.cloud.hivernage.view.component.DragAndDropRelativeLayout;
 
 public class HangarMainFragment extends Fragment {
@@ -113,7 +111,12 @@ public class HangarMainFragment extends Fragment {
     
     public void loadHangar(Hangar h){
     	if(currentHangar != h) {
-    		currentHangarView.removeAllViews();
+    		
+    		if (currentHangar != null) {
+    			Services.hangarService.updateHangar(currentHangar);
+    			currentHangarView.removeAllViews();
+    		}
+    		
     		currentHangar = h;
 	    	tv_HangarName.setText(currentHangar.getNom());
 	    	currentHangarView.loadHangar(currentHangar);
