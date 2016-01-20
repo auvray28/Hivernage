@@ -9,6 +9,7 @@ import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.model.EmplacementCamping;
+import com.meeple.cloud.hivernage.model.EmplacementHangar;
 import com.meeple.cloud.hivernage.model.Facture;
 import com.meeple.cloud.hivernage.model.Gabarit;
 import com.meeple.cloud.hivernage.model.Hangar;
@@ -71,7 +72,7 @@ public class DBMock {
 		Services.trancheService.createTranche(new Tranche(2, 261, 310, 200));
 		Services.trancheService.createTranche(new Tranche(3, 311, 1000, 400));
 		
-		Caravane caravane = new Caravane("AB213CD", "un peu grosse", gabarits.get(2), null);
+		Caravane caravane = new Caravane("AB213CD", "un peu grosse", gabarits.get(0), null);
 		Client c1 = new Client("Dupont", "Pierre", "il habite la", "0681623914", "ducon@gmail.com", "c'est un autiste", caravane);
 		c1.addHivernage(new Hivernage(HivernageStatus.IMPAYE, -250));
 		caravane.setClient(c1);
@@ -97,11 +98,26 @@ public class DBMock {
 		Services.clientService.create(c4);
 		
 		
-		Services.hangarService.createHangar(new Hangar("hangar 1", 50, 20));
+		Services.hangarService.createHangar(new Hangar("Porcherie", 500, 200));
 		Services.hangarService.createHangar(new Hangar("hangar 2", 20, 20));
 		Services.hangarService.createHangar(new Hangar("hangar 3", 40, 40));
 		Services.hangarService.createHangar(new Hangar("hangar 4", 30, 30));
+		
+		Hangar porch = Services.hangarService.findHangarByName("Porcherie");
+		
+		EmplacementHangar porch1 = new EmplacementHangar(10, 10, 0,  porch);
+		Services.caravaneService.putInHangar(caravane, porch1);
 
+		EmplacementHangar porch2 = new EmplacementHangar(120, 10, 0,  porch);
+		Services.caravaneService.putInHangar(caravane2, porch2);
+
+		EmplacementHangar porch3 = new EmplacementHangar(230, 10, 0,  porch);
+		Services.caravaneService.putInHangar(caravane3, porch3);
+
+		EmplacementHangar porch4 = new EmplacementHangar(10, 110, 0,  porch);
+		Services.caravaneService.putInHangar(caravane4, porch4);
+
+		
 	}
 	
 	public ArrayList<Client> getClients() {

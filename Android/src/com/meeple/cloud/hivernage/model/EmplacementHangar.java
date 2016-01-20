@@ -20,6 +20,14 @@ public class EmplacementHangar extends Entity<EmplacementHangar>{
 	private Hangar hangar;
 	
 	public EmplacementHangar() {}
+	
+	public EmplacementHangar(int posX, int posY, double angle, Hangar hangar) {
+		super();
+		this.posX = posX;
+		this.posY = posY;
+		this.angle = angle;
+		this.hangar = hangar;
+	}
 
 	public int getEmplacementId() {
 		return emplacementId;

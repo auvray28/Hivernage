@@ -86,7 +86,7 @@ public class Caravane extends Entity<Caravane>{
 		this.observation = observation;
 	}
 
-	public Gabarit getGabari() {
+	public Gabarit getGabarit() {
 		return gabari;
 	}
 

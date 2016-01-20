@@ -97,7 +97,7 @@ public class ClientInfoFragment extends Fragment {
     	
     	// Caravane
     	txt_caravane_immatriculation.setText(displayClient.getCaravane().getPlaque());
-    	txt_caravane_gabarit.setText(displayClient.getCaravane().getGabari().getNom());
+    	txt_caravane_gabarit.setText(displayClient.getCaravane().getGabarit().getNom());
     	txt_caravane_obs.setText(displayClient.getCaravane().getObservation());
     	
     	switch(displayClient.getCaravane().getStatus()) {

@@ -79,11 +79,12 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
         </RelativeLayout>
 
-        <com.meeple.cloud.hivernage.view.component.DragAndDropRelativeLayout
+        <com.meeple.cloud.hivernage.view.hangar.HangarView
             android:id="@+id/hangar_current_hangar_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="9"
+            android:background="@android:color/white"
             android:orientation="horizontal" >
 
             <TextView
@@ -95,7 +96,7 @@
                 android:text="Vue Hangar courant"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:visibility="gone" />
-        </com.meeple.cloud.hivernage.view.component.DragAndDropRelativeLayout>
+        </com.meeple.cloud.hivernage.view.hangar.HangarView>
     </LinearLayout>
 
 </LinearLayout>
