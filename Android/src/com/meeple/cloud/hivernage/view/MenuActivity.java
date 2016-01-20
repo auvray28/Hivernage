@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
@@ -36,6 +35,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	private FrameLayout little_frame, big_frame, only_frame;
 	
 	private PanelMode currentPanelMode = PanelMode.DOUBLE;
+	private MenuBarBtn currentMenu;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -178,37 +178,43 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		onArticleSelected(MenuBarBtn.WAITING);
 	}
 	
-	public void onArticleSelected(MenuBarBtn position) {
-		Fragment newFrag;
+	public void onArticleSelected(MenuBarBtn newMenu) {
 		
-		// TODO faudra regarder le new instance de tes Fragments a Diagonal
-		//
-		switch(position){
-		case CLIENT  : newFrag = new ClientListeFragment(); break;// pas bon a changer
-		case HANGAR  : newFrag = new HangarMainFragment(); break;
-		case LAVAGE  :
-		case CAMPING : newFrag = new CampingListeFragment();break;
-		case AGENDA  :
-		case WAITING :
-		default :  newFrag = new ClientListeFragment(); break; 
+		if (currentMenu != newMenu) {
 		
+			Fragment newFrag;
+			
+			currentMenu = newMenu;
+			
+			// TODO faudra regarder le new instance de tes Fragments a Diagonal
+			//
+			switch(newMenu){
+			case CLIENT  : newFrag = new ClientListeFragment(); break;// pas bon a changer
+			case HANGAR  : newFrag = new HangarMainFragment(); break;
+			case LAVAGE  :
+			case CAMPING : newFrag = new CampingListeFragment();break;
+			case AGENDA  :
+			case WAITING :
+			default :  newFrag = new ClientListeFragment(); break; 
+			
+			}
+			
+	        // Create fragment and give it an argument for the selected article
+	        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+	
+	        // Replace whatever is in the fragment_container view with this fragment,
+	        // and add the transaction to the back stack so the user can navigate back
+	        if ( currentPanelMode == PanelMode.DOUBLE) {
+	        	transaction.replace(R.id.little_frame, newFrag);
+	        }
+	        else {
+	        	transaction.replace(R.id.only_frame, newFrag);
+	        }
+	        transaction.addToBackStack(null);
+	
+	        // Commit the transaction
+	        transaction.commit();
 		}
-		
-        // Create fragment and give it an argument for the selected article
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        if ( currentPanelMode == PanelMode.DOUBLE) {
-        	transaction.replace(R.id.little_frame, newFrag);
-        }
-        else {
-        	transaction.replace(R.id.only_frame, newFrag);
-        }
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
     }
 	
 	public void setSelectedBtn(View btnSelected) {
