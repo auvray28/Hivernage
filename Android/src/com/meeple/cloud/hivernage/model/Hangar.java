@@ -74,6 +74,22 @@ public class Hangar extends Entity<Hangar>{
 		this.caravanes = caravanes;
 	}
 	
+	public void addCaravane(Caravane caravane) {
+		Iterator<Caravane> it = caravanes.iterator();
+		boolean alreadyHave = false;
+		
+		while(it.hasNext()) {
+			Caravane c = it.next();
+			if(c.getPlaque().equalsIgnoreCase(caravane.getPlaque())) {
+				alreadyHave = true;
+			}
+		}
+		
+		if(!alreadyHave) {
+			caravanes.add(caravane);
+		}
+	}
+	
 	public void removeCaravane(Caravane caravane) {
 		Iterator<Caravane> it = caravanes.iterator();
 		while(it.hasNext()) {

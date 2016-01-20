@@ -1,11 +1,9 @@
 package com.meeple.cloud.hivernage.view.component;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
@@ -14,6 +12,13 @@ import android.widget.RelativeLayout;
 
 public class DragAndDropRelativeLayout extends RelativeLayout implements OnDragListener {
 
+	public interface onDropListener
+    {
+        void onDropCaravane(DragAndDropRelativeLayout view, CaravaneView cv);
+    }
+	
+	private onDropListener onDropListener;
+	
 	private Paint paint = new Paint();
 	
 	private int backgroundColor;
@@ -73,10 +78,12 @@ public class DragAndDropRelativeLayout extends RelativeLayout implements OnDragL
 			
 			container.invalidate();
 			
+			if(onDropListener != null) onDropListener.onDropCaravane(this,view);
+			
 			break;
 		case DragEvent.ACTION_DRAG_ENDED:  // Quand le drag s'arrete
 			view = (CaravaneView) event.getLocalState();
-			if (view != null) {
+			if (view != null && view instanceof CaravaneView) {
 				view.setAlpha(1);
 			}
 		case DragEvent.ACTION_DRAG_EXITED: // Quand on sort de la vue
@@ -96,5 +103,10 @@ public class DragAndDropRelativeLayout extends RelativeLayout implements OnDragL
 	public void setBackColor(int color) {
 		backgroundColor = color;
 	}
+
+	public void setOnDropListener(onDropListener onDropListener) {
+		this.onDropListener = onDropListener;
+	}
+	
 	
 }

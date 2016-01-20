@@ -1,10 +1,10 @@
 package com.meeple.cloud.hivernage.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.meeple.cloud.hivernage.db.annotation.Column;
 import com.meeple.cloud.hivernage.db.annotation.Id;
-import com.meeple.cloud.hivernage.db.annotation.ManyToOne;
 import com.meeple.cloud.hivernage.db.annotation.OneToMany;
 
 public class Camping extends Entity<Camping>{
@@ -87,5 +87,32 @@ public class Camping extends Entity<Camping>{
 		this.emplacements = emplacements;
 	}
 	
+	
+/********************* Comparators Implémentation ****************************/
+	
+	public static class Comparators {
+        public static Comparator<Camping> ALPHABETIC = new Comparator<Camping>() {
+            @Override
+            public int compare(Camping o1, Camping o2) {
+                return o1.nom.compareTo(o2.nom);
+            }
+        };
+        
+        public static Comparator<Camping> PRIX_CROISSANT = new Comparator<Camping>() {
+            @Override
+            public int compare(Camping o1, Camping o2) {
+                return (o1.prix > (o2.prix)) ? 1 : -1;
+            }
+        };
+      
+        public static Comparator<Camping> PRIX_DECROISSANT = new Comparator<Camping>() {
+            @Override
+            public int compare(Camping o1, Camping o2) {
+                return (o1.prix > (o2.prix)) ? -1 : 1;
+            }
+        };
+      
+        
+    }
 	
 }

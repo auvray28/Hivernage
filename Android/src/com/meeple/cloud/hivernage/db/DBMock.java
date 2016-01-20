@@ -3,8 +3,6 @@ package com.meeple.cloud.hivernage.db;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.location.Address;
-
 import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Client;
@@ -97,6 +95,12 @@ public class DBMock {
 		caravane4.setClient(c4);
 		Services.clientService.create(c4);
 		
+		Caravane caravane5 = new Caravane("000VM28", "Mine!", gabarits.get(2), null);
+		Client c5 = new Client("nom", "prenom", "adresse", "0237341425","mail", "Coucou!", caravane5);
+		c1.addHivernage(new Hivernage(HivernageStatus.PAYE, 0));
+		caravane5.setClient(c5);
+		Services.clientService.create(c5);
+		
 		
 		Services.hangarService.createHangar(new Hangar("Porcherie", 500, 200));
 		Services.hangarService.createHangar(new Hangar("hangar 2", 20, 20));
@@ -114,9 +118,31 @@ public class DBMock {
 		EmplacementHangar porch3 = new EmplacementHangar(230, 10, 0,  porch);
 		Services.caravaneService.putInHangar(caravane3, porch3);
 
-		EmplacementHangar porch4 = new EmplacementHangar(10, 110, 0,  porch);
-		Services.caravaneService.putInHangar(caravane4, porch4);
+//		EmplacementHangar porch4 = new EmplacementHangar(10, 110, 0,  porch);
+//		Services.caravaneService.putInHangar(caravane4, porch4);
 
+		
+		Services.hangarService.createHangar(new Hangar("Lavage", 1, 1));
+		Services.hangarService.createHangar(new Hangar("Waiting", 1, 1));
+		
+		Hangar lavage = Services.hangarService.findHangarByName("Lavage");
+		
+		EmplacementHangar empLavage = new EmplacementHangar(10, 110, 0,  lavage);
+		Services.caravaneService.putInHangar(caravane5, empLavage);
+		
+		Hangar waiting = Services.hangarService.findHangarByName("Waiting");
+		
+		EmplacementHangar empWaiting = new EmplacementHangar(10, 110, 0,  waiting);
+		Services.caravaneService.putInHangar(caravane4, empWaiting);
+		
+		
+		/*********Campings**************/
+		
+		Services.campingService.createCamping(new Camping("Antibes", "antibes@gmail.com", "0102030405", 2000));
+		Services.campingService.createCamping(new Camping("Chartres", "chartres@gmail.com", "0237341425", 1000));
+		Services.campingService.createCamping(new Camping("Paris", "paris@gmail.com", "0681623914", 500));
+		Services.campingService.createCamping(new Camping("Nice", "nice@gmail.com", "0985647526", 100));
+		
 		
 	}
 	

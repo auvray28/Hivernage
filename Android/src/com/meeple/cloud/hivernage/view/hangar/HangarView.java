@@ -65,5 +65,9 @@ public class HangarView extends DragAndDropRelativeLayout {
         }
         
 	}
+
+	public Hangar getHangar() {
+		return hangar;
+	}
 	
 }

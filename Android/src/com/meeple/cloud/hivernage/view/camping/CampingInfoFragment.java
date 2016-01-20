@@ -7,9 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
 
 public class CampingInfoFragment extends Fragment {
 
+	public static ClientInfoFragment newInstance(int campingId) {
+		
+		ClientInfoFragment myFragment = new ClientInfoFragment();
+		
+		Bundle args = new Bundle();
+	    args.putInt("campingId", campingId);
+	    myFragment.setArguments(args);
+
+		return myFragment;
+	}
+	
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
