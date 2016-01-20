@@ -3,6 +3,7 @@ package com.meeple.cloud.hivernage.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
@@ -29,6 +31,8 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		SIMPLE, DOUBLE;
 	}
 	
+	boolean doubleBackToExitPressedOnce = false;
+	
 	private View btn_Client, btn_Hangar, btn_Lavage, btn_Camping, btn_Agenda, btn_Waiting;
 	
 	private LinearLayout one_panel, two_panel;
@@ -36,6 +40,10 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	
 	private PanelMode currentPanelMode = PanelMode.DOUBLE;
 	private MenuBarBtn currentMenu;
+	
+	private HangarMainFragment   hangarFragment;
+	private ClientListeFragment  clientFragment;
+	private CampingListeFragment campingFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +105,13 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		one_panel    = (LinearLayout) findViewById(R.id.one_panel);
 		only_frame   = (FrameLayout) findViewById(R.id.only_frame);
 		
-		//
+		// Initialisation des fragments
+		
+		hangarFragment = new HangarMainFragment();
+		clientFragment = new ClientListeFragment();
+		campingFragment = new CampingListeFragment();
+		
+		// Init Bouton Event
 		
 		btn_Client.setOnClickListener(new OnClickListener() {
 			@Override
@@ -189,15 +203,20 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 			// TODO faudra regarder le new instance de tes Fragments a Diagonal
 			//
 			switch(newMenu){
-			case CLIENT  : newFrag = new ClientListeFragment(); break;// pas bon a changer
-			case HANGAR  : newFrag = new HangarMainFragment(); break;
+			case CLIENT  : newFrag = clientFragment; break;// pas bon a changer
+			case HANGAR  : newFrag = hangarFragment; break;
 			case LAVAGE  :
-			case CAMPING : newFrag = new CampingListeFragment();break;
+			case CAMPING : newFrag = campingFragment;break;
 			case AGENDA  :
 			case WAITING :
-			default :  newFrag = new ClientListeFragment(); break; 
+			default :  newFrag = clientFragment; break; 
 			
 			}
+
+			/*
+			 * Attention une erreur pop quand tu vas de agenda vers un autre qui contient aussi clientFragment
+			 * n'en tiens pas compte (pas trouvé un moyen et en plus ne popera plus quand tous auront un fragment different)
+			 */
 			
 	        // Create fragment and give it an argument for the selected article
 	        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -210,7 +229,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	        else {
 	        	transaction.replace(R.id.only_frame, newFrag);
 	        }
-	        transaction.addToBackStack(null);
+//	        transaction.addToBackStack(null);
 	
 	        // Commit the transaction
 	        transaction.commit();
@@ -246,6 +265,26 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		currentPanelMode = newPanelMode;
 	}
 
+	
+	@Override
+	public void onBackPressed() {
+	    if (doubleBackToExitPressedOnce) {
+	        super.onBackPressed();
+	        return;
+	    }
+
+	    this.doubleBackToExitPressedOnce = true;
+	    Toast.makeText(this, "Cliquer une deuxième fois pour quitter", Toast.LENGTH_SHORT).show();
+
+	    new Handler().postDelayed(new Runnable() {
+	        @Override
+	        public void run() {
+	            doubleBackToExitPressedOnce=false;                       
+	        }
+	    }, 2000);
+	} 
+	
+	
 	/*************  ClientListInterface  **********/
 	
 	@Override
@@ -268,7 +307,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	        // Replace whatever is in the fragment_container view with this fragment,
 	        // and add the transaction to the back stack so the user can navigate back
 	        transaction.replace(R.id.big_frame, newFrag);
-	        transaction.addToBackStack(null);
+//	        transaction.addToBackStack(null);
 
 	        // Commit the transaction
 	        transaction.commit();
