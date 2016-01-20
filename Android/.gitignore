@@ -1,3 +1,6 @@
 /.settings/
 /.classpath
 /project.properties
+/.project
+/proguard-project.txt
+/libs/
