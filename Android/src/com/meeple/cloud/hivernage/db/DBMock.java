@@ -91,13 +91,13 @@ public class DBMock {
 		
 		Caravane caravane4 = new Caravane("9247VM28", "Mine!", gabarits.get(2), null);
 		Client c4 = new Client("Auvray", "François", "50 rue François Lépine, 28600 Luisant", "0237341425","auvray28@gmail.com", "Coucou!", caravane4);
-		c1.addHivernage(new Hivernage(HivernageStatus.PAYE, 0));
+		c4.addHivernage(new Hivernage(HivernageStatus.PAYE, 0));
 		caravane4.setClient(c4);
 		Services.clientService.create(c4);
 		
 		Caravane caravane5 = new Caravane("000VM28", "Mine!", gabarits.get(2), null);
 		Client c5 = new Client("nom", "prenom", "adresse", "0237341425","mail", "Coucou!", caravane5);
-		c1.addHivernage(new Hivernage(HivernageStatus.PAYE, 0));
+		c5.addHivernage(new Hivernage(HivernageStatus.PAYE, 0));
 		caravane5.setClient(c5);
 		Services.clientService.create(c5);
 		
@@ -138,12 +138,38 @@ public class DBMock {
 		
 		/*********Campings**************/
 		
-		Services.campingService.createCamping(new Camping("Antibes", "antibes@gmail.com", "0102030405", 2000));
+		Caravane caravane6 = createCaravane(6);
+		Caravane caravane7 = createCaravane(7);
+		Caravane caravane8 = createCaravane(8);
+		Caravane caravane9 = createCaravane(9);
+		
+		Camping ca = new Camping("Antibes", "antibes@gmail.com", "0102030405", 2000);
+		
+		EmplacementCamping em1 = new EmplacementCamping("Antibes_1", caravane6);
+		EmplacementCamping em2 = new EmplacementCamping("Antibes_2", caravane7);
+		EmplacementCamping em3 = new EmplacementCamping("Antibes_3", caravane8);
+		EmplacementCamping em4 = new EmplacementCamping("Antibes_4", caravane9);
+		
+		ArrayList<EmplacementCamping> alec = new ArrayList<EmplacementCamping>();
+		alec.add(em1);alec.add(em2);alec.add(em3);alec.add(em4);
+		ca.setEmplacements(alec);
+		
+		Services.campingService.createCamping(ca);
 		Services.campingService.createCamping(new Camping("Chartres", "chartres@gmail.com", "0237341425", 1000));
 		Services.campingService.createCamping(new Camping("Paris", "paris@gmail.com", "0681623914", 500));
 		Services.campingService.createCamping(new Camping("Nice", "nice@gmail.com", "0985647526", 100));
 		
+
+	}
+	
+	public Caravane createCaravane(int i){
+		Caravane caravaneX = new Caravane("00"+i+"VM28", "Mine!", gabarits.get(2), null);
+		Client cX = new Client("nom_"+i, "prenom_"+i, "adresse_"+i, "0237341425","mail", "Coucou!", caravaneX);
+		cX.addHivernage(new Hivernage(HivernageStatus.PAYE, i));
+		caravaneX.setClient(cX);
+		Services.clientService.create(cX);
 		
+		return caravaneX;
 	}
 	
 	public ArrayList<Client> getClients() {

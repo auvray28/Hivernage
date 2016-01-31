@@ -21,10 +21,14 @@ public class EmplacementCamping extends Entity<EmplacementCamping>{
 	@ManyToOne(colName = "CAMPING_ID")
 	private Camping camping;
 	
+	//NICO il faut un @ ici
+	private Caravane caravane;
+	
 	public EmplacementCamping() {}
 	
 	public EmplacementCamping(String emplacement, Caravane caravane) {
 		this.emplacement = emplacement;
+		this.caravane    = caravane;
 	}
 	
 	public EmplacementCamping(String jsonObject) {
@@ -62,6 +66,13 @@ public class EmplacementCamping extends Entity<EmplacementCamping>{
 	public void setCamping(Camping camping) {
 		this.camping = camping;
 	}
-	
+
+	public Caravane getCaravane() {
+		return caravane;
+	}
+
+	public void setCaravane(Caravane caravane) {
+		this.caravane = caravane;
+	}
 	
 }

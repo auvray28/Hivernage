@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.adapters.ListeCaravanesAdapter;
 
 public class CampingInfoFragment extends Fragment {
 
@@ -76,7 +77,9 @@ public class CampingInfoFragment extends Fragment {
 		camping_info.setText("Prix : " + camping2.getPrix());
 		
 		
-//		caravanes_liste.setAdapter(adapter);
+
+		ListeCaravanesAdapter lca = new ListeCaravanesAdapter(getActivity(), camping.getCaravanesInsideCamping());
+		caravanes_liste.setAdapter(lca);
 		
 	}
 

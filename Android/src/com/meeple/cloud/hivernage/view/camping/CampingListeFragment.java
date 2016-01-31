@@ -26,8 +26,6 @@ import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.service.Services;
 import com.meeple.cloud.hivernage.view.adapters.ListeCampingAdapter;
-import com.meeple.cloud.hivernage.view.adapters.ListeClientAdapter;
-import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.OrderClientBy;
 
 public class CampingListeFragment extends Fragment implements TextWatcher {
 
