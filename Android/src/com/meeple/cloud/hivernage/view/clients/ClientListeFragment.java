@@ -25,7 +25,7 @@ import android.widget.Spinner;
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.clients.adapter.ListeClientAdapter;
+import com.meeple.cloud.hivernage.view.adapters.ListeClientAdapter;
 
 
 /**

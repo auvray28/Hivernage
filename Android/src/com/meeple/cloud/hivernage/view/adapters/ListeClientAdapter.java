@@ -1,4 +1,4 @@
-package com.meeple.cloud.hivernage.view.clients.adapter;
+package com.meeple.cloud.hivernage.view.adapters;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -25,9 +25,9 @@ import android.widget.Spinner;
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.camping.adapters.ListeCampingAdapter;
+import com.meeple.cloud.hivernage.view.adapters.ListeCampingAdapter;
+import com.meeple.cloud.hivernage.view.adapters.ListeClientAdapter;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.OrderClientBy;
-import com.meeple.cloud.hivernage.view.clients.adapter.ListeClientAdapter;
 
 public class CampingListeFragment extends Fragment implements TextWatcher {
 

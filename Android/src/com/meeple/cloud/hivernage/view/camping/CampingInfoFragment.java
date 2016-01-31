@@ -76,6 +76,8 @@ public class CampingInfoFragment extends Fragment {
 		camping_info.setText("Prix : " + camping2.getPrix());
 		
 		
+//		caravanes_liste.setAdapter(adapter);
+		
 	}
 
 
