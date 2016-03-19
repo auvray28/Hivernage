@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.view.agenda.AgendaListFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment.CampingListInterface;
@@ -46,6 +47,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	private HangarMainFragment   hangarFragment;
 	private ClientListeFragment  clientFragment;
 	private CampingListeFragment campingFragment;
+	private AgendaListFragment agendaFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
                 return;
             }
             
-            clickForHangarView();
+            clickForAgendaView();
             
 //
 //            // Create an instance of ExampleFragment
@@ -93,7 +95,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		btn_Lavage   = findViewById(R.id.menu_lavage);
 		btn_Camping  = findViewById(R.id.menu_camping);
 		btn_Agenda   = findViewById(R.id.menu_agenda);
-		btn_Agenda.setEnabled(false);
+//		btn_Agenda.setEnabled(false);
 		btn_Waiting  = findViewById(R.id.menu_waiting);
 		
 		// En mode 2 panneaux
@@ -112,6 +114,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		hangarFragment = new HangarMainFragment();
 		clientFragment = new ClientListeFragment();
 		campingFragment = new CampingListeFragment();
+		agendaFragment = new AgendaListFragment();
 		
 		// Init Bouton Event
 		
@@ -147,6 +150,20 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 			@Override
 			public void onClick(View arg0) {
 				clickForAgendaView();
+//				Calendar beginTime = Calendar.getInstance();
+//				beginTime.set(2016, Calendar.JULY, 2, 15, 30);
+//				Calendar endTime = Calendar.getInstance();
+//				endTime.set(2016, Calendar.JULY, 3, 15, 30);
+//				Intent intent = new Intent(Intent.ACTION_INSERT)
+//				        .setData(Events.CONTENT_URI)
+//				        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+//				        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+//				        .putExtra(Events.TITLE, "Yoga")
+//				        .putExtra(Events.DESCRIPTION, "Group class")
+//				        .putExtra(Events.EVENT_LOCATION, "The gym")
+//				        .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY);
+////				        .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
+//				startActivity(intent);
 			}
 		});
 		
@@ -184,7 +201,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	
 	private void clickForAgendaView() {
 		setSelectedBtn(btn_Agenda);
-		switchPanelMode(PanelMode.SIMPLE);
+		switchPanelMode(PanelMode.DOUBLE);
 		onArticleSelected(MenuBarBtn.AGENDA);
 	}
 	
@@ -209,7 +226,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 			case HANGAR  : newFrag = hangarFragment; break;
 			case LAVAGE  :
 			case CAMPING : newFrag = campingFragment;break;
-			case AGENDA  :
+			case AGENDA  : newFrag = agendaFragment;break;
 			case WAITING :
 			default :  newFrag = clientFragment; break; 
 			

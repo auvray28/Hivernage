@@ -2,8 +2,8 @@
 <resources>
 
     <string name="app_name">Hivernage</string>
-    <string name="recherche">Recherche Client</string>
-    <string name="order_by">Trier Client par :</string>
+    <string name="recherche_client">Recherche Client</string>
+    <string name="order_client_by">Trier Client par :</string>
     <string name="fiche_client">"Client : "</string>
     <string name="infos_perso">Informations client :</string>
     <string name="infos_caravane">"Informations caravane : "</string>
@@ -25,6 +25,10 @@
     <string name="observation_caravane">Observations :</string>
     
     <string name="liste_caravanes">Liste Caravanes :</string>
+    
+    <string name="order_by">Trier par :</string>
+    
+    <string name="rechercher">Rechercher</string>
     
     
 </resources>
