@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.meeple.cloud.hivernage.model.Gabarit;
 
 public class CaravaneView extends View implements  OnLongClickListener, OnClickListener{
 	
-	private static final String TAG = "hivernage caravane";
+	private static final String TAG = "hivernage";
 	
 	private final static int CARAVANE_VIEW_WIDTH  = 100; 
 	private final static int CARAVANE_VIEW_HEIGHT = 70;
@@ -40,7 +41,6 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 	private LayoutParams lp;
 	
 	private Caravane caravane_object;
-	//TODO faut ajouter une caravane => gabarit, orientation...
 	
 	public CaravaneView(Context context) {
 		super(context);
@@ -58,13 +58,13 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 		initView();
 	}
 
-	public CaravaneView(Context context, int color) {
-		super(context);
-		
-		this.caravaneColor = color;
-		
-		initView();
-	}
+//	public CaravaneView(Context context, int color) {
+//		super(context);
+//		
+//		this.caravaneColor = color;
+//		
+//		initView();
+//	}
 	
 	public CaravaneView(Context context, Caravane caravane) {
 		super(context);
@@ -88,23 +88,22 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 				default : break;
 				
 			}
-			
 		}
 		
 		initView();
 	}
 	
-	public CaravaneView(Context context, int color, int left, int top) {
-		super(context);
-		
-		this.caravaneColor = color;
-		
-		this.position_X = left;
-		this.position_Y = top;
-		this.angle      = 0;
-		
-		initView();
-	}
+//	public CaravaneView(Context context, int color, int left, int top) {
+//		super(context);
+//		
+//		this.caravaneColor = color;
+//		
+//		this.position_X = left;
+//		this.position_Y = top;
+//		this.angle      = 0;
+//		
+//		initView();
+//	}
 	
 	private void initView() {
 		setOnClickListener(this);
@@ -131,8 +130,8 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
     			System.err.println(e);
     		}
     	}
-        Log.d("hivernage", canvas.getWidth()+" "+canvas.getHeight());
-    	
+        Log.d(TAG, canvas.getWidth()+" "+canvas.getHeight());
+        
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(3);
         // le gros rectangle
@@ -146,6 +145,7 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
         else { //droite
         	canvas.drawRect(right, CARAVANE_VIEW_HEIGHT/2 -3, right+8, CARAVANE_VIEW_HEIGHT/2 + 13, paint);
         }
+        
         
         // on rajoute un peut de couleur dans ce monde de brut
         paint.setStrokeWidth(0);
@@ -164,12 +164,37 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
         else { //droite
         	canvas.drawRect( right, CARAVANE_VIEW_HEIGHT/2, right +5, CARAVANE_VIEW_HEIGHT/2 + 10, paint );
         }
+        
+        // La plaque d'immatriculation + nom du client au milieu
+        //
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(18);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        
+        if (getAngle() >= 90 && getAngle() < 270) {
+        	canvas.rotate(180, 0, 0);
+        	canvas.drawText( caravane_object.getPlaque(), -(right-5), -(top + 10), paint);
+        	
+            paint.setTextSize(15);
+        	canvas.drawText( caravane_object.getClient().getNom(), -(right-10), - (bottom - 20), paint);
+        	canvas.drawText( caravane_object.getClient().getPrenom(), -(right-10), -(bottom - 35), paint);
+        }
+        else {
+        	canvas.drawText( caravane_object.getPlaque(), left+5, bottom - 10, paint);
+        	
+            paint.setTextSize(15);
+        	canvas.drawText( caravane_object.getClient().getNom(), left+10, top + 20, paint);
+        	canvas.drawText( caravane_object.getClient().getPrenom(), left+10, top + 35, paint);
+        }
+        
     }
 	
 
 	@Override
 	public void onClick(View v) {
 		setAngle(getAngle()+30);
+		Log.d(TAG, "Angle : " + getAngle());
+		invalidate();
 	}
 	
 
@@ -279,14 +304,14 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
     }
     
     
-    public static void addCaravane(ViewGroup v, int backgroundColor) {
-    	CaravaneView cv = new CaravaneView(v.getContext(), backgroundColor);
-    	v.addView(cv);
-    }
+//    public static void addCaravane(ViewGroup v, int backgroundColor) {
+//    	CaravaneView cv = new CaravaneView(v.getContext(), backgroundColor);
+//    	v.addView(cv);
+//    }
     
-    public static void addCaravaneAt(ViewGroup v, int backgroundColor, int left, int top) {
-    	CaravaneView c = new CaravaneView(v.getContext(), backgroundColor, left, top);
-    	v.addView(c);
-    }
+//    public static void addCaravaneAt(ViewGroup v, int backgroundColor, int left, int top) {
+//    	CaravaneView c = new CaravaneView(v.getContext(), backgroundColor, left, top);
+//    	v.addView(c);
+//    }
 
 }
