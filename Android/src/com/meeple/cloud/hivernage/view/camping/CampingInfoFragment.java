@@ -5,20 +5,26 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Camping;
+import com.meeple.cloud.hivernage.model.EmplacementCamping;
 import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.adapters.ListeCaravanesAdapter;
+import com.meeple.cloud.hivernage.view.adapters.ListeEmplacementCampingAdapter;
 
 public class CampingInfoFragment extends Fragment {
 
 	private Camping camping;
 	
 	private TextView camping_name, camping_phone, camping_mail, camping_info;
+	private TextView emplacement_str, emplacement_client_name, emplacement_entrée, emplacement_sortie;
 	private ListView caravanes_liste;
+	
+	private ListeEmplacementCampingAdapter lca;
 	
 	public static CampingInfoFragment newInstance(int campingId) {
 		
@@ -59,12 +65,22 @@ public class CampingInfoFragment extends Fragment {
     }
 
 	private void initView(View v) {
-		camping_name = (TextView) v.findViewById(R.id.camping_info_name);
+		camping_name  = (TextView) v.findViewById(R.id.camping_info_name);
 		camping_phone = (TextView) v.findViewById(R.id.camping_phone);
-		camping_mail = (TextView) v.findViewById(R.id.camping_mail);
-		camping_info = (TextView) v.findViewById(R.id.camping_details);
+		camping_mail  = (TextView) v.findViewById(R.id.camping_mail);
+		camping_info  = (TextView) v.findViewById(R.id.camping_details);
 		
 		caravanes_liste = (ListView) v.findViewById(R.id.camping_liste_caravanes_inside);
+		
+		emplacement_str         = (TextView) v.findViewById(R.id.camping_liste_emplacement_str);
+		emplacement_client_name = (TextView) v.findViewById(R.id.camping_liste_emplacement_client);
+		emplacement_entrée      = (TextView) v.findViewById(R.id.camping_liste_emplacement_entree);
+		emplacement_sortie      = (TextView) v.findViewById(R.id.camping_liste_emplacement_sortie);
+		
+		emplacement_str.setVisibility(View.INVISIBLE);
+		emplacement_client_name.setVisibility(View.INVISIBLE);
+		emplacement_entrée.setVisibility(View.INVISIBLE);
+		emplacement_sortie.setVisibility(View.INVISIBLE);
 		
 	} 
 	
@@ -78,9 +94,29 @@ public class CampingInfoFragment extends Fragment {
 		
 		
 
-		ListeCaravanesAdapter lca = new ListeCaravanesAdapter(getActivity(), camping.getCaravanesInsideCamping());
+		lca = new ListeEmplacementCampingAdapter(getActivity(), camping.getEmplacements());
 		caravanes_liste.setAdapter(lca);
 		
+		caravanes_liste.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				fillEmplacementInformation(lca.getItem(position));
+			}
+		});
+		
+	}
+
+	public void fillEmplacementInformation(EmplacementCamping item) {
+		emplacement_str.setVisibility(View.VISIBLE);
+		emplacement_client_name.setVisibility(View.VISIBLE);
+		emplacement_entrée.setVisibility(View.VISIBLE);
+		emplacement_sortie.setVisibility(View.VISIBLE);
+		
+		
+		emplacement_str.setText(item.getEmplacement());
+		emplacement_client_name.setText(item.getCaravane().getClient().getFullName());
+		emplacement_entrée.setText(item.getEntree().toString());
+		emplacement_sortie.setText(item.getSortie().toString());
 	}
 
 

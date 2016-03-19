@@ -93,6 +93,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		btn_Lavage   = findViewById(R.id.menu_lavage);
 		btn_Camping  = findViewById(R.id.menu_camping);
 		btn_Agenda   = findViewById(R.id.menu_agenda);
+		btn_Agenda.setEnabled(false);
 		btn_Waiting  = findViewById(R.id.menu_waiting);
 		
 		// En mode 2 panneaux

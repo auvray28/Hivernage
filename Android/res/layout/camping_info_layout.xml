@@ -23,13 +23,13 @@
             android:layout_height="wrap_content"
             android:text="Camping Paradis"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
     </LinearLayout>
-	<LinearLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-        
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
@@ -44,13 +44,13 @@
             android:layout_height="wrap_content"
             android:text="Numero de tel, adresse, observation (hidden) (on toggle)"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-        
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-        
+
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
@@ -65,13 +65,13 @@
             android:layout_height="wrap_content"
             android:text="Numero de tel, adresse, observation (hidden) (on toggle)"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-        
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-        
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -86,7 +86,6 @@
             android:layout_height="wrap_content"
             android:text="Numero de tel, adresse, observation (hidden) (on toggle)"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-        
     </LinearLayout>
 
     <LinearLayout
@@ -105,13 +104,59 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold" />
 
-        <ListView
-            android:id="@+id/camping_liste_caravanes_inside"
+        <LinearLayout
+            android:id="@+id/f"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7" >
-        </ListView>
+            android:layout_weight="7"
+            android:orientation="horizontal"
+            android:weightSum="3" >
 
+            <ListView
+                android:id="@+id/camping_liste_caravanes_inside"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+            </ListView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/camping_liste_emplacement_str"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/camping_liste_emplacement_client"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/camping_liste_emplacement_entree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/camping_liste_emplacement_sortie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

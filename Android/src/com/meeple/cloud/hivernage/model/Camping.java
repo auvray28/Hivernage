@@ -39,16 +39,6 @@ public class Camping extends Entity<Camping>{
 		//TODO
 	}
 	
-	public ArrayList<Caravane> getCaravanesInsideCamping(){
-		ArrayList<Caravane> alc = new ArrayList<Caravane>();
-		
-		for(EmplacementCamping ec : getEmplacements()) {
-			alc.add(ec.getCaravane());
-		}
-		
-		return alc;
-	}
-	
 
 	public int getCampingId() {
 		return CampingId;

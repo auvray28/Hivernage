@@ -1,6 +1,7 @@
 package com.meeple.cloud.hivernage.db;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import com.meeple.cloud.hivernage.model.Camping;
@@ -145,10 +146,13 @@ public class DBMock {
 		
 		Camping ca = new Camping("Antibes", "antibes@gmail.com", "0102030405", 2000);
 		
-		EmplacementCamping em1 = new EmplacementCamping("Antibes_1", caravane6);
-		EmplacementCamping em2 = new EmplacementCamping("Antibes_2", caravane7);
-		EmplacementCamping em3 = new EmplacementCamping("Antibes_3", caravane8);
-		EmplacementCamping em4 = new EmplacementCamping("Antibes_4", caravane9);
+		Date d = new Date(2016,1,31);
+		Date d2 = new Date(2016,2,24);
+		
+		EmplacementCamping em1 = new EmplacementCamping("Antibes_1", caravane6);em1.setEntree(d); em1.setSortie(d2);
+		EmplacementCamping em2 = new EmplacementCamping("Antibes_2", caravane7);em2.setEntree(d); em2.setSortie(d2);
+		EmplacementCamping em3 = new EmplacementCamping("Antibes_3", caravane8);em3.setEntree(d); em3.setSortie(d2);
+		EmplacementCamping em4 = new EmplacementCamping("Antibes_4", caravane9);em4.setEntree(d); em4.setSortie(d2);
 		
 		ArrayList<EmplacementCamping> alec = new ArrayList<EmplacementCamping>();
 		alec.add(em1);alec.add(em2);alec.add(em3);alec.add(em4);
