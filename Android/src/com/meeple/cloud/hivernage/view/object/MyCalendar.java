@@ -9,7 +9,7 @@ public class MyCalendar implements Comparable<MyCalendar>{
 	private String title, description;
 	private Date startDate, endDate;
 	
-	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+	public static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
 	
 	public MyCalendar() {}
 
@@ -59,11 +59,11 @@ public class MyCalendar implements Comparable<MyCalendar>{
 	}
 
 	public String getStrStartDate() {
-		return formatter.format(startDate);
+		return MyCalendar.formatter.format(startDate);
 	}
 
 	public String getStrEndDate() {
-		return formatter.format(endDate);
+		return MyCalendar.formatter.format(endDate);
 	}
 	
 	public boolean isSameDay() {

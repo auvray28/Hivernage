@@ -68,7 +68,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
                 return;
             }
             
-            clickForClientView();
+            clickForCampingView();
             
 //
 //            // Create an instance of ExampleFragment

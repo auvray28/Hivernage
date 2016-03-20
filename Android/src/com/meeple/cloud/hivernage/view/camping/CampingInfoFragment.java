@@ -15,6 +15,7 @@ import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.model.EmplacementCamping;
 import com.meeple.cloud.hivernage.service.Services;
 import com.meeple.cloud.hivernage.view.adapters.ListeEmplacementCampingAdapter;
+import com.meeple.cloud.hivernage.view.object.MyCalendar;
 
 public class CampingInfoFragment extends Fragment {
 
@@ -115,8 +116,8 @@ public class CampingInfoFragment extends Fragment {
 		
 		emplacement_str.setText(item.getEmplacement());
 		emplacement_client_name.setText(item.getCaravane().getClient().getFullName());
-		emplacement_entrée.setText(item.getEntree().toString());
-		emplacement_sortie.setText(item.getSortie().toString());
+		emplacement_entrée.setText(MyCalendar.formatter.format(item.getEntree()));
+		emplacement_sortie.setText(MyCalendar.formatter.format(item.getSortie()));
 	}
 
 

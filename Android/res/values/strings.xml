@@ -3,38 +3,46 @@
 
     <string name="app_name">Hivernage</string>
     <string name="recherche_client">Recherche Client</string>
-    <string name="order_client_by">Trier Client par :</string>
+    <string name="order_client_by">Trier Client par : </string>
     <string name="fiche_client">"Fiche Client : "</string>
-    <string name="infos_perso">Informations client :</string>
+    <string name="infos_perso">Informations client : </string>
     <string name="infos_caravane">"Informations caravane : "</string>
-    <string name="fiche_camping">Fiche Camping :</string>
-    <string name="details_camping">Details camping :</string>
+    <string name="fiche_camping">Fiche Camping : </string>
+    <string name="details_camping">Details camping : </string>
     
-    <string name="adresses">- Adresses :</string>
-    <string name="telephone">- Tel :</string>
-    <string name="mail">- Mail :</string>
-    <string name="observation">- Observations :</string>
-    <string name="compte">- Compte :</string>
+    <string name="adresses">- Adresses : </string>
+    <string name="telephone">- Tel : </string>
+    <string name="mail">- Mail : </string>
+    <string name="observation">- Observations : </string>
+    <string name="compte">- Compte : </string>
     
-    <string name="immatriculation">- Immatriculation :</string>
-    <string name="gabarit">- Gabarit :</string>
-    <string name="hangar">- Hangar :</string>
-    <string name="statut">- Statut :</string>
-    <string name="camping">- Camping :</string>
+    <string name="immatriculation">- Immatriculation  :</string>
+    <string name="gabarit">- Gabarit : </string>
+    <string name="hangar">- Hangar : </string>
+    <string name="statut">- Statut : </string>
+    <string name="camping">- Camping : </string>
     
-    <string name="observation_caravane">- Observations :</string>
+    <string name="observation_caravane">- Observations : </string>
     
-    <string name="liste_caravanes">Liste Caravanes :</string>
+    <string name="liste_caravanes">Liste Caravanes : </string>
     
-    <string name="order_by">Trier par :</string>
+    <string name="order_by">Trier par : </string>
     
     <string name="rechercher">Rechercher</string>
     
-    <string name="debut">Deb :</string>
+    <string name="debut">Deb : </string>
     
-    <string name="end">Fin :</string>
+    <string name="end">Fin : </string>
     
-    <string name="date">Date :</string>
+    <string name="date">Date : </string>
+    
+    <string name="empl">"Empl : "</string>
+    
+    <string name="client">"Client : "</string>
+    
+    <string name="entree">"Entrée : "</string>
+    
+    <string name="sortie">"Sortie : "</string>
     
     
 </resources>
