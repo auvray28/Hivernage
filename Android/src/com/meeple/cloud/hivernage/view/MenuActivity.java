@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import com.meeple.cloud.hivernage.view.camping.CampingListeFragment.CampingListI
 import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInterface;
+import com.meeple.cloud.hivernage.view.clients.NewClientFragment;
 import com.meeple.cloud.hivernage.view.hangar.HangarMainFragment;
 
 public class MenuActivity extends FragmentActivity implements ClientListInterface, CampingListInterface{
@@ -77,6 +79,8 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
             }
             
             clickForClientView();
+            
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             
 //
 //            // Create an instance of ExampleFragment
@@ -363,6 +367,26 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		}
 	}
 	
+	@Override
+	public void displayNewClientView() {
+		Fragment newFrag = NewClientFragment.newInstance();
+		
+		if (two_panel != null) {
+			
+	        // Create fragment and give it an argument for the selected article
+	        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+	        // Replace whatever is in the fragment_container view with this fragment,
+	        // and add the transaction to the back stack so the user can navigate back
+	        transaction.replace(R.id.big_frame, newFrag);
+//	        transaction.addToBackStack(null);
+
+	        // Commit the transaction
+	        transaction.commit();
+			
+		}
+	}
+	
 	/**********************************************/
 	
 	/*************  CampingListInterface  **********/
@@ -394,6 +418,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 			
 		}
 	}
+
 	
 	/**********************************************/
 	

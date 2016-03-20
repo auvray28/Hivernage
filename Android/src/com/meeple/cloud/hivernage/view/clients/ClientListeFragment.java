@@ -12,12 +12,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -60,6 +62,8 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 	
 	public interface ClientListInterface {
 		public void displayClientInfo(int clientId);
+		
+		public void displayNewClientView();
 	}
 	
 	
@@ -68,6 +72,7 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 	private ListeClientAdapter listeClientAdapter;
 	
 	private Spinner orderBy;
+	private Button btn_addClient;
 	
 	private ClientListInterface mCallback;
 	
@@ -141,6 +146,16 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 				mCallback.displayClientInfo( ((Client)parent.getItemAtPosition(pos)).getClientId());
 			}
 		});
+    	
+    	btn_addClient = (Button) v.findViewById(R.id.btn_addclient);
+    	btn_addClient.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mCallback.displayNewClientView();
+			}
+		});
+    	
+    	
     }
 
     @Override

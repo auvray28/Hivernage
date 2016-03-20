@@ -44,5 +44,21 @@
     
     <string name="sortie">"Sortie : "</string>
     
+    <string name="ajouter_client">Ajouter un client</string>
+    
+    <string name="nom">"Nom : "</string>
+    
+    <string name="prenom">"Prenom : "</string>
+    
+    <string name="caravane">"Caravane : "</string>
+    
+    <string name="creer_client">Créer client</string>
+    
+    <string name="acompte">"- Acompte : "</string>
+    
+    <string name="fillAll">Remplissez tous les champs ! \n(Les Observations peuvent rester vide)</string>
+    
+    <string name="confirmNewClient">le client a bien été créé</string>
+    
     
 </resources>
