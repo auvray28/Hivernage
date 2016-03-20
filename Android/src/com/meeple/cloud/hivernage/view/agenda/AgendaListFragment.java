@@ -1,9 +1,7 @@
 package com.meeple.cloud.hivernage.view.agenda;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
 
 import android.database.Cursor;
@@ -28,18 +26,7 @@ import com.meeple.cloud.hivernage.view.object.MyCalendar;
 public class AgendaListFragment extends Fragment {
 
 	public enum OrderCalendarsBy {
-		TODAY(null), SEVEN_DAYS(null), MONTH(null), YEAR(null);
-		
-		private Comparator<Calendar> comparator;
-		
-		private OrderCalendarsBy(Comparator<Calendar> comparator){
-			this.comparator = comparator;
-		}
-		
-		public Comparator<Calendar> getComparator() {
-			return this.comparator;
-		}
-		
+		TODAY(), SEVEN_DAYS(), MONTH(), YEAR();
 	}
 	
 	private Spinner spinner_agenda;
@@ -85,82 +72,6 @@ public class AgendaListFragment extends Fragment {
 		list_adapter = new  ListeAgendaAdapter(getActivity(), getCalendarEvent(OrderCalendarsBy.TODAY));
 		list_agenda.setAdapter(list_adapter);
 	}
-	
-	
-//	private String[] getCalendarEvent(OrderCalendarsBy order) {
-//		// Crée une projection pour limiter le curseur résultat 
-//		// aux colonnes désirées
-//		String [] projection = {
-//			CalendarContract.Events.TITLE,
-//			CalendarContract.Events.DTSTART,
-//			CalendarContract.Events.DTEND,
-//			CalendarContract.Events.DESCRIPTION,
-//		};
-//		
-//		Calendar range_start = Calendar.getInstance(); // Today 
-//		Calendar range_end   = Calendar.getInstance();
-//		String   selection   = null;
-//		
-//		
-//		switch(order) {
-//		case MONTH:
-//	        range_end.add(Calendar.DAY_OF_YEAR, 31); //Note that months start from 0 (January)
-//			break;
-//		case SEVEN_DAYS:
-//	        range_end.add(Calendar.DAY_OF_YEAR, 7); //Note that months start from 0 (January)
-//			break;
-//		case TODAY:
-//			range_end.add(Calendar.DAY_OF_YEAR, 1); //Note that months start from 0 (January)
-//			break;
-//		default:
-//			range_end.add(Calendar.DAY_OF_YEAR, 365);
-//			break;
-//		}
-//		selection = "((dtstart >= "+range_start.getTimeInMillis()+") AND (dtend <= "+range_end.getTimeInMillis()+"))";
-//		
-//		// Récupére un curseur sur le fournisseur d'événements
-//		//
-//		Cursor cursor = this.getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, projection , selection, null, null);
-//		
-//		// Récupére les indices des colonnes
-//		//
-//		int titleIdx   = cursor.getColumnIndexOrThrow(projection[0]);
-//		int dtStartIdx = cursor.getColumnIndexOrThrow(projection[1]);
-//		int dtEndIdx   = cursor.getColumnIndexOrThrow(projection[2]);
-//		int dtDescIdx  = cursor.getColumnIndexOrThrow(projection[3]);
-//		
-//		
-//		// Créer un tableau pour stocker le résultat
-//		//
-//		ArrayList<String> alresult = new ArrayList<>();
-//		
-//		// Parcours le cuseur résultat
-//		while(cursor.moveToNext()) {
-//			
-//			String title = cursor.getString(titleIdx);
-//			String dateS = convertIntStringToDate(cursor.getString(dtStartIdx));
-//			String dateE = convertIntStringToDate(cursor.getString(dtEndIdx));
-//			String desc  = cursor.getString(dtDescIdx);
-//			
-//			if (dateS != null && dateE != null) {
-//				alresult.add(title + " \n(" + dateS+ " => " + dateE + ")\n" + desc);
-//			}
-//			else if(dateS != null){
-//				alresult.add(title + " \n( Start: " + dateS + ")\n" + desc);
-//			}
-//			else if(dateE != null){
-//				alresult.add(title + " \n( End: " +dateE + ")\n" + desc);
-//			}
-//			else {
-//				alresult.add(title + "\n" + desc);
-//			}
-//		}
-//		
-//		//ferme le cursor
-//		cursor.close();
-//		
-//		return alresult.toArray(new String[]{});
-//	}
 	
 	private ArrayList<MyCalendar> getCalendarEvent(OrderCalendarsBy order) {
 		// Crée une projection pour limiter le curseur résultat 
@@ -245,55 +156,4 @@ public class AgendaListFragment extends Fragment {
 		
 		return alresult;
 	}
-	
-	private String convertIntStringToDate(String str_value){
-		
-		if(str_value != null) {
-			long value = Long.parseLong(str_value);
-		
-			return getDateStr(value, "dd/MM/yyyy");
-		}
-		else {
-			return null;
-		}
-	}
-	
-	/**
-	 * Return date in specified format.
-	 * @param milliSeconds Date in milliseconds
-	 * @param dateFormat Date format 
-	 * @return String representing date in specified format
-	 */
-	public String getDateStr(long milliSeconds, String dateFormat)
-	{
-	    // Create a DateFormatter object for displaying date in specified format.
-	    SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
-
-	    // Create a calendar object that will convert the date and time value in milliseconds to date. 
-	     Calendar calendar = Calendar.getInstance();
-	     calendar.setTimeInMillis(milliSeconds);
-	     return formatter.format(calendar.getTime());
-	}
-	
-	public Calendar getCalendar(String str_value)
-	{
-		if(str_value != null) {
-			long value = Long.parseLong(str_value);
-		
-			return getCalendar(value);
-		}
-		else {
-			return null;
-		}
-	}
-	
-	public Calendar getCalendar(long milliSeconds)
-	{
-	    // Create a calendar object that will convert the date and time value in milliseconds to date. 
-	     Calendar calendar = Calendar.getInstance();
-	     calendar.setTimeInMillis(milliSeconds);
-	     return calendar;
-	}
-
-	
 }
