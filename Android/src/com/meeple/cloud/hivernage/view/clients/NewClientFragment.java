@@ -27,7 +27,7 @@ import com.meeple.cloud.hivernage.service.Services;
 public class NewClientFragment extends Fragment {
 	
 	// Components for New Client
-	private EditText edt_nom, edt_prenom, edt_mail, edt_tel, edt_acompte, edt_observation;
+	private EditText edt_nom, edt_prenom, edt_adresse, edt_mail, edt_tel, edt_acompte, edt_observation;
 	
 	// Components for New Caravane
 	private EditText edt_immat, edt_carvaneObs;
@@ -61,7 +61,8 @@ public class NewClientFragment extends Fragment {
 	private void initView(View v) {
 		edt_nom         = (EditText) v.findViewById(R.id.edt_nom);
 		edt_prenom      = (EditText) v.findViewById(R.id.edt_prenom);
-		edt_mail        = (EditText) v.findViewById(R.id.edt_mail);;
+		edt_adresse     = (EditText) v.findViewById(R.id.edt_adresse);
+		edt_mail        = (EditText) v.findViewById(R.id.edt_mail);
 		edt_tel         = (EditText) v.findViewById(R.id.edt_tel);
 		edt_acompte     = (EditText) v.findViewById(R.id.edt_acompte);
 		edt_observation = (EditText) v.findViewById(R.id.edt_observation);
@@ -98,8 +99,17 @@ public class NewClientFragment extends Fragment {
 		ArrayList<String> als = new ArrayList<>();
 		
 		for(Hangar hang : Services.hangarService.getAllHangars()) {
-			als.add(hang.getNom());
+			// Ouais je sais le test est un poil moche mais je sais que ça marchera
+			// sans pb, tant que Waiting restera Waiting
+			if(hang.getNom().toLowerCase().equals("Waiting".toLowerCase())) {
+				als.add(0, hang.getNom());
+			}
+			else {
+				als.add(hang.getNom());
+			}
 		}
+		
+		
 		return als.toArray(new String[]{});
 	}
 	
@@ -114,11 +124,12 @@ public class NewClientFragment extends Fragment {
 	
 	
 	public void createClient() {
-		String nom    = edt_nom.getText().toString();
-		String prenom = edt_prenom.getText().toString();
-		String mail   = edt_mail.getText().toString();
-		String tel    = edt_tel.getText().toString();
-		String obs    = edt_observation.getText().toString();
+		String nom     = edt_nom.getText().toString();
+		String prenom  = edt_prenom.getText().toString();
+		String adresse = edt_adresse.getText().toString();
+		String mail    = edt_mail.getText().toString();
+		String tel     = edt_tel.getText().toString();
+		String obs     = edt_observation.getText().toString();
 		
 		int acompte   = Integer.parseInt(edt_acompte.getText().toString());
 		HivernageStatus hStatus = HivernageStatus.PAYE;
@@ -133,7 +144,7 @@ public class NewClientFragment extends Fragment {
 		Gabarit gab  = Services.gabaritService.findGabaritByName(spinner_gabarit.getSelectedItem().toString());
 		
 		Caravane caravane = new Caravane(immat, obsC, gab, null);
-		Client client = new Client(nom, prenom, "adresse", tel, mail, obs, caravane);
+		Client client = new Client(nom, prenom, adresse, tel, mail, obs, caravane);
 		client.addHivernage(new Hivernage(hStatus, acompte));
 		caravane.setClient(client);
 		Services.clientService.create(client);
@@ -145,6 +156,7 @@ public class NewClientFragment extends Fragment {
 	public boolean isAllEditFill() {
 		if( (edt_nom.getText().toString().length() == 0)  
 			|| (edt_prenom.getText().toString().length() == 0)
+			|| (edt_adresse.getText().toString().length() == 0)
 			|| (edt_mail.getText().toString().length() == 0)
 			|| (edt_tel.getText().toString().length() == 0)
 			|| (edt_acompte.getText().toString().length() == 0)
@@ -158,6 +170,7 @@ public class NewClientFragment extends Fragment {
 	private void emptyAllEdt(){
 		edt_nom.getText().clear();
 		edt_prenom.getText().clear();
+		edt_adresse.getText().clear();
 		edt_mail.getText().clear();
 		edt_tel.getText().clear();
 		edt_acompte.getText().clear();
