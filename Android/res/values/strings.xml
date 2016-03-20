@@ -4,25 +4,25 @@
     <string name="app_name">Hivernage</string>
     <string name="recherche_client">Recherche Client</string>
     <string name="order_client_by">Trier Client par :</string>
-    <string name="fiche_client">"Client : "</string>
+    <string name="fiche_client">"Fiche Client : "</string>
     <string name="infos_perso">Informations client :</string>
     <string name="infos_caravane">"Informations caravane : "</string>
     <string name="fiche_camping">Fiche Camping :</string>
     <string name="details_camping">Details camping :</string>
     
-    <string name="adresses">Adresses :</string>
-    <string name="telephone">tel :</string>
-    <string name="mail">mail :</string>
-    <string name="observation">Observations :</string>
-    <string name="compte">Compte :</string>
+    <string name="adresses">- Adresses :</string>
+    <string name="telephone">- Tel :</string>
+    <string name="mail">- Mail :</string>
+    <string name="observation">- Observations :</string>
+    <string name="compte">- Compte :</string>
     
-    <string name="immatriculation">Immatriculation :</string>
-    <string name="gabarit">Gabarit :</string>
-    <string name="hangar">Hangar :</string>
-    <string name="statut">Statut :</string>
-    <string name="camping">Camping :</string>
+    <string name="immatriculation">- Immatriculation :</string>
+    <string name="gabarit">- Gabarit :</string>
+    <string name="hangar">- Hangar :</string>
+    <string name="statut">- Statut :</string>
+    <string name="camping">- Camping :</string>
     
-    <string name="observation_caravane">Observations :</string>
+    <string name="observation_caravane">- Observations :</string>
     
     <string name="liste_caravanes">Liste Caravanes :</string>
     
