@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.meeple.cloud.hivernage.R;
@@ -34,9 +35,16 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		SIMPLE, DOUBLE;
 	}
 	
+	private int defaultMenuBarBtn = Color.rgb(34, 34, 34);
+	private int defaultMenuBarTxt = Color.rgb(244, 244, 244);
+	
+	private int selectedMenuBarBtn = Color.rgb(244, 244, 244);
+	private int selectedMenuBarTxt = Color.rgb(34, 34, 34);
+	
 	boolean doubleBackToExitPressedOnce = false;
 	
 	private View btn_Client, btn_Hangar, btn_Lavage, btn_Camping, btn_Agenda, btn_Waiting;
+	private TextView txt_Client, txt_Hangar, txt_Lavage, txt_Camping, txt_Agenda, txt_Waiting;
 	
 	private LinearLayout one_panel, two_panel;
 	private FrameLayout little_frame, big_frame, only_frame;
@@ -68,7 +76,7 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
                 return;
             }
             
-            clickForCampingView();
+            clickForClientView();
             
 //
 //            // Create an instance of ExampleFragment
@@ -95,8 +103,14 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		btn_Lavage   = findViewById(R.id.menu_lavage);
 		btn_Camping  = findViewById(R.id.menu_camping);
 		btn_Agenda   = findViewById(R.id.menu_agenda);
-//		btn_Agenda.setEnabled(false);
 		btn_Waiting  = findViewById(R.id.menu_waiting);
+		
+		txt_Client   = (TextView) findViewById(R.id.txt_client);
+		txt_Hangar   = (TextView) findViewById(R.id.txt_hangar);
+		txt_Lavage   = (TextView) findViewById(R.id.txt_lavage);
+		txt_Camping  = (TextView) findViewById(R.id.txt_camping);
+		txt_Agenda   = (TextView) findViewById(R.id.txt_agenda);
+		txt_Waiting  = (TextView) findViewById(R.id.txt_waiting);
 		
 		// En mode 2 panneaux
 		//
@@ -176,39 +190,39 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	}
 	
 	private void clickForClientView() {
-		setSelectedBtn(btn_Client);
 		switchPanelMode(PanelMode.DOUBLE);
 		onArticleSelected(MenuBarBtn.CLIENT);
+		setSelectedBtn(btn_Client);
 	}
 	
 	private void clickForHangarView() {
-		setSelectedBtn(btn_Hangar);
 		switchPanelMode(PanelMode.SIMPLE);
 		onArticleSelected(MenuBarBtn.HANGAR);
+		setSelectedBtn(btn_Hangar);
 	}
 	
 	private void clickForLavageView() {
-		setSelectedBtn(btn_Lavage);
 		switchPanelMode(PanelMode.DOUBLE);
 		onArticleSelected(MenuBarBtn.LAVAGE);
+		setSelectedBtn(btn_Lavage);
 	}
 	
 	private void clickForCampingView() {
-		setSelectedBtn(btn_Camping);
 		switchPanelMode(PanelMode.DOUBLE);
 		onArticleSelected(MenuBarBtn.CAMPING);
+		setSelectedBtn(btn_Camping);
 	}
 	
 	private void clickForAgendaView() {
-		setSelectedBtn(btn_Agenda);
 		switchPanelMode(PanelMode.DOUBLE);
 		onArticleSelected(MenuBarBtn.AGENDA);
+		setSelectedBtn(btn_Agenda);
 	}
 	
 	private void clickForWaitingView() {
-		setSelectedBtn(btn_Waiting);
 		switchPanelMode(PanelMode.DOUBLE);
 		onArticleSelected(MenuBarBtn.WAITING);
+		setSelectedBtn(btn_Waiting);
 	}
 	
 	public void onArticleSelected(MenuBarBtn newMenu) {
@@ -256,15 +270,23 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
     }
 	
 	public void setSelectedBtn(View btnSelected) {
-		btn_Agenda.setBackgroundColor(Color.BLUE);
-		btn_Client.setBackgroundColor(Color.BLUE);
-		btn_Camping.setBackgroundColor(Color.BLUE);
-		btn_Hangar.setBackgroundColor(Color.BLUE);
-		btn_Waiting.setBackgroundColor(Color.BLUE);
-		btn_Lavage.setBackgroundColor(Color.BLUE);
+		btn_Agenda.setBackgroundColor(defaultMenuBarBtn);
+		btn_Client.setBackgroundColor(defaultMenuBarBtn);
+		btn_Camping.setBackgroundColor(defaultMenuBarBtn);
+		btn_Hangar.setBackgroundColor(defaultMenuBarBtn);
+		btn_Waiting.setBackgroundColor(defaultMenuBarBtn);
+		btn_Lavage.setBackgroundColor(defaultMenuBarBtn);
 		
+		txt_Agenda.setTextColor(defaultMenuBarTxt);
+		txt_Client.setTextColor(defaultMenuBarTxt);
+		txt_Camping.setTextColor(defaultMenuBarTxt);
+		txt_Hangar.setTextColor(defaultMenuBarTxt);
+		txt_Waiting.setTextColor(defaultMenuBarTxt);
+		txt_Lavage.setTextColor(defaultMenuBarTxt);
 		
-		btnSelected.setBackgroundColor(Color.GREEN);
+		btnSelected.setBackgroundColor(selectedMenuBarBtn);
+		
+		((TextView) findViewByStringId(btnSelected, "txt_"+ currentMenu.toString().toLowerCase())).setTextColor(selectedMenuBarTxt);
 	}
 	
 	public void switchPanelMode(PanelMode newPanelMode){
@@ -303,6 +325,11 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	    }, 2000);
 	} 
 	
+	
+	public View findViewByStringId(View parent, String name) {
+		int id = parent.getContext().getResources().getIdentifier("id/"+name, "id", parent.getContext().getPackageName());
+		return parent.findViewById(id);
+	}
 	
 	/*************  ClientListInterface  **********/
 	
