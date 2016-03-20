@@ -26,7 +26,7 @@ import com.meeple.cloud.hivernage.view.object.MyCalendar;
 public class AgendaListFragment extends Fragment {
 
 	public enum OrderCalendarsBy {
-		TODAY(), SEVEN_DAYS(), MONTH(), YEAR();
+		SEVEN_DAYS(), TODAY(),  MONTH(), YEAR();
 	}
 	
 	private Spinner spinner_agenda;
@@ -69,7 +69,7 @@ public class AgendaListFragment extends Fragment {
 		edt_agenda = (EditText) v.findViewById(R.id.agenda_liste_edittexte);
 		
 		list_agenda = (ListView) v.findViewById(R.id.agenda_liste_listview);
-		list_adapter = new  ListeAgendaAdapter(getActivity(), getCalendarEvent(OrderCalendarsBy.TODAY));
+		list_adapter = new  ListeAgendaAdapter(getActivity(), getCalendarEvent(OrderCalendarsBy.SEVEN_DAYS));
 		list_agenda.setAdapter(list_adapter);
 	}
 	
