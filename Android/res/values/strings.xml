@@ -30,5 +30,11 @@
     
     <string name="rechercher">Rechercher</string>
     
+    <string name="debut">Deb :</string>
+    
+    <string name="end">Fin :</string>
+    
+    <string name="date">Date :</string>
+    
     
 </resources>

@@ -1,7 +1,6 @@
 package com.meeple.cloud.hivernage.view.adapters;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -11,38 +10,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.view.agenda.AgendaListFragment.OrderCalendarsBy;
+import com.meeple.cloud.hivernage.view.object.MyCalendar;
 
 
 public class ListeAgendaAdapter  extends BaseAdapter {	
 
 	private Context ctx;
-	private List<Calendar> viewedListe = null;
-	private ArrayList<Calendar> dataListe;
+	private List<MyCalendar> viewedListe = null;
+	private ArrayList<MyCalendar> dataListe;
 	
-	private OrderCalendarsBy orderBy;
-	
-	public ListeAgendaAdapter(Context ctx, ArrayList<Calendar> list){
+	public ListeAgendaAdapter(Context ctx, ArrayList<MyCalendar> list){
 		this.ctx = ctx;
 		this.viewedListe = list;
 		
-		dataListe = new ArrayList<Calendar>();
+		dataListe = new ArrayList<MyCalendar>();
 		dataListe.addAll(viewedListe);
 		
-		reorderCalendarsBy(OrderCalendarsBy.ALL);
-	}	
-	
-	public ListeAgendaAdapter(Context ctx, ArrayList<Calendar> list, OrderCalendarsBy newOrder){
-		this.ctx = ctx;
-		this.viewedListe = list;
-		
-		dataListe = new ArrayList<Calendar>();
-		dataListe.addAll(viewedListe);
-		
-		reorderCalendarsBy(newOrder);
+		Collections.sort(dataListe);
 	}	
 	
 	@Override
@@ -51,7 +39,7 @@ public class ListeAgendaAdapter  extends BaseAdapter {
 	}
 
 	@Override
-	public Calendar getItem(int arg0) {
+	public MyCalendar getItem(int arg0) {
 		return viewedListe.get(arg0);
 	}
 
@@ -61,8 +49,14 @@ public class ListeAgendaAdapter  extends BaseAdapter {
 	}
 
 	private class ViewHolder{
-		public TextView txt_name;
-		public TextView txt_infoSup;
+		public LinearLayout ll_StarDate;
+		public LinearLayout ll_EndDate;
+		
+		public TextView txt_title;
+		public TextView txt_startDate;
+		public TextView txt_endDate;
+		public TextView txt_startStr;
+		public TextView txt_description;
 	}
 	
 	@Override
@@ -71,10 +65,16 @@ public class ListeAgendaAdapter  extends BaseAdapter {
 		
 		if(convertView == null) {
 			holder = new ViewHolder();
-			convertView = LayoutInflater.from(ctx).inflate(R.layout.liste_client_items_layout, null);
+			convertView = LayoutInflater.from(ctx).inflate(R.layout.agenda_list_items_layout, null);
 			
-			holder.txt_name = (TextView) convertView.findViewById(R.id.txt_name);
-			holder.txt_infoSup = (TextView) convertView.findViewById(R.id.txt_info);
+			holder.ll_StarDate = (LinearLayout) convertView.findViewById(R.id.ll_StartDate);
+			holder.ll_EndDate  = (LinearLayout) convertView.findViewById(R.id.ll_endDate);
+			
+			holder.txt_title       = (TextView) convertView.findViewById(R.id.tx_tittle);
+			holder.txt_startDate   = (TextView) convertView.findViewById(R.id.tx_startDate);
+			holder.txt_endDate     = (TextView) convertView.findViewById(R.id.tx_endDate);
+			holder.txt_startStr    = (TextView) convertView.findViewById(R.id.tx_debStr);
+			holder.txt_description = (TextView) convertView.findViewById(R.id.tx_description);
 			
 			convertView.setTag(holder);
 		}
@@ -82,32 +82,30 @@ public class ListeAgendaAdapter  extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
-//		holder.txt_name.setText(getItem(position).getNom());
-//		
-//		switch (orderBy) {
-//		case PRIX_CROISSANT :
-//		case PRIX_DECROISSANT : 
-//		case ALPHABETIC:
-//		default :
-//			holder.txt_infoSup.setVisibility(View.VISIBLE);
-//			break;
-//
-//		}
+		MyCalendar myCal = getItem(position);
 		
-//		holder.txt_infoSup.setText(""+getItem(position).getPrix());
+		holder.txt_title.setText(myCal.getTitle());
+		holder.txt_startDate.setText(myCal.getStrStartDate());
+		holder.txt_description.setText(myCal.getDescription());
+		
+		holder.txt_startStr.setText(R.string.debut);
+		
+		if(myCal.isSameDay()) {
+			holder.ll_EndDate.setVisibility(View.GONE);
+			holder.txt_startStr.setText(R.string.date);
+		}
+		else if(myCal.getEndDate() != null)  {
+			holder.ll_EndDate.setVisibility(View.VISIBLE);
+			holder.txt_endDate.setText(myCal.getStrEndDate());
+		}
+		else {
+			holder.ll_EndDate.setVisibility(View.GONE);
+		}
 		
 		return convertView;
 	}
 
 
-	public void reorderCalendarsBy(OrderCalendarsBy new_orderBy){
-		this.orderBy = new_orderBy;
-
-		Collections.sort(viewedListe, orderBy.getComparator());
-		
-		notifyDataSetChanged();
-	}
-	
 	
 	// Filter Class
 	public void filter(String charText) {
@@ -116,14 +114,14 @@ public class ListeAgendaAdapter  extends BaseAdapter {
 		if (charText.length() == 0) {
 			viewedListe.addAll(dataListe);
 		} else {
-			for (Calendar c : dataListe) {
+			for (MyCalendar c : dataListe) {
 //				if (c.getNom().toLowerCase(Locale.getDefault()).contains(charText) ) {
 //					viewedListe.add(c);
 //				}
 			}
 		}
 		
-		Collections.sort(viewedListe, orderBy.getComparator());
+//		Collections.sort(viewedListe, orderBy.getComparator());
 		
 		notifyDataSetChanged();
 	}

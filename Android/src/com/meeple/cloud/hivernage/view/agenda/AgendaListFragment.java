@@ -4,10 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.provider.CalendarContract.Calendars;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +23,12 @@ import android.widget.Spinner;
 
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.view.adapters.ListeAgendaAdapter;
+import com.meeple.cloud.hivernage.view.object.MyCalendar;
 
 public class AgendaListFragment extends Fragment {
 
 	public enum OrderCalendarsBy {
-		TODAY(null), SEVEN_DAYS(null), MONTH(null), ALL(null);
+		TODAY(null), SEVEN_DAYS(null), MONTH(null), YEAR(null);
 		
 		private Comparator<Calendar> comparator;
 		
@@ -66,9 +69,8 @@ public class AgendaListFragment extends Fragment {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-//				listeCampingsAdapter.reorderCampingsBy((OrderCampingsBy) parent.getItemAtPosition(pos));
-				ArrayAdapter<String> adapter = new ArrayAdapter<String>(parent.getContext(), android.R.layout.simple_list_item_1, getCalendarEvent((OrderCalendarsBy) parent.getItemAtPosition(pos)));
-				list_agenda.setAdapter(adapter);
+				list_adapter = new ListeAgendaAdapter(getActivity(), getCalendarEvent((OrderCalendarsBy) parent.getItemAtPosition(pos)));
+				list_agenda.setAdapter(list_adapter);
 			}
 
 			@Override
@@ -77,22 +79,94 @@ public class AgendaListFragment extends Fragment {
 			}
 		});
 		
-		
 		edt_agenda = (EditText) v.findViewById(R.id.agenda_liste_edittexte);
 		
 		list_agenda = (ListView) v.findViewById(R.id.agenda_liste_listview);
-//		list_adapter = new  ListeAgendaAdapter(getActivity(), getAllCalendarEvent());
-		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, getCalendarEvent(OrderCalendarsBy.TODAY));
-		list_agenda.setAdapter(adapter);
-		
+		list_adapter = new  ListeAgendaAdapter(getActivity(), getCalendarEvent(OrderCalendarsBy.TODAY));
+		list_agenda.setAdapter(list_adapter);
 	}
 	
 	
-	private String[] getCalendarEvent(OrderCalendarsBy order) {
+//	private String[] getCalendarEvent(OrderCalendarsBy order) {
+//		// Crée une projection pour limiter le curseur résultat 
+//		// aux colonnes désirées
+//		String [] projection = {
+//			CalendarContract.Events.TITLE,
+//			CalendarContract.Events.DTSTART,
+//			CalendarContract.Events.DTEND,
+//			CalendarContract.Events.DESCRIPTION,
+//		};
+//		
+//		Calendar range_start = Calendar.getInstance(); // Today 
+//		Calendar range_end   = Calendar.getInstance();
+//		String   selection   = null;
+//		
+//		
+//		switch(order) {
+//		case MONTH:
+//	        range_end.add(Calendar.DAY_OF_YEAR, 31); //Note that months start from 0 (January)
+//			break;
+//		case SEVEN_DAYS:
+//	        range_end.add(Calendar.DAY_OF_YEAR, 7); //Note that months start from 0 (January)
+//			break;
+//		case TODAY:
+//			range_end.add(Calendar.DAY_OF_YEAR, 1); //Note that months start from 0 (January)
+//			break;
+//		default:
+//			range_end.add(Calendar.DAY_OF_YEAR, 365);
+//			break;
+//		}
+//		selection = "((dtstart >= "+range_start.getTimeInMillis()+") AND (dtend <= "+range_end.getTimeInMillis()+"))";
+//		
+//		// Récupére un curseur sur le fournisseur d'événements
+//		//
+//		Cursor cursor = this.getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, projection , selection, null, null);
+//		
+//		// Récupére les indices des colonnes
+//		//
+//		int titleIdx   = cursor.getColumnIndexOrThrow(projection[0]);
+//		int dtStartIdx = cursor.getColumnIndexOrThrow(projection[1]);
+//		int dtEndIdx   = cursor.getColumnIndexOrThrow(projection[2]);
+//		int dtDescIdx  = cursor.getColumnIndexOrThrow(projection[3]);
+//		
+//		
+//		// Créer un tableau pour stocker le résultat
+//		//
+//		ArrayList<String> alresult = new ArrayList<>();
+//		
+//		// Parcours le cuseur résultat
+//		while(cursor.moveToNext()) {
+//			
+//			String title = cursor.getString(titleIdx);
+//			String dateS = convertIntStringToDate(cursor.getString(dtStartIdx));
+//			String dateE = convertIntStringToDate(cursor.getString(dtEndIdx));
+//			String desc  = cursor.getString(dtDescIdx);
+//			
+//			if (dateS != null && dateE != null) {
+//				alresult.add(title + " \n(" + dateS+ " => " + dateE + ")\n" + desc);
+//			}
+//			else if(dateS != null){
+//				alresult.add(title + " \n( Start: " + dateS + ")\n" + desc);
+//			}
+//			else if(dateE != null){
+//				alresult.add(title + " \n( End: " +dateE + ")\n" + desc);
+//			}
+//			else {
+//				alresult.add(title + "\n" + desc);
+//			}
+//		}
+//		
+//		//ferme le cursor
+//		cursor.close();
+//		
+//		return alresult.toArray(new String[]{});
+//	}
+	
+	private ArrayList<MyCalendar> getCalendarEvent(OrderCalendarsBy order) {
 		// Crée une projection pour limiter le curseur résultat 
 		// aux colonnes désirées
 		String [] projection = {
+			CalendarContract.Events._ID,
 			CalendarContract.Events.TITLE,
 			CalendarContract.Events.DTSTART,
 			CalendarContract.Events.DTEND,
@@ -101,74 +175,75 @@ public class AgendaListFragment extends Fragment {
 		
 		Calendar range_start = Calendar.getInstance(); // Today 
 		Calendar range_end   = Calendar.getInstance();
-		String   selection   = null;
+		
+		String selection = "((" + Calendars.ACCOUNT_NAME + " = ?) AND (" + Calendars.ACCOUNT_TYPE + " = ?) AND (" + Calendars.OWNER_ACCOUNT + " = ?) ";
+		String[] selectionArgs = new String[] {"auvray28@gmail.com", "com.google", "auvray28@gmail.com"}; 
 		
 		
 		switch(order) {
 		case MONTH:
 	        range_end.add(Calendar.DAY_OF_YEAR, 31); //Note that months start from 0 (January)
-	        selection = "((dtstart >= "+range_start.getTimeInMillis()+") AND (dtend <= "+range_end.getTimeInMillis()+"))";
 			break;
 		case SEVEN_DAYS:
 	        range_end.add(Calendar.DAY_OF_YEAR, 7); //Note that months start from 0 (January)
-	        selection = "((dtstart >= "+range_start.getTimeInMillis()+") AND (dtend <= "+range_end.getTimeInMillis()+"))";
 			break;
 		case TODAY:
 			range_end.add(Calendar.DAY_OF_YEAR, 1); //Note that months start from 0 (January)
-	        selection = "((dtstart >= "+range_start.getTimeInMillis()+") AND (dtend <= "+range_end.getTimeInMillis()+"))";
 			break;
 		default:
-			selection = "(dtstart >= "+range_start.getTimeInMillis()+")";
+			range_end.add(Calendar.DAY_OF_YEAR, 365);
 			break;
 		}
-		
+		selection += " AND (dtstart >= "+range_start.getTimeInMillis()+") AND (dtend <= "+range_end.getTimeInMillis()+"))";
 		// Récupére un curseur sur le fournisseur d'événements
 		//
-		Cursor cursor = this.getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, projection , selection, null, null);
+		Cursor cursor = this.getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, projection , selection, selectionArgs, null);
 		
 		// Récupére les indices des colonnes
 		//
-		int titleIdx   = cursor.getColumnIndexOrThrow(projection[0]);
-		int dtStartIdx = cursor.getColumnIndexOrThrow(projection[1]);
-		int dtEndIdx   = cursor.getColumnIndexOrThrow(projection[2]);
-		int dtDescIdx  = cursor.getColumnIndexOrThrow(projection[3]);
+		int idIdx      = cursor.getColumnIndexOrThrow(projection[0]);
+		int titleIdx   = cursor.getColumnIndexOrThrow(projection[1]);
+		int dtStartIdx = cursor.getColumnIndexOrThrow(projection[2]);
+		int dtEndIdx   = cursor.getColumnIndexOrThrow(projection[3]);
+		int dtDescIdx  = cursor.getColumnIndexOrThrow(projection[4]);
 		
 		
 		// Créer un tableau pour stocker le résultat
 		//
-		ArrayList<String> alresult = new ArrayList<>();
-//		String [] result = new String[cursor.getCount()];
+		ArrayList<MyCalendar> alresult = new ArrayList<>();
 		
 		// Parcours le cuseur résultat
 		while(cursor.moveToNext()) {
 			
+			MyCalendar cal = new MyCalendar();
+			
+			String id    = cursor.getString(idIdx);
 			String title = cursor.getString(titleIdx);
-			String dateS = convertIntStringToDate(cursor.getString(dtStartIdx));
-			String dateE = convertIntStringToDate(cursor.getString(dtEndIdx));
+			String dateS = (cursor.getString(dtStartIdx));
+			String dateE = (cursor.getString(dtEndIdx));
 			String desc  = cursor.getString(dtDescIdx);
 			
-			if (dateS != null && dateE != null) {
-//				result[cursor.getPosition()] = title + " \n(" + dateS+ " => " + dateE + ")\n" + desc ;
-				alresult.add(title + " \n(" + dateS+ " => " + dateE + ")\n" + desc);
+			cal.setCalendar_id(id);
+			cal.setTitle(title);
+			cal.setDescription(desc);
+			
+			if(dateS != null){
+				long mlStart = Long.parseLong(dateS);
+				cal.setStartDate(new Date(mlStart));
 			}
-			else if(dateS != null){
-//				result[cursor.getPosition()] = title + " \n( Start: " + dateS + ")\n" + desc ;
-				alresult.add(title + " \n( Start: " + dateS + ")\n" + desc);
+
+			if(dateE != null){
+				long mlEnd = Long.parseLong(dateS);
+				cal.setEndDate(new Date(mlEnd));
 			}
-			else if(dateE != null){
-//				result[cursor.getPosition()] = title + " \n( End: " + dateE + ")\n" + desc ;
-				alresult.add(title + " \n( End: " +dateE + ")\n" + desc);
-			}
-			else {
-//				result[cursor.getPosition()] = title + "\n" + desc ;
-				alresult.add(title + "\n" + desc);
-			}
+			
+			alresult.add(cal);
 		}
 		
 		//ferme le cursor
 		cursor.close();
 		
-		return alresult.toArray(new String[]{});
+		return alresult;
 	}
 	
 	private String convertIntStringToDate(String str_value){
@@ -220,37 +295,5 @@ public class AgendaListFragment extends Fragment {
 	     return calendar;
 	}
 
-	public boolean compareCalendar(Calendar cal, OrderCalendarsBy order) {
-		
-		if (cal != null) {
-			switch (order) {
-			case ALL:
-	//			break;
-			case MONTH:
-	//			break;
-			case SEVEN_DAYS:
-//				Calendar range_start = Calendar.getInstance(); // Today   
-//		        Calendar range_end = Calendar.getInstance();   range_end.add(Calendar.DAY_OF_YEAR, 7); //Note that months start from 0 (January)
-//
-//		        String selection = "((dtstart >= "+range_start.getTimeInMillis()+") AND (dtend <= "+range_end.getTimeInMillis()+"))";
-//
-//		        String[] selectionArgs = new String[] {startString, endString};
-//		        cursor = contentResolver.query(Uri.parse("content://com.android.calendar/events"), 
-//		                (new String[] { "calendar_id", "title", "description", "dtstart", "dtend", "eventLocation"})
-//		                ,null,selectionArgs,selection);
-//				break;
-			case TODAY:
-			default:
-				Calendar today = Calendar.getInstance();
-				if (today.get(Calendar.DAY_OF_YEAR) == cal.get(Calendar.DAY_OF_YEAR) && today.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
-					return true;
-				}
-				break;
-			}
-			
-		
-		}
-		return false;
-	}
 	
 }
