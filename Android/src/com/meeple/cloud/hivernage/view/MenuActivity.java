@@ -36,9 +36,9 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	}
 	
 	private int defaultMenuBarBtn = Color.rgb(34, 34, 34);
-	private int defaultMenuBarTxt = Color.rgb(244, 244, 244);
+	private int defaultMenuBarTxt = Color.rgb(243, 243, 243);
 	
-	private int selectedMenuBarBtn = Color.rgb(244, 244, 244);
+	private int selectedMenuBarBtn = Color.rgb(243, 243, 243);
 	private int selectedMenuBarTxt = Color.rgb(34, 34, 34);
 	
 	boolean doubleBackToExitPressedOnce = false;
@@ -104,6 +104,8 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 		btn_Camping  = findViewById(R.id.menu_camping);
 		btn_Agenda   = findViewById(R.id.menu_agenda);
 		btn_Waiting  = findViewById(R.id.menu_waiting);
+		btn_Waiting.setVisibility(View.GONE);
+		btn_Lavage.setVisibility(View.GONE);
 		
 		txt_Client   = (TextView) findViewById(R.id.txt_client);
 		txt_Hangar   = (TextView) findViewById(R.id.txt_hangar);
