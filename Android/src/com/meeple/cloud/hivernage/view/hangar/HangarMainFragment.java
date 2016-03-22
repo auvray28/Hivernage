@@ -100,12 +100,9 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
     		loadHangar(currentHangar);
     	}
     	
-    	LAVAGE  = Services.hangarService.findHangarByName("Lavage");
-    	hangarToWash.loadHangar(LAVAGE);
-    	
-    	WAITING = Services.hangarService.findHangarByName("Waiting");
-    	hangarToWait.loadHangar(WAITING);
+    	refreshHangar();
     }
+    
     
     
     public void showNextHangar(){
@@ -172,6 +169,22 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 			
 			Services.caravaneService.update(c);
 		}
+	}
+	
+	
+	public void refreshHangar(){
+    	
+    	LAVAGE  = Services.hangarService.findHangarByName("Lavage");
+    	if(hangarToWash != null) {
+    		hangarToWash.removeAllViews();
+    		hangarToWash.loadHangar(LAVAGE);
+    	}
+
+    	WAITING = Services.hangarService.findHangarByName("Waiting");
+    	if(hangarToWait != null) {
+    		hangarToWait.removeAllViews();
+    		hangarToWait.loadHangar(WAITING);
+    	}
 	}
     
 }
