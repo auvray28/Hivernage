@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInterface;
 import com.meeple.cloud.hivernage.view.object.MyEditView;
 
 public class ClientInfoFragment extends Fragment implements TextWatcher{

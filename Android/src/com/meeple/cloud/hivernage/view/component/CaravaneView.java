@@ -28,8 +28,8 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 	
 	private int left   = 10;
 	private int top    = 5;
-	private int right  = 110;
-	private int bottom = 75;
+	private int right  = left + CARAVANE_VIEW_WIDTH;
+	private int bottom = top + CARAVANE_VIEW_HEIGHT;
 			
 	private int position_X = 0;
 	private int position_Y = 0;

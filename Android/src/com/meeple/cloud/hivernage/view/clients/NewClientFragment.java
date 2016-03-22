@@ -2,6 +2,7 @@ package com.meeple.cloud.hivernage.view.clients;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,8 +24,15 @@ import com.meeple.cloud.hivernage.model.Hangar;
 import com.meeple.cloud.hivernage.model.Hivernage;
 import com.meeple.cloud.hivernage.model.enums.HivernageStatus;
 import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment.ClientInfoInterface;
 
 public class NewClientFragment extends Fragment {
+	
+	public interface NewClientInterface {
+		public void refreshClientList();
+	}
+	
+	private NewClientInterface mCallback;
 	
 	// Components for New Client
 	private EditText edt_nom, edt_prenom, edt_adresse, edt_mail, edt_tel, edt_acompte, edt_observation;
@@ -83,6 +91,7 @@ public class NewClientFragment extends Fragment {
 				if (isAllEditFill()) {
 					createClient();
 					Toast.makeText(getActivity(), R.string.confirmNewClient, Toast.LENGTH_SHORT).show();
+					if(mCallback != null) mCallback.refreshClientList();
 					emptyAllEdt();
 				}
 				else {
@@ -179,4 +188,30 @@ public class NewClientFragment extends Fragment {
 		edt_carvaneObs.getText().clear();
 	}
 	
+	 @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (NewClientInterface) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement NewClientInterface");
+        }
+    }
+
+
+	public NewClientInterface getmCallback() {
+		return mCallback;
+	}
+
+
+	public void setmCallback(NewClientInterface mCallback) {
+		this.mCallback = mCallback;
+	}
+
+	 
+	 
 }

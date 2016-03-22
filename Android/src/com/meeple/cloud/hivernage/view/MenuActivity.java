@@ -26,9 +26,10 @@ import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment.ClientInfoInte
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInterface;
 import com.meeple.cloud.hivernage.view.clients.NewClientFragment;
+import com.meeple.cloud.hivernage.view.clients.NewClientFragment.NewClientInterface;
 import com.meeple.cloud.hivernage.view.hangar.HangarMainFragment;
 
-public class MenuActivity extends FragmentActivity implements ClientListInterface, CampingListInterface, ClientInfoInterface{
+public class MenuActivity extends FragmentActivity implements ClientListInterface, CampingListInterface, ClientInfoInterface, NewClientInterface{
 
 	private enum MenuBarBtn {
 		CLIENT, HANGAR, LAVAGE, CAMPING, AGENDA, WAITING;
@@ -79,7 +80,8 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
                 return;
             }
             
-            clickForClientView();
+            //TODO First Page
+            clickForHangarView();
             
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             
