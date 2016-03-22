@@ -187,7 +187,14 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 
 	@Override
 	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-    
+
+
+	public void refreshClient() {
+//    	listeClientAdapter = new ListeClientAdapter(getActivity().getApplicationContext(), Services.clientService.getAllClient(), (OrderClientBy) orderBy.getSelectedItem());
+//    	listeClients.setAdapter(listeClientAdapter);
+    	
+    	listeClientAdapter.notifyDataSetChanged();
+	}
     
 	
 }

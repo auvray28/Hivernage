@@ -22,12 +22,13 @@ import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment.CampingListInterface;
 import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
+import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment.ClientInfoInterface;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInterface;
 import com.meeple.cloud.hivernage.view.clients.NewClientFragment;
 import com.meeple.cloud.hivernage.view.hangar.HangarMainFragment;
 
-public class MenuActivity extends FragmentActivity implements ClientListInterface, CampingListInterface{
+public class MenuActivity extends FragmentActivity implements ClientListInterface, CampingListInterface, ClientInfoInterface{
 
 	private enum MenuBarBtn {
 		CLIENT, HANGAR, LAVAGE, CAMPING, AGENDA, WAITING;
@@ -417,6 +418,12 @@ public class MenuActivity extends FragmentActivity implements ClientListInterfac
 	        transaction.commit();
 			
 		}
+	}
+
+
+	@Override
+	public void refreshClientList() {
+		clientFragment.refreshClient();
 	}
 
 	

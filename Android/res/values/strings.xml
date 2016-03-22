@@ -60,5 +60,7 @@
     
     <string name="confirmNewClient">le client a bien été créé</string>
     
+    <string name="updateClient">Update Client</string>
+    
     
 </resources>
