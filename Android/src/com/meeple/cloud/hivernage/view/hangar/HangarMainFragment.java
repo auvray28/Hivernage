@@ -18,6 +18,7 @@ import com.meeple.cloud.hivernage.model.Hangar;
 import com.meeple.cloud.hivernage.service.Services;
 import com.meeple.cloud.hivernage.view.component.CaravaneView;
 import com.meeple.cloud.hivernage.view.component.DragAndDropRelativeLayout;
+import com.meeple.cloud.hivernage.view.component.HangarView;
 
 public class HangarMainFragment extends Fragment implements DragAndDropRelativeLayout.onDropListener{
 

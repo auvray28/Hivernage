@@ -1,4 +1,4 @@
-package com.meeple.cloud.hivernage.view.hangar;
+package com.meeple.cloud.hivernage.view.component;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,8 +8,6 @@ import android.util.AttributeSet;
 
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Hangar;
-import com.meeple.cloud.hivernage.view.component.CaravaneView;
-import com.meeple.cloud.hivernage.view.component.DragAndDropRelativeLayout;
 
 public class HangarView extends DragAndDropRelativeLayout {
 
