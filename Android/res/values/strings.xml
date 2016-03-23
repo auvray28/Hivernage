@@ -60,6 +60,8 @@
     
     <string name="confirmNewClient">le client a bien été créé</string>
     
+    <string name="confirmNewCamping">le camping a bien été créé</string>
+    
     <string name="updateClient">Update Client</string>
     
     <string name="ajouter_camping">Ajouter Camping</string>
