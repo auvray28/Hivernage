@@ -185,6 +185,11 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
     		hangarToWait.removeAllViews();
     		hangarToWait.loadHangar(WAITING);
     	}
+    	
+    	if(currentHangar != null && currentHangarView != null) {
+    		currentHangarView.removeAllViews();
+    		currentHangarView.loadHangar(currentHangar);
+    	}
 	}
     
 }
