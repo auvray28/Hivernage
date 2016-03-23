@@ -64,5 +64,9 @@
     
     <string name="ajouter_camping">Ajouter Camping</string>
     
+    <string name="creer_camping">Créer camping</string>
+    
+    <string name="prix">"- Prix : "</string>
+    
     
 </resources>
