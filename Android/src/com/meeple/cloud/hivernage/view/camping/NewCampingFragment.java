@@ -1,14 +1,15 @@
 package com.meeple.cloud.hivernage.view.camping;
 
-import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.view.clients.NewClientFragment.NewClientInterface;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.meeple.cloud.hivernage.R;
 
 public class NewCampingFragment extends Fragment {
 
@@ -29,11 +30,17 @@ public class NewCampingFragment extends Fragment {
 		return myFragment;
 	}
 	
+	private EditText edt_nom, edt_adresse, edt_tel, edt_mail, edt_prix, edt_obs;
+	
+	//
+	private Button btn_createCamping;
+	
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         
 
-        View v = inflater.inflate(R.layout.new_client_layout, container, false); 
+        View v = inflater.inflate(R.layout.new_camping_layout, container, false); 
         
         initView(v);
         // Inflate the layout for this fragment
@@ -44,6 +51,14 @@ public class NewCampingFragment extends Fragment {
 	
 	private void initView(View v) {
 		
+		edt_nom     = (EditText) v.findViewById(R.id.edt_nom);
+		edt_adresse = (EditText) v.findViewById(R.id.edt_adresse);
+		edt_tel     = (EditText) v.findViewById(R.id.edt_tel);
+		edt_mail    = (EditText) v.findViewById(R.id.edt_mail);
+		edt_prix    = (EditText) v.findViewById(R.id.edt_prix);
+		edt_obs     = (EditText) v.findViewById(R.id.edt_observation);
+		
+		btn_createCamping = (Button) v.findViewById(R.id.btn_createCamping);
 	}
 	
 	
