@@ -79,7 +79,7 @@
 
             <TextView
                 android:id="@+id/tx_strTel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/telephone"
                 android:textAppearance="?android:attr/textAppearanceMedium"
