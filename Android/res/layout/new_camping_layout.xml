@@ -38,7 +38,7 @@
             <EditText
                 android:id="@+id/edt_nom"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:ems="10"
                 android:inputType="textPersonName" >
@@ -74,11 +74,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" >
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/tx_strTel"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/telephone"
                 android:textAppearance="?android:attr/textAppearanceMedium"
