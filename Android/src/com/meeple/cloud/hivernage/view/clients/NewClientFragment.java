@@ -24,12 +24,11 @@ import com.meeple.cloud.hivernage.model.Hangar;
 import com.meeple.cloud.hivernage.model.Hivernage;
 import com.meeple.cloud.hivernage.model.enums.HivernageStatus;
 import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment.ClientInfoInterface;
 
 public class NewClientFragment extends Fragment {
 	
 	public interface NewClientInterface {
-		public void refreshClientList();
+		public void refreshList();
 	}
 	
 	private NewClientInterface mCallback;
@@ -91,7 +90,7 @@ public class NewClientFragment extends Fragment {
 				if (isAllEditFill()) {
 					createClient();
 					Toast.makeText(getActivity(), R.string.confirmNewClient, Toast.LENGTH_SHORT).show();
-					if(mCallback != null) mCallback.refreshClientList();
+					if(mCallback != null) mCallback.refreshList();
 					emptyAllEdt();
 				}
 				else {
@@ -201,16 +200,6 @@ public class NewClientFragment extends Fragment {
                     + " must implement NewClientInterface");
         }
     }
-
-
-	public NewClientInterface getmCallback() {
-		return mCallback;
-	}
-
-
-	public void setmCallback(NewClientInterface mCallback) {
-		this.mCallback = mCallback;
-	}
 
 	 
 	 

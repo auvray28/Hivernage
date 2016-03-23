@@ -20,7 +20,10 @@ import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.view.agenda.AgendaListFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
+import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment.CampingInfoInterface;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment.CampingListInterface;
+import com.meeple.cloud.hivernage.view.camping.NewCampingFragment;
+import com.meeple.cloud.hivernage.view.camping.NewCampingFragment.NewCampingInterface;
 import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
 import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment.ClientInfoInterface;
 import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
@@ -30,8 +33,8 @@ import com.meeple.cloud.hivernage.view.clients.NewClientFragment.NewClientInterf
 import com.meeple.cloud.hivernage.view.hangar.HangarMainFragment;
 
 public class MenuActivity extends FragmentActivity implements
-		ClientListInterface, CampingListInterface, ClientInfoInterface,
-		NewClientInterface {
+		ClientListInterface, CampingListInterface, ClientInfoInterface, CampingInfoInterface,
+		NewClientInterface, NewCampingInterface {
 
 	private enum MenuBarBtn {
 		CLIENT, HANGAR, LAVAGE, CAMPING, AGENDA, WAITING;
@@ -449,10 +452,43 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void refreshClientList() {
-		clientFragment.refreshClient();
+	public void displayNewCampingView() {
+		// On ferme le clavier dans un premier temps
+		//
+		View view = this.getCurrentFocus();
+		if (view != null) {
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}
+
+		Fragment newFrag = NewCampingFragment.newInstance();
+
+		if (two_panel != null) {
+
+			// Create fragment and give it an argument for the selected article
+			FragmentTransaction transaction = getSupportFragmentManager()
+					.beginTransaction();
+
+			// Replace whatever is in the fragment_container view with this
+			// fragment,
+			// and add the transaction to the back stack so the user can
+			// navigate back
+			transaction.replace(R.id.big_frame, newFrag);
+			// transaction.addToBackStack(null);
+
+			// Commit the transaction
+			transaction.commit();
+
+		}
 	}
 
 	/**********************************************/
 
+	@Override
+	public void refreshList() {
+		clientFragment.refreshClient();
+		
+		campingFragment.refreshCamping();
+	}
+	
 }

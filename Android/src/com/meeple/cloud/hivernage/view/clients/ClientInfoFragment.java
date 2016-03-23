@@ -22,7 +22,7 @@ import com.meeple.cloud.hivernage.view.object.MyEditView;
 public class ClientInfoFragment extends Fragment implements TextWatcher{
 
 	public interface ClientInfoInterface {
-		public void refreshClientList();
+		public void refreshList();
 	}
 	
 	
@@ -106,7 +106,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 				v.setVisibility(View.INVISIBLE);
 				
 				if (mCallback != null) {
-					mCallback.refreshClientList();
+					mCallback.refreshList();
 				}
 			}
 		});

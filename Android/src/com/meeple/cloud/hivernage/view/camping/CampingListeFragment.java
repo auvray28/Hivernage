@@ -12,12 +12,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -51,6 +53,8 @@ public class CampingListeFragment extends Fragment implements TextWatcher {
 	
 	public interface CampingListInterface {
 		public void displayCampingInfo(int campingID);
+
+		public void displayNewCampingView();
 	}
 	
 	private EditText searchCampings;
@@ -58,6 +62,8 @@ public class CampingListeFragment extends Fragment implements TextWatcher {
 	private ListeCampingAdapter listeCampingsAdapter;
 	
 	private Spinner orderBy;
+	
+	private Button btn_addCamping;
 	
 	private CampingListInterface mCallback;
 	
@@ -132,6 +138,15 @@ public class CampingListeFragment extends Fragment implements TextWatcher {
 					mCallback.displayCampingInfo( ((Camping)parent.getItemAtPosition(pos)).getCampingId());
 				}
 			});
+	    	
+	    	btn_addCamping = (Button) v.findViewById(R.id.btn_addclient);
+	    	btn_addCamping.setText(R.string.ajouter_camping);
+	    	btn_addCamping.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mCallback.displayNewCampingView();
+				}
+			});
 	    }
 
 	    @Override
@@ -147,6 +162,10 @@ public class CampingListeFragment extends Fragment implements TextWatcher {
 	                    + " must implement ClientListInterface");
 	        }
 	    }
+	    
+		public void refreshCamping() {
+	    	listeCampingsAdapter.notifyDataSetChanged();
+		}
 	    
 	    /***** TextWatcher ****/
 	    

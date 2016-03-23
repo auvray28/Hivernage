@@ -1,5 +1,6 @@
 package com.meeple.cloud.hivernage.view.camping;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,10 +16,17 @@ import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.model.EmplacementCamping;
 import com.meeple.cloud.hivernage.service.Services;
 import com.meeple.cloud.hivernage.view.adapters.ListeEmplacementCampingAdapter;
+import com.meeple.cloud.hivernage.view.camping.CampingListeFragment.CampingListInterface;
 import com.meeple.cloud.hivernage.view.object.MyCalendar;
 
 public class CampingInfoFragment extends Fragment {
 
+	public interface CampingInfoInterface {
+		public void refreshList();
+	}
+	
+	private CampingInfoInterface mCallback;
+	
 	private Camping camping;
 	
 	private TextView camping_name, camping_phone, camping_mail, camping_info;
@@ -120,5 +128,19 @@ public class CampingInfoFragment extends Fragment {
 		emplacement_sortie.setText(MyCalendar.formatter.format(item.getSortie()));
 	}
 
+	
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (CampingInfoInterface) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement ClientListInterface");
+        }
+    }
 
 }

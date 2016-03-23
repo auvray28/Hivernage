@@ -148,6 +148,7 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 		});
     	
     	btn_addClient = (Button) v.findViewById(R.id.btn_addclient);
+    	btn_addClient.setText(R.string.ajouter_client);
     	btn_addClient.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -190,9 +191,6 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 
 
 	public void refreshClient() {
-//    	listeClientAdapter = new ListeClientAdapter(getActivity().getApplicationContext(), Services.clientService.getAllClient(), (OrderClientBy) orderBy.getSelectedItem());
-//    	listeClients.setAdapter(listeClientAdapter);
-    	
     	listeClientAdapter.notifyDataSetChanged();
 	}
     
