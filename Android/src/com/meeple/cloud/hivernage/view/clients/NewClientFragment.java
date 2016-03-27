@@ -107,7 +107,7 @@ public class NewClientFragment extends Fragment {
 		ArrayList<String> als = new ArrayList<>();
 		
 		for(Hangar hang : Services.hangarService.getAllHangars()) {
-			// Ouais je sais le test est un poil moche mais je sais que ça marchera
+			// Ouais je sais le test est un poil moche mais je sais que ï¿½a marchera
 			// sans pb, tant que Waiting restera Waiting
 			if(hang.getNom().toLowerCase().equals("Waiting".toLowerCase())) {
 				als.add(0, hang.getNom());

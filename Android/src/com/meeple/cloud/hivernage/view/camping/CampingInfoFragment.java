@@ -30,7 +30,7 @@ public class CampingInfoFragment extends Fragment {
 	private Camping camping;
 	
 	private TextView camping_name, camping_phone, camping_mail, camping_info;
-	private TextView emplacement_str, emplacement_client_name, emplacement_entrée, emplacement_sortie;
+	private TextView emplacement_str, emplacement_client_name, emplacement_entree, emplacement_sortie;
 	private ListView caravanes_liste;
 	
 	private ListeEmplacementCampingAdapter lca;
@@ -83,12 +83,12 @@ public class CampingInfoFragment extends Fragment {
 		
 		emplacement_str         = (TextView) v.findViewById(R.id.camping_liste_emplacement_str);
 		emplacement_client_name = (TextView) v.findViewById(R.id.camping_liste_emplacement_client);
-		emplacement_entrée      = (TextView) v.findViewById(R.id.camping_liste_emplacement_entree);
+		emplacement_entree      = (TextView) v.findViewById(R.id.camping_liste_emplacement_entree);
 		emplacement_sortie      = (TextView) v.findViewById(R.id.camping_liste_emplacement_sortie);
 		
 		emplacement_str.setVisibility(View.INVISIBLE);
 		emplacement_client_name.setVisibility(View.INVISIBLE);
-		emplacement_entrée.setVisibility(View.INVISIBLE);
+		emplacement_entree.setVisibility(View.INVISIBLE);
 		emplacement_sortie.setVisibility(View.INVISIBLE);
 		
 	} 
@@ -118,13 +118,13 @@ public class CampingInfoFragment extends Fragment {
 	public void fillEmplacementInformation(EmplacementCamping item) {
 		emplacement_str.setVisibility(View.VISIBLE);
 		emplacement_client_name.setVisibility(View.VISIBLE);
-		emplacement_entrée.setVisibility(View.VISIBLE);
+		emplacement_entree.setVisibility(View.VISIBLE);
 		emplacement_sortie.setVisibility(View.VISIBLE);
 		
 		
 		emplacement_str.setText(item.getEmplacement());
 		emplacement_client_name.setText(item.getCaravane().getClient().getFullName());
-		emplacement_entrée.setText(MyCalendar.formatter.format(item.getEntree()));
+		emplacement_entree.setText(MyCalendar.formatter.format(item.getEntree()));
 		emplacement_sortie.setText(MyCalendar.formatter.format(item.getSortie()));
 	}
 

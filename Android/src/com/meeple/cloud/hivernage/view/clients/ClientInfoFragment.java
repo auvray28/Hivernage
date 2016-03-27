@@ -147,7 +147,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	txt_client_tel.setOriginalText(displayClient.getTelephone());
     	txt_client_mail.setOriginalText(displayClient.getMail());
     	
-    	txt_client_acompte.setText(" "+displayClient.getCurrentAcompte()+ "€");
+    	txt_client_acompte.setText(" "+displayClient.getCurrentAcompte()+ "ï¿½");
     	
     	int colorAcompte = Color.BLACK; // == 0
     	if ( displayClient.getCurrentAcompte() > 0) colorAcompte = Color.GREEN;

@@ -15,7 +15,7 @@ public class HangarView extends DragAndDropRelativeLayout {
 	
 	private Paint paint = new Paint();
 	
-	// Je les defs juste pour les tests dans la vue, aprés elles seront certainement dans une frame layout
+	// Je les defs juste pour les tests dans la vue, aprï¿½s elles seront certainement dans une frame layout
 	public HangarView(Context context, AttributeSet attrs,	int defStyle) {
 		super(context, attrs, defStyle);
 	}

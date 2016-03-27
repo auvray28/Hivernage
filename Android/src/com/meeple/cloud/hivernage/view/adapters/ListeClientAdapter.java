@@ -104,7 +104,7 @@ public class ListeClientAdapter  extends BaseAdapter {
 			holder.txt_infoSup.setVisibility(View.VISIBLE);
 			break;
 		case RESTEDU :
-			holder.txt_infoSup.setText(getItem(position).getCurrentAcompte() + "€" ); 
+			holder.txt_infoSup.setText(getItem(position).getCurrentAcompte() + "ï¿½" ); 
 			holder.txt_infoSup.setVisibility(View.VISIBLE);
 			break;
 		case ALPHABETIC:

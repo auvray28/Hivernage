@@ -74,8 +74,8 @@ public class AgendaListFragment extends Fragment {
 	}
 	
 	private ArrayList<MyCalendar> getCalendarEvent(OrderCalendarsBy order) {
-		// Crée une projection pour limiter le curseur résultat 
-		// aux colonnes désirées
+		// Crï¿½e une projection pour limiter le curseur rï¿½sultat 
+		// aux colonnes dï¿½sirï¿½es
 		String [] projection = {
 			CalendarContract.Events._ID,
 			CalendarContract.Events.TITLE,
@@ -106,11 +106,11 @@ public class AgendaListFragment extends Fragment {
 			break;
 		}
 		selection += " AND (dtstart >= "+range_start.getTimeInMillis()+") AND (dtend <= "+range_end.getTimeInMillis()+"))";
-		// Récupére un curseur sur le fournisseur d'événements
+		// Rï¿½cupï¿½re un curseur sur le fournisseur d'ï¿½vï¿½nements
 		//
 		Cursor cursor = this.getActivity().getContentResolver().query(CalendarContract.Events.CONTENT_URI, projection , selection, selectionArgs, null);
 		
-		// Récupére les indices des colonnes
+		// Rï¿½cupï¿½re les indices des colonnes
 		//
 		int idIdx      = cursor.getColumnIndexOrThrow(projection[0]);
 		int titleIdx   = cursor.getColumnIndexOrThrow(projection[1]);
@@ -119,11 +119,11 @@ public class AgendaListFragment extends Fragment {
 		int dtDescIdx  = cursor.getColumnIndexOrThrow(projection[4]);
 		
 		
-		// Créer un tableau pour stocker le résultat
+		// Crï¿½er un tableau pour stocker le rï¿½sultat
 		//
 		ArrayList<MyCalendar> alresult = new ArrayList<>();
 		
-		// Parcours le cuseur résultat
+		// Parcours le cuseur rï¿½sultat
 		while(cursor.moveToNext()) {
 			
 			MyCalendar cal = new MyCalendar();

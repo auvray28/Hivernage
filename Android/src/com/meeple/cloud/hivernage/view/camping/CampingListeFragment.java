@@ -78,7 +78,7 @@ public class CampingListeFragment extends Fragment implements TextWatcher {
 	        
 	        IMG_CLEAR = getResources().getDrawable(android.R.drawable.ic_menu_close_clear_cancel);
 	        
-	        // Ouias je sais c'est le meme layout que pour ClientListFragment mais en meme temps ça affiche la meme chose ^^^
+	        // Ouias je sais c'est le meme layout que pour ClientListFragment mais en meme temps ï¿½a affiche la meme chose ^^^
 	        //
 	        View v = inflater.inflate(R.layout.client_liste_layout, container, false); 
 	        

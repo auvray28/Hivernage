@@ -262,7 +262,7 @@ public class MenuActivity extends FragmentActivity implements
 
 			/*
 			 * Attention une erreur pop quand tu vas de agenda vers un autre qui
-			 * contient aussi clientFragment n'en tiens pas compte (pas trouvé
+			 * contient aussi clientFragment n'en tiens pas compte (pas trouvï¿½
 			 * un moyen et en plus ne popera plus quand tous auront un fragment
 			 * different)
 			 */
@@ -340,7 +340,7 @@ public class MenuActivity extends FragmentActivity implements
 		}
 
 		this.doubleBackToExitPressedOnce = true;
-		Toast.makeText(this, "Cliquer une deuxième fois pour quitter",
+		Toast.makeText(this, "Cliquer une deuxiï¿½me fois pour quitter",
 				Toast.LENGTH_SHORT).show();
 
 		new Handler().postDelayed(new Runnable() {

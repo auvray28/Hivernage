@@ -32,7 +32,7 @@ import com.meeple.cloud.hivernage.view.adapters.ListeClientAdapter;
 
 /**
  * Fragment affichant la liste des clients que l'on peut ensuite trier, 
- * On peut également effectuer une recherche
+ * On peut ï¿½galement effectuer une recherche
  * 
  * 
  * @author Francois

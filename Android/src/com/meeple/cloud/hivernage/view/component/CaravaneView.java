@@ -138,7 +138,7 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
         canvas.drawRect(left, top, right, bottom, paint);
         
         // Test pour l'orientation
-        // le petit carré
+        // le petit carrï¿½
         if (gauche)  { // gauche
         	canvas.drawRect(left-8, CARAVANE_VIEW_HEIGHT/2 -3, left, CARAVANE_VIEW_HEIGHT/2 + 13, paint);
         }
@@ -157,7 +157,7 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
         }
         // La couleur du rectangle
         canvas.drawRect(left +3, top + 3, right - 3, bottom - 3, paint );
-        // La couleur du petit carré qui indique l'orientation
+        // La couleur du petit carrï¿½ qui indique l'orientation
         if (gauche)  { // gauche
         	canvas.drawRect( left-5, CARAVANE_VIEW_HEIGHT/2, left, CARAVANE_VIEW_HEIGHT/2 + 10, paint );
         }
@@ -204,8 +204,8 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 		ClipData data = ClipData.newPlainText("", "");
 //		DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 		
-		// pour être franc j'ai copié collé un truc du net et le resultat est pas mal...
-		// j'ai meme pas regarder les maths qu'il y a derriere mais dois pas etre bien compliqués...
+		// pour ï¿½tre franc j'ai copiï¿½ collï¿½ un truc du net et le resultat est pas mal...
+		// j'ai meme pas regarder les maths qu'il y a derriere mais dois pas etre bien compliquï¿½s...
 		//
 		double rotationRad = Math.toRadians(view.getRotation());
 	    final int w = (int) (view.getWidth() * view.getScaleX());
