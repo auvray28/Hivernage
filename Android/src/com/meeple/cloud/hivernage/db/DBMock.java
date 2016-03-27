@@ -91,7 +91,7 @@ public class DBMock {
 		Services.clientService.create(c3);
 		
 		Caravane caravane4 = new Caravane("9247VM28", "Mine!", gabarits.get(2), null);
-		Client c4 = new Client("Auvray", "François", "50 rue Fran�ois L�pine, 28600 Luisant", "0237341425","auvray28@gmail.com", "Coucou!", caravane4);
+		Client c4 = new Client("Auvray", "François", "50 rue François Lépine, 28600 Luisant", "0237341425","auvray28@gmail.com", "Coucou!", caravane4);
 		c4.addHivernage(new Hivernage(HivernageStatus.PAYE, 0));
 		caravane4.setClient(c4);
 		Services.clientService.create(c4);
