@@ -138,7 +138,8 @@ public class ListeClientAdapter  extends BaseAdapter {
 		} else {
 			for (Client c : dataListe) {
 				if (c.getNom().toLowerCase(Locale.getDefault()).contains(charText)
-				  || c.getPrenom().toLowerCase(Locale.getDefault()).contains(charText)) {
+				  || c.getPrenom().toLowerCase(Locale.getDefault()).contains(charText)
+				  || c.getCaravane().getPlaque().toLowerCase(Locale.getDefault()).contains(charText)) {
 					viewedListe.add(c);
 				}
 			}
