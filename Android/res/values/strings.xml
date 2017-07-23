@@ -70,5 +70,13 @@
     
     <string name="prix">"- Prix : "</string>
     
+    <string name="imp_exp">Importer/Exporter</string>
+    
+    <string name="date_begin">- Date de début :</string>
+    
+    <string name="date_fin">- Date de fin :</string>
+    
+    <string name="planifier_vacances">Planifier Vacances</string>
+    
     
 </resources>

@@ -37,7 +37,7 @@ public class MenuActivity extends FragmentActivity implements
 		NewClientInterface, NewCampingInterface {
 
 	private enum MenuBarBtn {
-		CLIENT, HANGAR, LAVAGE, CAMPING, AGENDA, WAITING;
+		CLIENT, HANGAR, LAVAGE, CAMPING, AGENDA, IMP_EXP;
 	}
 
 	private enum PanelMode {
@@ -53,7 +53,7 @@ public class MenuActivity extends FragmentActivity implements
 	boolean doubleBackToExitPressedOnce = false;
 
 	private View btn_Client, btn_Hangar, btn_Lavage, btn_Camping, btn_Agenda,
-			btn_Waiting;
+			btn_Imp_Exp;
 	private TextView txt_Client, txt_Hangar, txt_Lavage, txt_Camping,
 			txt_Agenda, txt_Waiting;
 
@@ -119,8 +119,8 @@ public class MenuActivity extends FragmentActivity implements
 		btn_Lavage = findViewById(R.id.menu_lavage);
 		btn_Camping = findViewById(R.id.menu_camping);
 		btn_Agenda = findViewById(R.id.menu_agenda);
-		btn_Waiting = findViewById(R.id.menu_waiting);
-		btn_Waiting.setVisibility(View.GONE);
+		btn_Imp_Exp = findViewById(R.id.menu_imp_exp);
+		//btn_Imp_Exp.setVisibility(View.GONE);
 		btn_Lavage.setVisibility(View.GONE);
 
 		txt_Client = (TextView) findViewById(R.id.txt_client);
@@ -128,7 +128,7 @@ public class MenuActivity extends FragmentActivity implements
 		txt_Lavage = (TextView) findViewById(R.id.txt_lavage);
 		txt_Camping = (TextView) findViewById(R.id.txt_camping);
 		txt_Agenda = (TextView) findViewById(R.id.txt_agenda);
-		txt_Waiting = (TextView) findViewById(R.id.txt_waiting);
+		txt_Waiting = (TextView) findViewById(R.id.txt_imp_exp);
 
 		// En mode 2 panneaux
 		//
@@ -185,10 +185,10 @@ public class MenuActivity extends FragmentActivity implements
 			}
 		});
 
-		btn_Waiting.setOnClickListener(new OnClickListener() {
+		btn_Imp_Exp.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				clickForWaitingView();
+				clickForImpExp();
 			}
 		});
 	}
@@ -223,10 +223,10 @@ public class MenuActivity extends FragmentActivity implements
 		setSelectedBtn(btn_Agenda);
 	}
 
-	private void clickForWaitingView() {
+	private void clickForImpExp() {
 		switchPanelMode(PanelMode.DOUBLE);
-		onArticleSelected(MenuBarBtn.WAITING);
-		setSelectedBtn(btn_Waiting);
+		onArticleSelected(MenuBarBtn.IMP_EXP);
+		setSelectedBtn(btn_Imp_Exp);
 	}
 
 	public void onArticleSelected(MenuBarBtn newMenu) {
@@ -253,7 +253,9 @@ public class MenuActivity extends FragmentActivity implements
 			case AGENDA:
 				newFrag = agendaFragment;
 				break;
-			case WAITING:
+			case IMP_EXP:
+				// on ne fait rien
+				return;
 			default:
 				newFrag = clientFragment;
 				break;
@@ -297,7 +299,7 @@ public class MenuActivity extends FragmentActivity implements
 		btn_Client.setBackgroundColor(defaultMenuBarBtn);
 		btn_Camping.setBackgroundColor(defaultMenuBarBtn);
 		btn_Hangar.setBackgroundColor(defaultMenuBarBtn);
-		btn_Waiting.setBackgroundColor(defaultMenuBarBtn);
+		btn_Imp_Exp.setBackgroundColor(defaultMenuBarBtn);
 		btn_Lavage.setBackgroundColor(defaultMenuBarBtn);
 
 		txt_Agenda.setTextColor(defaultMenuBarTxt);
