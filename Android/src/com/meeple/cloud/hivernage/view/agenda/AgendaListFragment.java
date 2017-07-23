@@ -121,7 +121,7 @@ public class AgendaListFragment extends Fragment {
 		
 		// Cr�er un tableau pour stocker le r�sultat
 		//
-		ArrayList<MyCalendar> alresult = new ArrayList<>();
+		ArrayList<MyCalendar> alresult = new ArrayList<MyCalendar>();
 		
 		// Parcours le cuseur r�sultat
 		while(cursor.moveToNext()) {

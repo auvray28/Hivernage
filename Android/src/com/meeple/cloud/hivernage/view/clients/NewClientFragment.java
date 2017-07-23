@@ -104,7 +104,7 @@ public class NewClientFragment extends Fragment {
 	}
 	
 	private String[] getAllHangarName(){
-		ArrayList<String> als = new ArrayList<>();
+		ArrayList<String> als = new ArrayList<String>();
 		
 		for(Hangar hang : Services.hangarService.getAllHangars()) {
 			// Ouais je sais le test est un poil moche mais je sais que �a marchera
@@ -122,7 +122,7 @@ public class NewClientFragment extends Fragment {
 	}
 	
 	private String[] getAllGabaritName(){
-		ArrayList<String> als = new ArrayList<>();
+		ArrayList<String> als = new ArrayList<String>();
 		
 		for(Gabarit gab : Services.gabaritService.getAllGabarits()) {
 			als.add(gab.getNom());
