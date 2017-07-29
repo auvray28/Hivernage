@@ -20,17 +20,21 @@ public class Camping extends Entity<Camping>{
 	private String tel;
 	@Column
 	private double prix;
+	@Column
+	private String observations;
+	
 	
 	@OneToMany(ref="camping", isDouble=true)
 	private ArrayList<EmplacementCamping> emplacements;
 
 	public Camping() {}
 	
-	public Camping(String nom, String mail, String tel, double prix) {
+	public Camping(String nom, String mail, String tel, double prix, String observations) {
 		this.nom = nom;
 		this.mail = mail;
 		this.tel = tel;
 		this.prix = prix;
+		this.observations = observations;
 		this.emplacements = new ArrayList<EmplacementCamping>();
 		
 	}
@@ -80,6 +84,14 @@ public class Camping extends Entity<Camping>{
 		this.prix = prix;
 	}
 
+	public String getObservations() {
+		return observations;
+	}
+
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}
+
 	public ArrayList<EmplacementCamping> getEmplacements() {
 		return emplacements;
 	}
@@ -89,7 +101,7 @@ public class Camping extends Entity<Camping>{
 	}
 	
 	
-/********************* Comparators Implémentation ****************************/
+/********************* Comparators Implï¿½mentation ****************************/
 	
 	public static class Comparators {
         public static Comparator<Camping> ALPHABETIC = new Comparator<Camping>() {
@@ -115,5 +127,10 @@ public class Camping extends Entity<Camping>{
       
         
     }
+
+	public String getCSVString() {
+		//NOM;Tel;Mail;Prix;Observation;
+		return getNom() + ";" + getTel() + ";" + getMail() + ";" + getPrix() + ";" + getObservations() + "\n";
+	}
 	
 }

@@ -23,8 +23,10 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 
 	public interface ClientInfoInterface {
 		public void refreshList();
+		
+		public void displayNewHolidaysView(int clientID);
 	}
-	
+
 	
 	private Client client;  
 	
@@ -40,7 +42,8 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 	private TextView txt_caravane_gabarit,txt_caravane_label_position, txt_caravane_position;
 	
 	//
-	private Button btn_updateClient;
+	private Button btn_updateClient, btn_orga_vac;
+	
 	
 	public static ClientInfoFragment newInstance(int clientId) {
 		
@@ -108,6 +111,14 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 				if (mCallback != null) {
 					mCallback.refreshList();
 				}
+			}
+		});
+    	
+    	btn_orga_vac                = (Button) v.findViewById(R.id.btn_orga_vac);
+    	btn_orga_vac.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View arg0) {
+				mCallback.displayNewHolidaysView(client.getClientId());
 			}
 		});
     }

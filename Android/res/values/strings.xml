@@ -82,5 +82,6 @@
     
     <string name="name_new_hangar">Nom du nouveau Hangar</string>
     <string name="add_new_hangar">Ajouter un nouveau Hangar</string>
+    <string name="orag_vac">Organisé vacances</string>
     
 </resources>

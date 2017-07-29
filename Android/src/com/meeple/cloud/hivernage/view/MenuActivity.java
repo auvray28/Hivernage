@@ -1,6 +1,8 @@
 package com.meeple.cloud.hivernage.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.view.agenda.AgendaListFragment;
+import com.meeple.cloud.hivernage.view.agenda.HolidaysFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment.CampingInfoInterface;
@@ -31,6 +34,7 @@ import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInt
 import com.meeple.cloud.hivernage.view.clients.NewClientFragment;
 import com.meeple.cloud.hivernage.view.clients.NewClientFragment.NewClientInterface;
 import com.meeple.cloud.hivernage.view.hangar.HangarMainFragment;
+import com.meeple.cloud.hivernage.view.object.FileManager;
 
 public class MenuActivity extends FragmentActivity implements
 		ClientListInterface, CampingListInterface, ClientInfoInterface, CampingInfoInterface,
@@ -227,6 +231,37 @@ public class MenuActivity extends FragmentActivity implements
 		switchPanelMode(PanelMode.DOUBLE);
 		onArticleSelected(MenuBarBtn.IMP_EXP);
 		setSelectedBtn(btn_Imp_Exp);
+		
+		// Pop up
+		showImpExpWindows();
+	}
+
+	private void showImpExpWindows() {
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+
+		alertDialog.setTitle("Importation/Exportation des données");
+
+		alertDialog.setMessage("Importer ou Exporter ?");
+
+		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Exporter", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				FileManager.writeCampingsToCSV(getBaseContext());
+				FileManager.writeClientsToCSV(getBaseContext());
+			}
+		}); 
+
+		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Importer", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				FileManager.readCampingsCSV(getBaseContext());
+				FileManager.readClientsCSV(getBaseContext());
+			}
+		}); 
+
+		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Annuler", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+			}
+		});
 	}
 
 	public void onArticleSelected(MenuBarBtn newMenu) {
@@ -491,6 +526,37 @@ public class MenuActivity extends FragmentActivity implements
 		clientFragment.refreshClient();
 		
 		campingFragment.refreshCamping();
+	}
+	
+	@Override
+	public void displayNewHolidaysView(int clientID) {
+		// On ferme le clavier dans un premier temps
+		//
+		View view = this.getCurrentFocus();
+		if (view != null) {
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}
+
+		Fragment newFrag = HolidaysFragment.newInstance(clientID);
+
+		if (two_panel != null) {
+
+			// Create fragment and give it an argument for the selected article
+			FragmentTransaction transaction = getSupportFragmentManager()
+					.beginTransaction();
+
+			// Replace whatever is in the fragment_container view with this
+			// fragment,
+			// and add the transaction to the back stack so the user can
+			// navigate back
+			transaction.replace(R.id.big_frame, newFrag);
+			// transaction.addToBackStack(null);
+
+			// Commit the transaction
+			transaction.commit();
+
+		}
 	}
 	
 }

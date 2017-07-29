@@ -140,7 +140,7 @@ public class Client extends Entity<Client>{
 	}
 	
 	
-	/********************* Comparators Implémentation ****************************/
+	/********************* Comparators Implï¿½mentation ****************************/
 	
 	public static class Comparators {
         public static Comparator<Client> ALPHABETIC = new Comparator<Client>() {
@@ -186,5 +186,19 @@ public class Client extends Entity<Client>{
 
 	public CharSequence getFullName() {
 		return nom + " " + prenom; 
+	}
+
+	
+	public String getCSVString() {
+		// Clients 
+		//Nom;Prenom;Adresse;Mail;Telephone;Acompte;Observation;
+		// Caravanes
+		//Immatriculation;Gabarit;Camping/HIVERNAGE;Emplacement/Hangar;EntrÃ©e/X;Sortie/Y;-/Angle;Observation
+		String caravaneInfo = "";
+		if (caravane !=  null) {
+			caravaneInfo = ";"+caravane.getCSVString();
+		}
+		
+		return getNom()+";"+getPrenom()+";"+getAdresse()+";"+getMail()+";"+getTelephone()+";"+getCurrentAcompte()+";"+getObservation()+ caravaneInfo + "\n";
 	}	
 }

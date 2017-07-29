@@ -144,7 +144,7 @@ public class DBMock {
 		Caravane caravane8 = createCaravane(8);
 		Caravane caravane9 = createCaravane(9);
 		
-		Camping ca = new Camping("Antibes", "antibes@gmail.com", "0102030405", 2000);
+		Camping ca = new Camping("Antibes", "antibes@gmail.com", "0102030405", 2000, "observations");
 		
 		Date d = new Date(2016,1,31);
 		Date d2 = new Date(2016,2,24);
@@ -159,9 +159,9 @@ public class DBMock {
 		ca.setEmplacements(alec);
 		
 		Services.campingService.createCamping(ca);
-		Services.campingService.createCamping(new Camping("Chartres", "chartres@gmail.com", "0237341425", 1000));
-		Services.campingService.createCamping(new Camping("Paris", "paris@gmail.com", "0681623914", 500));
-		Services.campingService.createCamping(new Camping("Nice", "nice@gmail.com", "0985647526", 100));
+		Services.campingService.createCamping(new Camping("Chartres", "chartres@gmail.com", "0237341425", 1000, "observations1"));
+		Services.campingService.createCamping(new Camping("Paris", "paris@gmail.com", "0681623914", 500, "observations2"));
+		Services.campingService.createCamping(new Camping("Nice", "nice@gmail.com", "0985647526", 100, "observations3"));
 		
 
 	}

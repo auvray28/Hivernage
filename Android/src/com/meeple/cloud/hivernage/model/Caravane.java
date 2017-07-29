@@ -34,8 +34,7 @@ public class Caravane extends Entity<Caravane>{
 	
 	public Caravane() {}
 	
-	public Caravane(String plaque, String observation, Gabarit gabari,
-			Client client) {
+	public Caravane(String plaque, String observation, Gabarit gabari, Client client) {
 		super();
 		this.plaque = plaque;
 		this.observation = observation;
@@ -145,12 +144,19 @@ public class Caravane extends Entity<Caravane>{
 	}
 	
 	
-	public Camping getCurrentCamping(){
-		//NICO comme nous avons une arrayliste d'emplacement camping comment on sait dans qu'elle camping on est a une date d ?
-		//
-		// il faut check toute les emplacementCamping au load et recup le currentCamping 
-		
-		
+	public Camping getCurrentCamping()
+	{
+		if (getStatus().equals(CaravaneStatus.CAMPING)) {
+			return ((EmplacementCamping)getEmplacementCamping().get(getEmplacementCamping().size() - 1)).getCamping();
+		}
+		return null;
+	}
+	  
+	public EmplacementCamping getCurrentEmplacementCamping()
+	{
+		if (getStatus().equals(CaravaneStatus.CAMPING)) {
+			return (EmplacementCamping)getEmplacementCamping().get(getEmplacementCamping().size() - 1);
+		}
 		return null;
 	}
 
@@ -167,4 +173,58 @@ public class Caravane extends Entity<Caravane>{
 		this.emplacementCamping = emplacementCamping;
 	}
 	
+	public String getCSVString() {
+		// Caravanes
+		//Immatriculation;Gabarit;Camping/HIVERNAGE;Emplacement/Hangar;Entrée/X;Sortie/Y;-/Angle;Observation
+		
+		StringBuilder sb = new StringBuilder("");
+		
+		sb.append(getPlaque() + ";");
+		
+		if(getGabarit() != null) {
+			sb.append(getGabarit().toString().replace("g", "") + ";");
+		}
+		else {
+			sb.append(" ;");
+		}
+		
+		
+		switch (status) {
+		
+		case CAMPING: {
+			sb.append(getCurrentEmplacementCamping().getCamping(). getNom() + ";");
+			sb.append(getCurrentEmplacementCamping().getEmplacement() + ";");
+			if(getCurrentEmplacementCamping().getEntree() != null) {
+				sb.append(getCurrentEmplacementCamping().getEntree().getTime() + ";");
+			}
+			else {
+				sb.append("null;");
+			}
+			if(getCurrentEmplacementCamping().getSortie() != null) {
+				sb.append(getCurrentEmplacementCamping().getSortie().getTime() + ";");
+			}
+			else {
+				sb.append("null;");
+			}
+			sb.append("-;");
+		
+		} break;
+		case HANGAR: 
+			sb.append("HIVERNAGE;");
+			sb.append(getEmplacementHangar().getHangar().getNom() + ";");
+			sb.append(getEmplacementHangar().getPosX() + ";");
+			sb.append(getEmplacementHangar().getPosY() + ";");
+			sb.append(getEmplacementHangar().getAngle() +"-;");
+
+		default:
+			sb.append(status.name() + ";");
+			sb.append(getEmplacementHangar().getHangar().getNom() + ";");
+			sb.append(getEmplacementHangar().getPosX() + ";");
+			sb.append(getEmplacementHangar().getPosY() + ";");
+			sb.append(getEmplacementHangar().getAngle() +"-;");
+		}
+		sb.append(getObservation());
+		
+		return sb.toString();
+	}
 }

@@ -90,9 +90,9 @@ public class NewCampingFragment extends Fragment {
 		String mail    = edt_mail.getText().toString();
 		String tel     = edt_tel.getText().toString();
 		Double prix    = Double.parseDouble(edt_prix.getText().toString());
-//		String obs     = edt_obs.getText().toString();
+		String obs     = edt_obs.getText().toString();
 		 
-		 Camping camp = new Camping(nom, mail, tel, prix);
+		 Camping camp = new Camping(nom, mail, tel, prix, obs);
 		 
 		 Services.campingService.createCamping(camp);
 	}

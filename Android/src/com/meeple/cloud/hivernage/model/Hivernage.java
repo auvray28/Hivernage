@@ -37,6 +37,16 @@ public class Hivernage extends Entity<Hivernage>{
 		historiquePayement = new ArrayList<Paiement>();
 	}
 	
+	public Hivernage(int acompte) {
+		super();
+		this.acompte = acompte;
+		debut = new Date();
+		
+		historiquePayement = new ArrayList<Paiement>();
+		
+		this.status = (acompte == 0) ? HivernageStatus.PAYE : (acompte < 0) ? HivernageStatus.IMPAYE : HivernageStatus.ACCOMPTE;
+	}
+	
 	public Hivernage(String jsonObject) {
 		//TODO
 	}
