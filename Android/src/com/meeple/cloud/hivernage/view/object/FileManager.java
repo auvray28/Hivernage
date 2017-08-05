@@ -201,6 +201,7 @@ public class FileManager {
 
 		File campings_file = new File(documents, CAMPINGS_FILENAME);
 
+		
 		try {
 			OutputStream os = new FileOutputStream(campings_file);
 
