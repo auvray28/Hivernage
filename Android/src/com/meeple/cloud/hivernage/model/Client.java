@@ -45,7 +45,7 @@ public class Client extends Entity<Client>{
 		this.caravane = caravane;
 		this.hivernages = new ArrayList<Hivernage>();
 		
-		if(caravane.getClient() == null) {
+		if(caravane != null && caravane.getClient() == null) {
 			this.caravane.setClient(this);
 		}
 	}
@@ -117,7 +117,7 @@ public class Client extends Entity<Client>{
 
 	public void setCaravane(Caravane caravane) {
 		this.caravane = caravane;
-		if(caravane.getClient() == null) {
+		if(caravane != null && caravane.getClient() == null) {
 			this.caravane.setClient(this);
 		}
 	}

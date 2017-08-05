@@ -182,7 +182,7 @@ public class Caravane extends Entity<Caravane>{
 		sb.append(getPlaque() + ";");
 		
 		if(getGabarit() != null) {
-			sb.append(getGabarit().toString().replace("g", "") + ";");
+			sb.append(getGabarit().getNom().toString().replace("g", "") + ";");
 		}
 		else {
 			sb.append(" ;");
@@ -218,10 +218,12 @@ public class Caravane extends Entity<Caravane>{
 
 		default:
 			sb.append(status.name() + ";");
-			sb.append(getEmplacementHangar().getHangar().getNom() + ";");
-			sb.append(getEmplacementHangar().getPosX() + ";");
-			sb.append(getEmplacementHangar().getPosY() + ";");
-			sb.append(getEmplacementHangar().getAngle() +"-;");
+			if (getEmplacementHangar() != null && getEmplacementHangar().getHangar() != null) {
+				sb.append(getEmplacementHangar().getHangar().getNom() + ";");
+				sb.append(getEmplacementHangar().getPosX() + ";");
+				sb.append(getEmplacementHangar().getPosY() + ";");
+				sb.append(getEmplacementHangar().getAngle() +"-;");
+			}
 		}
 		sb.append(getObservation());
 		

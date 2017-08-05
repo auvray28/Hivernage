@@ -101,6 +101,11 @@ public class Camping extends Entity<Camping>{
 	}
 	
 	
+	public void addEmplacements(EmplacementCamping emplacement) {
+		this.emplacements.add(emplacement);
+	}
+	
+	
 /********************* Comparators Impl�mentation ****************************/
 	
 	public static class Comparators {

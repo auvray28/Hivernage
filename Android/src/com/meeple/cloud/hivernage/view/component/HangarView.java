@@ -44,10 +44,12 @@ public class HangarView extends DragAndDropRelativeLayout {
 	public void loadHangar(Hangar h) {
 		this.hangar = h;
 
-		for (Caravane c : this.hangar.getCaravanes()) {
-			CaravaneView.addCaravane(this,c);
+		if (hangar != null) {
+			for (Caravane c : this.hangar.getCaravanes()) {
+				CaravaneView.addCaravane(this,c);
+			}
+			this.invalidate();
 		}
-		this.invalidate();
 	}
 
 

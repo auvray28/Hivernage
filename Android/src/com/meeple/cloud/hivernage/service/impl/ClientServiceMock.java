@@ -40,7 +40,9 @@ public class ClientServiceMock implements IClientService {
 	public void create(Client client) {
 		client.setClientId(DBMock.DB.getNextId(Client.class));
 		DBMock.DB.getClients().add(client);
-		Services.caravaneService.create(client.getCaravane());
+		if (client.getCaravane() != null) {
+			Services.caravaneService.create(client.getCaravane());
+		}
 	}
 
 	@Override
