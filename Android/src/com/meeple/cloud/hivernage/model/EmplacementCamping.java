@@ -26,9 +26,12 @@ public class EmplacementCamping extends Entity<EmplacementCamping>{
 	
 	public EmplacementCamping() {}
 	
-	public EmplacementCamping(String emplacement, Caravane caravane) {
+	public EmplacementCamping(Camping camping, String emplacement, Caravane caravane) {
+		this.camping = camping;
 		this.emplacement = emplacement;
 		this.caravane    = caravane;
+		
+		camping.addEmplacements(this);
 	}
 	
 	public EmplacementCamping(String jsonObject) {
