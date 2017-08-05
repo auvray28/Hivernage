@@ -59,7 +59,7 @@ public class MenuActivity extends FragmentActivity implements
 	private View btn_Client, btn_Hangar, btn_Lavage, btn_Camping, btn_Agenda,
 			btn_Imp_Exp;
 	private TextView txt_Client, txt_Hangar, txt_Lavage, txt_Camping,
-			txt_Agenda, txt_Waiting;
+			txt_Agenda, txt_Imp_Exp;
 
 	private LinearLayout one_panel, two_panel;
 	private FrameLayout little_frame, big_frame, only_frame;
@@ -132,7 +132,7 @@ public class MenuActivity extends FragmentActivity implements
 		txt_Lavage = (TextView) findViewById(R.id.txt_lavage);
 		txt_Camping = (TextView) findViewById(R.id.txt_camping);
 		txt_Agenda = (TextView) findViewById(R.id.txt_agenda);
-		txt_Waiting = (TextView) findViewById(R.id.txt_imp_exp);
+		txt_Imp_Exp = (TextView) findViewById(R.id.txt_imp_exp);
 
 		// En mode 2 panneaux
 		//
@@ -228,7 +228,7 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	private void clickForImpExp() {
-		switchPanelMode(PanelMode.DOUBLE);
+		//switchPanelMode(PanelMode.DOUBLE);
 		onArticleSelected(MenuBarBtn.IMP_EXP);
 		setSelectedBtn(btn_Imp_Exp);
 		
@@ -243,7 +243,7 @@ public class MenuActivity extends FragmentActivity implements
 
 		alertDialog.setMessage("Importer ou Exporter ?");
 
-		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Exporter", new DialogInterface.OnClickListener() {
+		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Exporter", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				FileManager.writeCampingsToCSV(getBaseContext());
 				FileManager.writeClientsToCSV(getBaseContext());
@@ -257,11 +257,13 @@ public class MenuActivity extends FragmentActivity implements
 			}
 		}); 
 
-		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Annuler", new DialogInterface.OnClickListener() {
+		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Annuler", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.dismiss();
 			}
 		});
+		
+		alertDialog.show();
 	}
 
 	public void onArticleSelected(MenuBarBtn newMenu) {
@@ -341,8 +343,8 @@ public class MenuActivity extends FragmentActivity implements
 		txt_Client.setTextColor(defaultMenuBarTxt);
 		txt_Camping.setTextColor(defaultMenuBarTxt);
 		txt_Hangar.setTextColor(defaultMenuBarTxt);
-		txt_Waiting.setTextColor(defaultMenuBarTxt);
 		txt_Lavage.setTextColor(defaultMenuBarTxt);
+		txt_Imp_Exp.setTextColor(defaultMenuBarTxt);
 
 		btnSelected.setBackgroundColor(selectedMenuBarBtn);
 
