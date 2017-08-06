@@ -16,6 +16,9 @@ import com.meeple.cloud.hivernage.model.Hivernage;
 import com.meeple.cloud.hivernage.model.Tranche;
 import com.meeple.cloud.hivernage.model.enums.HivernageStatus;
 import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.object.FileManager;
+
+import android.content.Context;
 
 public class DBMock {
 	
@@ -60,6 +63,34 @@ public class DBMock {
 		lastIds = new HashMap<Class<? extends Object>, Integer>();
 
 //		fill();
+	}
+	
+	public void load(Context context) {
+		
+		if (true) {
+			createDefaultObject();
+		
+			FileManager.readCampingsCSV(context);
+			FileManager.readClientsCSV(context);
+		}
+	}
+	
+	
+	private void createDefaultObject() {
+		// Gabarit par defaut
+	    Services.gabaritService.createGabarit(new Gabarit("g1", 250, 170));
+	    Services.gabaritService.createGabarit(new Gabarit("g2", 300, 170));
+	    Services.gabaritService.createGabarit(new Gabarit("g3", 400, 170));
+	    Services.gabaritService.createGabarit(new Gabarit("g4", 500, 170));
+	    Services.gabaritService.createGabarit(new Gabarit("g5", 600, 170));
+	    // Tranche par defaut
+	    Services.trancheService.createTranche(new Tranche(1, 100, 260, 100.0D));
+	    Services.trancheService.createTranche(new Tranche(2, 261, 310, 200.0D));
+	    Services.trancheService.createTranche(new Tranche(3, 311, 1000, 400.0D));
+	    // hangar par defaut
+	    Services.hangarService.createHangar(new Hangar("Porcherie", 0, 0));
+	    Services.hangarService.createHangar(new Hangar("Lavage", 1, 1));
+	    Services.hangarService.createHangar(new Hangar("Waiting", 1, 1));
 	}
 	
 	public void fill() {
@@ -149,10 +180,10 @@ public class DBMock {
 		Date d = new Date(2016,1,31);
 		Date d2 = new Date(2016,2,24);
 		
-		EmplacementCamping em1 = new EmplacementCamping("Antibes_1", caravane6);em1.setEntree(d); em1.setSortie(d2);
-		EmplacementCamping em2 = new EmplacementCamping("Antibes_2", caravane7);em2.setEntree(d); em2.setSortie(d2);
-		EmplacementCamping em3 = new EmplacementCamping("Antibes_3", caravane8);em3.setEntree(d); em3.setSortie(d2);
-		EmplacementCamping em4 = new EmplacementCamping("Antibes_4", caravane9);em4.setEntree(d); em4.setSortie(d2);
+		EmplacementCamping em1 = new EmplacementCamping(ca, "Antibes_1", caravane6);em1.setEntree(d); em1.setSortie(d2);
+		EmplacementCamping em2 = new EmplacementCamping(ca, "Antibes_2", caravane7);em2.setEntree(d); em2.setSortie(d2);
+		EmplacementCamping em3 = new EmplacementCamping(ca, "Antibes_3", caravane8);em3.setEntree(d); em3.setSortie(d2);
+		EmplacementCamping em4 = new EmplacementCamping(ca, "Antibes_4", caravane9);em4.setEntree(d); em4.setSortie(d2);
 		
 		ArrayList<EmplacementCamping> alec = new ArrayList<EmplacementCamping>();
 		alec.add(em1);alec.add(em2);alec.add(em3);alec.add(em4);
@@ -211,6 +242,12 @@ public class DBMock {
 		lastIds.put(c, nextId);
 		return nextId;
 	}
+	
+	  public HashMap<Class<? extends Object>, Integer> getLastIds()
+	  {
+	    return this.lastIds;
+	  }
+	
 	public ArrayList<Caravane> getCaravanes() {
 		return caravanes;
 	}

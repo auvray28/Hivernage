@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.meeple.cloud.hivernage.db.DBMock;
+import com.meeple.cloud.hivernage.db.DbHelper;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.model.Hivernage;
 import com.meeple.cloud.hivernage.service.IClientService;
@@ -42,6 +43,7 @@ public class ClientServiceMock implements IClientService {
 		DBMock.DB.getClients().add(client);
 		if (client.getCaravane() != null) {
 			Services.caravaneService.create(client.getCaravane());
+			DbHelper.instance.saveModel();
 		}
 	}
 
@@ -54,6 +56,7 @@ public class ClientServiceMock implements IClientService {
 		c.setNom(client.getNom());
 		c.setObservation(client.getObservation());
 		c.setPrenom(client.getPrenom());
+		DbHelper.instance.saveModel();
 		
 	}
 
@@ -61,11 +64,13 @@ public class ClientServiceMock implements IClientService {
 	public void delete(Client client) {
 		Client c = findById(client.getClientId());
 		DBMock.DB.getClients().remove(c);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
 	public void addHivernage(Client client, Hivernage hivernage) {
 		findById(client.getClientId()).getHivernages().add(hivernage);
+		DbHelper.instance.saveModel();
 		
 	}
 
@@ -79,6 +84,7 @@ public class ClientServiceMock implements IClientService {
 				return;
 			}
 		}
+		DbHelper.instance.saveModel();
 	}
 
 }

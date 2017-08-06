@@ -5,6 +5,7 @@ import android.app.Application;
 
 import com.meeple.cloud.hivernage.db.DBMock;
 import com.meeple.cloud.hivernage.db.DbHelper;
+import com.meeple.cloud.hivernage.model.tools.SharedPreferenceHelper;
 
 public class HivernageApplication extends Application {
 
@@ -18,7 +19,8 @@ public class HivernageApplication extends Application {
 	
 	protected void initMock() {
 		DBMock.DB.fill();
-		DbHelper.instance = new DbHelper(getApplicationContext());
+		DbHelper.instance = new DbHelper(getBaseContext(), new SharedPreferenceHelper(getBaseContext()));
+		//DbHelper.instance.load();
 	}
 	
 }

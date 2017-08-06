@@ -3,6 +3,7 @@ package com.meeple.cloud.hivernage.service.impl;
 import java.util.ArrayList;
 
 import com.meeple.cloud.hivernage.db.DBMock;
+import com.meeple.cloud.hivernage.db.DbHelper;
 import com.meeple.cloud.hivernage.model.Hangar;
 import com.meeple.cloud.hivernage.service.IHangarService;
 
@@ -13,6 +14,7 @@ public class HangarServiceMock implements IHangarService {
 	public void createHangar(Hangar hangar) {
 		hangar.setHangarId(DBMock.DB.getNextId(Hangar.class));
 		DBMock.DB.getHangars().add(hangar);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
@@ -21,12 +23,14 @@ public class HangarServiceMock implements IHangarService {
 		h.setLargeur(hangar.getLargeur());
 		h.setLongueur(hangar.getLongueur());
 		h.setNom(hangar.getNom());
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
 	public void removeHangar(Hangar hangar) {
 		Hangar h = findHangarById(hangar.getHangarId());
 		DBMock.DB.getHangars().remove(h);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override

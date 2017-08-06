@@ -3,6 +3,7 @@ package com.meeple.cloud.hivernage.service.impl;
 import java.util.ArrayList;
 
 import com.meeple.cloud.hivernage.db.DBMock;
+import com.meeple.cloud.hivernage.db.DbHelper;
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.model.EmplacementCamping;
@@ -51,6 +52,7 @@ public class CaravaneServiceMock implements ICaravaneService {
 	public void create(Caravane caravane) {
 		caravane.setCaravaneId(DBMock.DB.getNextId(Caravane.class));
 		DBMock.DB.getCaravanes().add(caravane);
+		DbHelper.instance.saveModel();
 
 	}
 
@@ -63,18 +65,21 @@ public class CaravaneServiceMock implements ICaravaneService {
 		c.setObservation(caravane.getObservation());
 		c.setPlaque(caravane.getPlaque());
 		c.setStatus(caravane.getStatus());
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
 	public void delete(Caravane caravane) {
 		Caravane c = findById(caravane.getCaravaneId());
 		DBMock.DB.getCaravanes().remove(c);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
 	public void move(Caravane caravane, EmplacementHangar emplacementHangar) {
 		removeFromHangar(caravane);
 		putInHangar(caravane, emplacementHangar);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
@@ -82,17 +87,20 @@ public class CaravaneServiceMock implements ICaravaneService {
 		emplacementHangar.getHangar().getCaravanes().add(caravane);
 		caravane.setEmplacementHangar(emplacementHangar);
 		caravane.setStatus(CaravaneStatus.HANGAR);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
 	public void removeFromHangar(Caravane caravane) {
 		caravane.getEmplacementHangar().getHangar().removeCaravane(caravane);
 		caravane.setEmplacementHangar(null);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
 	public void putToCamping(Caravane caravane, EmplacementCamping emplacement) {
 		caravane.setStatus(CaravaneStatus.CAMPING);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
@@ -100,12 +108,15 @@ public class CaravaneServiceMock implements ICaravaneService {
 			EmplacementCamping emplacement) {
 		caravane.getEmplacementCamping().add(emplacement);
 		DBMock.DB.getEmplacements().add(emplacement);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
 	public void removeFromCamping(Caravane caravane) {
-		//TODO
+		caravane.getEmplacementHangar().getHangar().removeCaravane(caravane);
+		caravane.setEmplacementHangar(null);
 		caravane.setStatus(CaravaneStatus.SORTIE);
+		DbHelper.instance.saveModel();
 	}
 
 }

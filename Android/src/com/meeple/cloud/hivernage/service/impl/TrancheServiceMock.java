@@ -3,6 +3,7 @@ package com.meeple.cloud.hivernage.service.impl;
 import java.util.ArrayList;
 
 import com.meeple.cloud.hivernage.db.DBMock;
+import com.meeple.cloud.hivernage.db.DbHelper;
 import com.meeple.cloud.hivernage.model.Tranche;
 import com.meeple.cloud.hivernage.service.ITrancheService;
 
@@ -12,7 +13,7 @@ public class TrancheServiceMock implements ITrancheService {
 	public void createTranche(Tranche tranche) {
 		tranche.setTrancheId(DBMock.DB.getNextId(Tranche.class));
 		DBMock.DB.getTranches().add(tranche);
-		
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
@@ -21,12 +22,14 @@ public class TrancheServiceMock implements ITrancheService {
 		t.setLongueurMax(tranche.getLongueurMax());
 		t.setLongueurMin(tranche.getLongueurMin());
 		t.setPrix(tranche.getPrix());
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
 	public void removeTranche(Tranche tranche) {
 		Tranche t = findTrancheById(tranche.getTrancheId());
 		DBMock.DB.getTranches().remove(t);
+		DbHelper.instance.saveModel();
 	}
 
 	@Override
