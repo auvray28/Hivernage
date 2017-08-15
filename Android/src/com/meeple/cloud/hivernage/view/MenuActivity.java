@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.db.DBMock;
+import com.meeple.cloud.hivernage.db.DbHelper;
 import com.meeple.cloud.hivernage.view.agenda.AgendaListFragment;
 import com.meeple.cloud.hivernage.view.agenda.HolidaysFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment;
@@ -252,8 +254,11 @@ public class MenuActivity extends FragmentActivity implements
 
 		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Importer", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
+				DbHelper.instance.isImportingModel = true;
 				FileManager.readCampingsCSV(getBaseContext());
 				FileManager.readClientsCSV(getBaseContext());
+				DbHelper.instance.isImportingModel = false;
+				DbHelper.instance.saveModel();
 			}
 		}); 
 

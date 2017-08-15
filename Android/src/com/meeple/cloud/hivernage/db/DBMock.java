@@ -78,6 +78,8 @@ public class DBMock {
 	
 	
 	public void createDefaultObject() {
+		DbHelper.instance.isImportingModel = true;
+		
 		// Gabarit par defaut
 	    Services.gabaritService.createGabarit(new Gabarit("g1", 250, 170));
 	    Services.gabaritService.createGabarit(new Gabarit("g2", 300, 170));
@@ -92,6 +94,8 @@ public class DBMock {
 	    Services.hangarService.createHangar(new Hangar("Porcherie", 0, 0));
 	    Services.hangarService.createHangar(new Hangar("Lavage", 1, 1));
 	    Services.hangarService.createHangar(new Hangar("Waiting", 1, 1));
+	    
+	    DbHelper.instance.isImportingModel = false;
 	}
 	
 	public void fill() {
