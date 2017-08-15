@@ -33,6 +33,7 @@ public class AbstractDao<T extends Entity<T>> {
 			String cols = res.getIdColumn() + " = ?";
 			String[] values = { "" + id };
 
+			/*
 			Cursor c = DbHelper.getInstance().getReadableDatabase()
 					.query(tableName, // The table to query
 							null, // The columns to return
@@ -49,6 +50,7 @@ public class AbstractDao<T extends Entity<T>> {
 			}
 
 			res.parseFromString(serial);
+			*/
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,7 +69,7 @@ public class AbstractDao<T extends Entity<T>> {
 				values.put(DbHelper.fieldToColName(f.getName()), val);
 				System.out.println("key:"+DbHelper.fieldToColName(f.getName())+" val:"+val);
 			}
-			DbHelper.getInstance().getWritableDatabase().insert(tableName, null, values);
+//			DbHelper.getInstance().getWritableDatabase().insert(tableName, null, values);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -78,7 +80,7 @@ public class AbstractDao<T extends Entity<T>> {
 		String cols = entity.getIdColumn()+" = ?";
 		String[] values = {""+entity.getIdValue()};
 
-		DbHelper.getInstance().getWritableDatabase().delete(tableName, cols, values);
+//		DbHelper.getInstance().getWritableDatabase().delete(tableName, cols, values);
 	}
 	
 	public void update(T entity) {
@@ -95,7 +97,7 @@ public class AbstractDao<T extends Entity<T>> {
 			String cols = entity.getIdColumn()+" = ?";
 			String[] id = {""+entity.getIdValue()};
 
-			DbHelper.getInstance().getWritableDatabase().update(tableName, values, cols, id);
+//			DbHelper.getInstance().getWritableDatabase().update(tableName, values, cols, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
