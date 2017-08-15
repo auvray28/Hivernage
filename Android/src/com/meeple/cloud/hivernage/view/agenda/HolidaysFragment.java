@@ -9,9 +9,11 @@ import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.object.MyCalendar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 public class HolidaysFragment extends Fragment
 {
@@ -135,53 +138,16 @@ public class HolidaysFragment extends Fragment
 	
 	public void pickDate(final TextView paramTextView, final int paramInt)
 	{
-	
-		DatePickerDialog datePIckerDialog = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
-			
-			@Override
-			public void onDateSet(DatePicker arg0, int year, int monthOfYear, int dayOfMonth) {
-				paramTextView.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
-				
-			}
-		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-		
-		datePIckerDialog.show();
-		/*
-		DatePickerDialog.Builder ad = new DatePickerDialog.Builder(this.getActivity());
-		ad.setTitle("");
-		ad.setMessage("");
-		
-		ad.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				
-			}
-		});
-		
-		ad.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// ne rien faire
-			}
-		});
-		// POur le bouton retour
-		ad.setCancelable(true);
-		ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-			
-			@Override
-			public void onCancel(DialogInterface dialog) {
-				// ne rien faire
-			}
-		});
-		*/
-		/*
 		final Dialog localDialog = new Dialog(getActivity());
-		localDialog.setContentView(2130903053);
-		localDialog.setTitle(2131034158);
-		final TimePicker localTimePicker = (TimePicker)localDialog.findViewById(2131230838);
+		localDialog.setContentView(R.layout.dt_picker);
+		localDialog.setTitle(R.string.choose_date_and_time);
+
+		final TimePicker localTimePicker = (TimePicker)localDialog.findViewById(R.id.timePicker1);
 		localTimePicker.setIs24HourView(Boolean.valueOf(true));
-		final DatePicker localDatePicker = (DatePicker)localDialog.findViewById(2131230837);
-		((Button)localDialog.findViewById(2131230841)).setOnClickListener(new View.OnClickListener()
+		final DatePicker localDatePicker = (DatePicker)localDialog.findViewById(R.id.datePicker1);
+		
+		// Bouton Valider
+		((Button)localDialog.findViewById(R.id.bt_valider)).setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View paramAnonymousView)
 			{
@@ -192,28 +158,27 @@ public class HolidaysFragment extends Fragment
 				int n = localDatePicker.getDayOfMonth();
 				if (paramInt == 0) {
 					HolidaysFragment.this.beginDate = new GregorianCalendar(k, m, n, j, i);
+					paramTextView.setText(MyCalendar.formatter.format(HolidaysFragment.this.beginDate.getTime()));
 				}
-				//TODO met a jour la text view dans la vue parent
-				//
-				for (paramAnonymousView = HolidaysFragment.this.beginDate;; paramAnonymousView = HolidaysFragment.this.endDate)
-				{
-					paramTextView.setText(MyCalendar.formatter.format(paramAnonymousView.getTime()));
-					paramTextView.setError(null);
-					localDialog.hide();
-					return;
+				else {
 					HolidaysFragment.this.endDate = new GregorianCalendar(k, m, n, j, i);
+					paramTextView.setText(MyCalendar.formatter.format(HolidaysFragment.this.endDate.getTime()));
 				}
-				//
+				localDialog.hide();
 			}
 		});
-		((Button)localDialog.findViewById(2131230840)).setOnClickListener(new View.OnClickListener()
+		
+		// Bouton Annuler
+		((Button)localDialog.findViewById(R.id.bt_annuler)).setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View paramAnonymousView)
 			{
 				localDialog.hide();
 			}
 		});
-		localDialog.show();*/
+		
+		
+		localDialog.show();
 	}
 
 	public void planifierVacances()

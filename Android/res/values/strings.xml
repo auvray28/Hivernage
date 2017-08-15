@@ -84,4 +84,10 @@
     <string name="add_new_hangar">Ajouter un nouveau Hangar</string>
     <string name="orag_vac">Organisé vacances</string>
     
+    <string name="choose_date_and_time">Choisis la date et l\'heure</string>
+    
+    <string name="annuler">Annuler</string>
+    
+    <string name="valider">Valider</string>
+    
 </resources>
