@@ -3,7 +3,14 @@ package com.meeple.cloud.hivernage.view.clients;
 import java.util.Comparator;
 import java.util.Locale;
 
+import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.model.Client;
+import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.adapters.ListeClientAdapter;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,11 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-
-import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Client;
-import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.adapters.ListeClientAdapter;
 
 
 /**
@@ -147,6 +149,30 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 			}
 		});
     	
+    	listeClients.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+				new AlertDialog.Builder(ClientListeFragment.this.getActivity())
+				.setTitle("Supprimer Client")
+				.setMessage("Êtes-vous sûre de vouloir supprimer ce client ?")
+				.setPositiveButton(R.string.valider, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int)
+					{
+						ClientListeFragment.this.deleteClient(pos);
+					}
+				})
+				.setNegativeButton(R.string.annuler, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int)
+					{
+						paramAnonymous2DialogInterface.dismiss();
+					}
+				})
+				.setIcon(android.R.drawable.ic_dialog_alert)
+				.show();
+				return true;				
+			}
+		});
+    	
     	btn_addClient = (Button) v.findViewById(R.id.btn_addclient);
     	btn_addClient.setText(R.string.ajouter_client);
     	btn_addClient.setOnClickListener(new OnClickListener() {
@@ -159,7 +185,16 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
     	
     }
 
-    @Override
+    protected void deleteClient(int index) {
+    	Client localClient = (Client)this.listeClientAdapter.getViewedList().get(index);
+    	if (this.listeClientAdapter.getDataList().contains(localClient)) {
+    		this.listeClientAdapter.getDataList().remove(localClient);
+    	}
+    	Services.clientService.delete(localClient);
+    	this.listeClientAdapter.notifyDataSetChanged();
+    }
+
+	@Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 

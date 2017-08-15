@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,16 @@ public class ListeClientAdapter  extends BaseAdapter {
 		return arg0;
 	}
 
+
+	public List<Client> getViewedList() {
+		return viewedListe;
+	}
+	
+
+	public ArrayList<Client> getDataList() {
+		return dataListe;
+	}
+	
 	private class ViewHolder{
 		public TextView txt_name;
 		public TextView txt_infoSup;
@@ -149,5 +160,4 @@ public class ListeClientAdapter  extends BaseAdapter {
 		
 		notifyDataSetChanged();
 	}
-	
 }

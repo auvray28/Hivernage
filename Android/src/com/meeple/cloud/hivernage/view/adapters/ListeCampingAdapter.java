@@ -54,6 +54,14 @@ public class ListeCampingAdapter  extends BaseAdapter {
 	public Camping getItem(int arg0) {
 		return viewedListe.get(arg0);
 	}
+	
+	public List<Camping> getViewedList(){
+		return this.viewedListe;
+	}
+	
+	public ArrayList<Camping> getDataList(){
+		return this.dataListe;
+	}
 
 	@Override
 	public long getItemId(int arg0) {

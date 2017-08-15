@@ -3,7 +3,14 @@ package com.meeple.cloud.hivernage.view.camping;
 import java.util.Comparator;
 import java.util.Locale;
 
+import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.model.Camping;
+import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.adapters.ListeCampingAdapter;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,17 +24,13 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-
-import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Camping;
-import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.adapters.ListeCampingAdapter;
 
 public class CampingListeFragment extends Fragment implements TextWatcher {
 
@@ -138,6 +141,29 @@ public class CampingListeFragment extends Fragment implements TextWatcher {
 					mCallback.displayCampingInfo( ((Camping)parent.getItemAtPosition(pos)).getCampingId());
 				}
 			});
+	    	listeCampings.setOnItemLongClickListener(new OnItemLongClickListener() {
+				@Override
+				public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+					new AlertDialog.Builder(CampingListeFragment.this.getActivity())
+					.setTitle("Supprimer Camping")
+					.setMessage("Êtes-vous sûre de vouloir supprimer ce camping ?")
+					.setPositiveButton(R.string.valider, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int)
+						{
+							CampingListeFragment.this.deleteCamping(pos);
+						}
+					})
+					.setNegativeButton(R.string.annuler, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int)
+						{
+							paramAnonymous2DialogInterface.dismiss();
+						}
+					})
+					.setIcon(android.R.drawable.ic_dialog_alert).show();
+					return true;				
+				}
+			});
+	    	
 	    	
 	    	btn_addCamping = (Button) v.findViewById(R.id.btn_addclient);
 	    	btn_addCamping.setText(R.string.ajouter_camping);
@@ -165,6 +191,15 @@ public class CampingListeFragment extends Fragment implements TextWatcher {
 	    
 		public void refreshCamping() {
 	    	listeCampingsAdapter.notifyDataSetChanged();
+		}
+		
+		private void deleteCamping(int paramInt)  {
+			Camping localCamping = (Camping)this.listeCampingsAdapter.getViewedList().get(paramInt);
+			if (this.listeCampingsAdapter.getDataList().contains(localCamping)) {
+				this.listeCampingsAdapter.getDataList().remove(localCamping);
+			}
+			Services.campingService.removeCamping(localCamping);
+			this.listeCampingsAdapter.notifyDataSetChanged();
 		}
 	    
 	    /***** TextWatcher ****/
