@@ -28,9 +28,9 @@ public class ClientServiceMock implements IClientService {
 	}
 
 	@Override
-	public Client findByName(String firstName, String lastName) {
+	public Client findByName(String prenom, String nom) {
 		for(Client c : getAllClient()) {
-			if(c.getNom().equalsIgnoreCase(lastName) && c.getPrenom().equalsIgnoreCase(firstName)) {
+			if(c.getNom().equalsIgnoreCase(nom) && c.getPrenom().equalsIgnoreCase(prenom)) {
 				return c;
 			}
 		}
