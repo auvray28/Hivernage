@@ -18,9 +18,9 @@ public class HivernageApplication extends Application {
 	}
 	
 	protected void initMock() {
-		DBMock.DB.fill();
 		DbHelper.instance = new DbHelper(getBaseContext(), new SharedPreferenceHelper(getBaseContext()));
-		//DbHelper.instance.load();
+		//DBMock.DB.fill();
+		DbHelper.instance.load();
 	}
 	
 }
