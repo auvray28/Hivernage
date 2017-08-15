@@ -100,5 +100,8 @@ public class Hangar extends Entity<Hangar>{
 		}
 	}
 	
+	public String toString() {
+		return getNom() + " : " + getCaravanes().size();
+	}
 	
 }

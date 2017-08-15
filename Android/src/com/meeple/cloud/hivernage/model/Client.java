@@ -211,4 +211,19 @@ public class Client extends Entity<Client>{
 		
 		return getNom()+";"+getPrenom()+";"+getAdresse()+";"+getMail()+";"+getTelephone()+";"+getCurrentAcompte()+";"+getObservation()+ caravaneInfo + "\n";
 	}	
+	
+	public String toString() {
+		String caravaneState = "";
+		
+		switch (getCaravane().getStatus()) {
+		case CAMPING:
+			caravaneState += "=> Camping : " +caravane.getCurrentCamping().getNom();
+			break;
+		default:
+			caravaneState += "=> Hangar : " + caravane.getEmplacementHangar().getHangar().getNom();
+			break;
+		}
+		
+		return getNom() + " " + getPrenom() + caravaneState;
+	}
 }

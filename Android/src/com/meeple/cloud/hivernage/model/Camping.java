@@ -138,4 +138,8 @@ public class Camping extends Entity<Camping>{
 		return getNom() + ";" + getTel() + ";" + getMail() + ";" + getPrix() + ";" + getObservations() + "\n";
 	}
 	
+	public String toString() {
+		return getNom() + " : " + getEmplacements().size();
+	}
+	
 }
