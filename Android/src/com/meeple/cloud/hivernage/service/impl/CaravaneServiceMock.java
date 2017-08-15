@@ -50,7 +50,7 @@ public class CaravaneServiceMock implements ICaravaneService {
 
 	@Override
 	public void create(Caravane caravane) {
-		caravane.setCaravaneId(DBMock.DB.getNextId(Caravane.class));
+		caravane.setCaravaneId(DBMock.DB.getNextId(Caravane.class.getSimpleName()));
 		DBMock.DB.getCaravanes().add(caravane);
 		DbHelper.instance.saveModel();
 

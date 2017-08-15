@@ -11,7 +11,7 @@ public class TrancheServiceMock implements ITrancheService {
 
 	@Override
 	public void createTranche(Tranche tranche) {
-		tranche.setTrancheId(DBMock.DB.getNextId(Tranche.class));
+		tranche.setTrancheId(DBMock.DB.getNextId(Tranche.class.getSimpleName()));
 		DBMock.DB.getTranches().add(tranche);
 		DbHelper.instance.saveModel();
 	}

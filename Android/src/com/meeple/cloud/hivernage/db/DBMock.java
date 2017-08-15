@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.google.gson.JsonElement;
 import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Client;
@@ -40,7 +41,7 @@ public class DBMock {
 	
 	private ArrayList<Facture> factures;
 	
-	private HashMap<Class<? extends Object>, Integer> lastIds;
+	private HashMap<String, Integer> lastIds;
 	
 	private ArrayList<Caravane> caravanes;
 	
@@ -60,7 +61,7 @@ public class DBMock {
 		factures = new ArrayList<Facture>();
 		tranches = new ArrayList<Tranche>();
 
-		lastIds = new HashMap<Class<? extends Object>, Integer>();
+		lastIds = new HashMap<String, Integer>();
 
 //		fill();
 	}
@@ -76,7 +77,7 @@ public class DBMock {
 	}
 	
 	
-	private void createDefaultObject() {
+	public void createDefaultObject() {
 		// Gabarit par defaut
 	    Services.gabaritService.createGabarit(new Gabarit("g1", 250, 170));
 	    Services.gabaritService.createGabarit(new Gabarit("g2", 300, 170));
@@ -232,7 +233,7 @@ public class DBMock {
 		return factures;
 	}
 	
-	public int getNextId(Class<? extends Object> c){
+	public int getNextId(String c){
 		if(! lastIds.containsKey(c)) {
 			lastIds.put(c, 0);
 			return 0;
@@ -243,12 +244,28 @@ public class DBMock {
 		return nextId;
 	}
 	
-	  public HashMap<Class<? extends Object>, Integer> getLastIds()
-	  {
-	    return this.lastIds;
-	  }
+	public HashMap<String, Integer> getLastIds() {
+		return this.lastIds;
+	}
 	
 	public ArrayList<Caravane> getCaravanes() {
 		return caravanes;
+	}
+	
+	public void setLastIds(HashMap<String, Integer> paramHashMap) 	{
+		this.lastIds = paramHashMap;
+	}
+	
+	public String getLastIdsString() {
+		return getLastIds().toString().replace("=", ":");
+	}
+	public HashMap<String, Integer> getLastIdsForJSon() {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		
+		for ( String keyClass : this.lastIds.keySet()) {
+			map.put(keyClass, this.lastIds.get(keyClass));
+		}
+		
+		return map;
 	}
 }

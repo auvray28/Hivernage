@@ -12,7 +12,7 @@ public class HangarServiceMock implements IHangarService {
 
 	@Override
 	public void createHangar(Hangar hangar) {
-		hangar.setHangarId(DBMock.DB.getNextId(Hangar.class));
+		hangar.setHangarId(DBMock.DB.getNextId(Hangar.class.getSimpleName()));
 		DBMock.DB.getHangars().add(hangar);
 		DbHelper.instance.saveModel();
 	}

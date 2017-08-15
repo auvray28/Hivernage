@@ -11,7 +11,7 @@ public class CampingServiceMock implements ICampingService {
 
 	@Override
 	public void createCamping(Camping camping) {
-		camping.setCampingId(DBMock.DB.getNextId(Camping.class));
+		camping.setCampingId(DBMock.DB.getNextId(Camping.class.getSimpleName()));
 		DBMock.DB.getCampings().add(camping);
 		DbHelper.instance.saveModel();
 	}

@@ -12,7 +12,7 @@ public class HivernageServiceMock implements IHivernageService {
 
 	@Override
 	public void createHivernage(Hivernage hivernage) {
-		hivernage.setHivernageId(DBMock.DB.getNextId(Hivernage.class));
+		hivernage.setHivernageId(DBMock.DB.getNextId(Hivernage.class.getSimpleName()));
 		DBMock.DB.getHivernages().add(hivernage);
 		DbHelper.instance.saveModel();
 		

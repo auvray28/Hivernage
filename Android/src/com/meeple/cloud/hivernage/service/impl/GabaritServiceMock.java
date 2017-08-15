@@ -11,7 +11,7 @@ public class GabaritServiceMock implements IGabaritService {
 
 	@Override
 	public void createGabarit(Gabarit gabarit) {
-		gabarit.setGabaritId(DBMock.DB.getNextId(Gabarit.class));
+		gabarit.setGabaritId(DBMock.DB.getNextId(Gabarit.class.getSimpleName()));
 		DBMock.DB.getGabarits().add(gabarit);
 		DbHelper.instance.saveModel();
 	}
