@@ -26,7 +26,9 @@ public class Hivernage extends Entity<Hivernage>{
 	@OneToMany(colName="HIVERNAGE_ID")
 	private ArrayList<Paiement> historiquePayement;
 	
-	public Hivernage() {}
+	public Hivernage() {
+		this.historiquePayement = new ArrayList();
+	}
 	
 	public Hivernage(HivernageStatus status, int acompte) {
 		super();

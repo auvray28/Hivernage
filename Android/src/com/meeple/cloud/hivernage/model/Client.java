@@ -31,7 +31,9 @@ public class Client extends Entity<Client>{
 	@OneToMany(colName="CLIENT_ID")
 	private ArrayList<Hivernage> hivernages;
 	
-	public Client() {}
+	public Client() {
+		this.hivernages = new ArrayList<Hivernage>();
+	}
 	
 	public Client(String nom, String prenom, String adresse, String telephone, String mail,
 			String observation, Caravane caravane) {

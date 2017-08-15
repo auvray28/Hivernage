@@ -3,6 +3,7 @@ package com.meeple.cloud.hivernage.model;
 import java.util.ArrayList;
 
 import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.GsonTransient;
 import com.meeple.cloud.hivernage.db.annotation.Id;
 import com.meeple.cloud.hivernage.db.annotation.OneToMany;
 import com.meeple.cloud.hivernage.db.annotation.OneToOne;
@@ -23,6 +24,7 @@ public class Caravane extends Entity<Caravane>{
 	@OneToOne(colName="GABARAIT_ID")
 	private Gabarit gabari;
 	
+	@GsonTransient
 	@OneToOne(ref="caravane")
 	private Client client;
 	
@@ -32,7 +34,9 @@ public class Caravane extends Entity<Caravane>{
 	@OneToMany(colName="EMP_CAMPING_ID")
 	private ArrayList<EmplacementCamping> emplacementCamping;
 	
-	public Caravane() {}
+	public Caravane() {
+		this.emplacementCamping = new ArrayList<EmplacementCamping>();
+	}
 	
 	public Caravane(String plaque, String observation, Gabarit gabari, Client client) {
 		super();
@@ -99,7 +103,7 @@ public class Caravane extends Entity<Caravane>{
 
 	public void setClient(Client client) {
 		this.client = client;
-		if(client.getCaravane() == null) {
+		if(client != null && client.getCaravane() == null) {
 			client.setCaravane(this);
 		}
 	}

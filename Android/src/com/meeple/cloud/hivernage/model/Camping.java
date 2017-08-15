@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.GsonTransient;
 import com.meeple.cloud.hivernage.db.annotation.Id;
 import com.meeple.cloud.hivernage.db.annotation.OneToMany;
 
@@ -23,11 +24,14 @@ public class Camping extends Entity<Camping>{
 	@Column
 	private String observations;
 	
-	
+	@GsonTransient
 	@OneToMany(ref="camping", isDouble=true)
 	private ArrayList<EmplacementCamping> emplacements;
 
-	public Camping() {}
+	public Camping() {
+		// car @GSonTransient, donc n'est pas recreer lors lecture
+		this.emplacements = new ArrayList<EmplacementCamping>();
+	}
 	
 	public Camping(String nom, String mail, String tel, double prix, String observations) {
 		this.nom = nom;

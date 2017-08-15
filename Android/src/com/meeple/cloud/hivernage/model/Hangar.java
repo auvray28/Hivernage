@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.GsonTransient;
 import com.meeple.cloud.hivernage.db.annotation.Transient;
 
 public class Hangar extends Entity<Hangar>{
@@ -17,10 +18,13 @@ public class Hangar extends Entity<Hangar>{
 	@Column
 	private int largeur;
 	
+	@GsonTransient
 	@Transient
 	private ArrayList<Caravane> caravanes;
 
-	public Hangar() {}
+	public Hangar() {
+		this.caravanes = new ArrayList();
+	}
 	
 	public Hangar(String nom, int longueur, int largeur) {
 		super();

@@ -3,6 +3,7 @@ package com.meeple.cloud.hivernage.model;
 import java.util.Date;
 
 import com.meeple.cloud.hivernage.db.annotation.Column;
+import com.meeple.cloud.hivernage.db.annotation.GsonTransient;
 import com.meeple.cloud.hivernage.db.annotation.Id;
 import com.meeple.cloud.hivernage.db.annotation.ManyToOne;
 
@@ -22,6 +23,7 @@ public class EmplacementCamping extends Entity<EmplacementCamping>{
 	private Camping camping;
 	
 	//NICO il faut un @ ici
+	@GsonTransient
 	private Caravane caravane;
 	
 	public EmplacementCamping() {}
