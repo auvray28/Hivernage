@@ -47,22 +47,33 @@ public class FileManager {
 			while ((line = br.readLine()) != null) {
 
 				if (count != 0) {
-
+					Camping ca;
 					String[] campingsLine = line.split(";");
 
 					if (campingsLine.length == 5) {
-						double accompte = 0;
+						double prix = 0;
 
 						try {
-							accompte = Double.parseDouble(campingsLine[3]);
+							prix = Double.parseDouble(campingsLine[3]);
 						}
 						catch (Exception e) {
-							accompte = 0;
+							prix = 0;
 						}
 
-						Camping ca = new Camping(campingsLine[0], campingsLine[2], campingsLine[1], accompte, campingsLine[4]);
-
-						Services.campingService.createCamping(ca);
+						ca = Services.campingService.findCampingByName(campingsLine[0]);
+						
+						// update
+						if (ca != null) {
+							ca.setPrix(prix);
+							ca.setMail(campingsLine[2]);
+							ca.setTel(campingsLine[1]);
+							ca.setObservations(campingsLine[4]);
+						}
+						// nouveau
+						else {
+							ca = new Camping(campingsLine[0], campingsLine[2], campingsLine[1], prix, campingsLine[4]);
+							Services.campingService.createCamping(ca);
+						}
 					}
 					else {
 						// TODO faire qqchose quand erreur import
@@ -101,7 +112,7 @@ public class FileManager {
 					// 8 derniers -> caravanes + emplcaravanes
 					if (clientLine.length > 7) {
 
-						client = Services.clientService.findByName(clientLine[0], clientLine[1]);
+						client = Services.clientService.findByName(clientLine[1], clientLine[0]);
 
 						if (client == null) {
 							int hivernage = 0;
