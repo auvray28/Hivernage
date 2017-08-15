@@ -29,7 +29,7 @@ public class SharedPreferenceHelper
     return this.prefs.getString("clients", "");
   }
   
-  public String getGabaris()
+  public String getGabarits()
   {
     return this.prefs.getString("gabaris", "");
   }
