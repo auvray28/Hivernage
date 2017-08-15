@@ -36,7 +36,7 @@ public class FileManager {
 
 	public static void readCampingsCSV(Context context) {
 
-		//Get the text file
+		// Get the text file
 		File file = new File(documents,  CAMPINGS_FILENAME);
 		int count = 0;
 
@@ -112,7 +112,6 @@ public class FileManager {
 							}
 							catch (NumberFormatException e) { hivernage = 0; }
 
-							
 							client.addHivernage(new Hivernage(hivernage));
 
 							Services.clientService.create(client);
@@ -128,10 +127,11 @@ public class FileManager {
 						if (clientLine.length > 14) obs = clientLine[14];
 						
 						caravane = new Caravane(clientLine[7], obs, gabarit, null);
-
+						Services.caravaneService.create(caravane);
+						
 						// Hangar
 						//
-						if (clientLine[9] == "HIVERNAGE") {
+						if (clientLine[9].equals("HIVERNAGE")) {
 							int    posX   = 0;
 							int    posY   = 0;
 							double angle  = 0;
@@ -153,7 +153,7 @@ public class FileManager {
 							catch (NumberFormatException e) { angle = 0; }
 
 							if (hangar == null) {
-								hangar = new Hangar(clientLine[8], 0, 0);
+								hangar = new Hangar(clientLine[10], 0, 0);
 								Services.hangarService.createHangar(hangar);
 							}
 							EmplacementHangar emplH = new EmplacementHangar(posX, posY, angle, hangar);
@@ -199,6 +199,9 @@ public class FileManager {
 		}
 		catch (IOException e) {
 			Toast.makeText(context, CLIENTS_FILENAME + " read failed", Toast.LENGTH_SHORT).show();
+		}
+		catch (OutOfMemoryError e) {
+			System.err.println(e);
 		}
 	}
 
