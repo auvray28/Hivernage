@@ -50,7 +50,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 	// Pour le client
 	private MyEditView txt_client_nom, txt_client_prenom, txt_client_adresse, txt_client_tel,
 					   txt_client_mail, txt_client_obs, txt_caravane_obs, txt_showHolidaysDate,
-					   txt_caravane_immatriculation;
+					   txt_caravane_marque, txt_caravane_immatriculation;
 	private TextView txt_client_acompte;
 	private CheckBox cb_isOldClient;
 	
@@ -111,6 +111,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	txt_client_obs      = (MyEditView) v.findViewById(R.id.client_info_obs);
     	cb_isOldClient         = (CheckBox) v.findViewById(R.id.check_oldclient);
     	//
+    	txt_caravane_marque          = (MyEditView) v.findViewById(R.id.caravane_info_marque);
     	txt_caravane_immatriculation = (MyEditView) v.findViewById(R.id.caravane_info_immat);
     	txt_caravane_label_position  = (TextView) v.findViewById(R.id.caravane_info_label_position);
     	txt_caravane_position        = (TextView) v.findViewById(R.id.caravane_info_position);
@@ -219,7 +220,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 		Gabarit newGabarit = Services.gabaritService.findGabaritByName(newgabaritName);
 		
 		if (newGabarit != null) {
-			client.getCaravane().setGabari(newGabarit);
+			client.getCaravane().setGabarit(newGabarit);
 			Services.caravaneService.update(client.getCaravane());
 		}
 	}
@@ -249,6 +250,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	txt_client_mail.addTextChangedListener(tw);
     	txt_client_acompte.addTextChangedListener(tw);
     	txt_client_obs.addTextChangedListener(tw);
+    	txt_caravane_marque.addTextChangedListener(tw);
     	txt_caravane_immatriculation.addTextChangedListener(tw);
     	txt_caravane_obs.addTextChangedListener(tw);
 	}
@@ -274,6 +276,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	cb_isOldClient.setChecked(displayClient.isOldClient());
     	
     	// Caravane
+    	txt_caravane_marque.setOriginalText(displayClient.getCaravane().getMarque());
     	txt_caravane_immatriculation.setOriginalText(displayClient.getCaravane().getPlaque());
     	txt_caravane_obs.setOriginalText( displayClient.getCaravane().getObservation());
     	
@@ -335,6 +338,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 		client.setObservation(txt_client_obs.getText().toString());
 		
 		// Sa caravane
+		client.getCaravane().setMarque(txt_caravane_marque.getText().toString());
 		client.getCaravane().setPlaque(txt_caravane_immatriculation.getText().toString());
 		client.getCaravane().setObservation(txt_caravane_obs.getText().toString());
 	}

@@ -15,6 +15,8 @@ public class Caravane extends Entity<Caravane>{
 	@Column
 	private int caravaneId;
 	@Column
+	private String marque = "Marque";
+	@Column
 	private String plaque;
 	@Column
 	private CaravaneStatus status;
@@ -38,8 +40,9 @@ public class Caravane extends Entity<Caravane>{
 		this.emplacementCamping = new ArrayList<EmplacementCamping>();
 	}
 	
-	public Caravane(String plaque, String observation, Gabarit gabari, Client client) {
+	public Caravane(String marque, String plaque, String observation, Gabarit gabari, Client client) {
 		super();
+		this.marque = marque;
 		this.plaque = plaque;
 		this.observation = observation;
 		this.gabari = gabari;
@@ -63,6 +66,14 @@ public class Caravane extends Entity<Caravane>{
 
 	public void setCaravaneId(int caravaneId) {
 		this.caravaneId = caravaneId;
+	}
+
+	public String getMarque() {
+		return marque;
+	}
+
+	public void setMarque(String marque) {
+		this.marque = marque;
 	}
 
 	public String getPlaque() {
@@ -93,7 +104,7 @@ public class Caravane extends Entity<Caravane>{
 		return gabari;
 	}
 
-	public void setGabari(Gabarit gabari) {
+	public void setGabarit(Gabarit gabari) {
 		this.gabari = gabari;
 	}
 

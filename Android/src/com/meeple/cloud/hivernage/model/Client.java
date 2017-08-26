@@ -66,7 +66,7 @@ public class Client extends Entity<Client>{
 
 	
 	public Client clientForJson() 	{
-		Caravane localCaravane = new Caravane(this.caravane.getPlaque(), this.caravane.getObservation(), this.caravane.getGabarit(), null);
+		Caravane localCaravane = new Caravane(this.caravane.getMarque(), this.caravane.getPlaque(), this.caravane.getObservation(), this.caravane.getGabarit(), null);
 		localCaravane.setEmplacementHangar(this.caravane.getEmplacementHangar());
 		localCaravane.setEmplacementCamping(this.caravane.getEmplacementCamping());
 		Client localClient = new Client(this.nom, this.prenom, this.adresse, this.telephone, this.mail, this.observation, localCaravane);

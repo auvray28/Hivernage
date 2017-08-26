@@ -37,7 +37,7 @@ public class NewClientFragment extends Fragment {
 	private EditText edt_nom, edt_prenom, edt_adresse, edt_mail, edt_tel, edt_acompte, edt_observation;
 	
 	// Components for New Caravane
-	private EditText edt_immat, edt_carvaneObs;
+	private EditText edt_marque, edt_immat, edt_carvaneObs;
 	private Spinner spinner_hangar, spinner_gabarit;
 	
 	// 
@@ -73,6 +73,7 @@ public class NewClientFragment extends Fragment {
 		edt_tel         = (EditText) v.findViewById(R.id.edt_tel);
 		edt_acompte     = (EditText) v.findViewById(R.id.edt_acompte);
 		edt_observation = (EditText) v.findViewById(R.id.edt_observation);
+		edt_marque      = (EditText) v.findViewById(R.id.edt_newCaravaneMarque);
 		edt_immat       = (EditText) v.findViewById(R.id.edt_newCaravaneImmat);
 		edt_carvaneObs  = (EditText) v.findViewById(R.id.edt_newCaravaneObs);
 		
@@ -145,13 +146,14 @@ public class NewClientFragment extends Fragment {
 		else if( acompte > 0) hStatus = HivernageStatus.ACCOMPTE;
 		
 		// Caravane
+		String marqu = edt_marque.getText().toString();
 		String immat = edt_immat.getText().toString();
 		String obsC  = edt_carvaneObs.getText().toString();
 		
 		Hangar hang  = Services.hangarService.findHangarByName(spinner_hangar.getSelectedItem().toString());
 		Gabarit gab  = Services.gabaritService.findGabaritByName(spinner_gabarit.getSelectedItem().toString());
 		
-		Caravane caravane = new Caravane(immat, obsC, gab, null);
+		Caravane caravane = new Caravane(marqu, immat, obsC, gab, null);
 		Client client = new Client(nom, prenom, adresse, tel, mail, obs, caravane);
 		client.addHivernage(new Hivernage(hStatus, acompte));
 		caravane.setClient(client);

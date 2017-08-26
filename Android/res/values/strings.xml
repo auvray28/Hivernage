@@ -94,5 +94,6 @@
     <string name="caravane_recup">Caravane récupéré</string>
     <string name="deliver_caravane">Amener la caravane au camping</string>
     <string name="take_caravane">Recuperer la caravane du camping</string>
+    <string name="marque">Marque :</string>
     
 </resources>

@@ -60,7 +60,7 @@ public class CaravaneServiceMock implements ICaravaneService {
 	public void update(Caravane caravane) {
 		Caravane c = findById(caravane.getCaravaneId());
 		c.setClient(caravane.getClient());
-		c.setGabari(caravane.getGabarit());
+		c.setGabarit(caravane.getGabarit());
 		c.setEmplacementHangar(caravane.getEmplacementHangar());
 		c.setObservation(caravane.getObservation());
 		c.setPlaque(caravane.getPlaque());

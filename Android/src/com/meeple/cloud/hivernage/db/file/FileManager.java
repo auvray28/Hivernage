@@ -85,31 +85,32 @@ public class FileManager {
     					acompte = Integer.parseInt(acompte_str);
     				}
     				String observation = oneData[6];
-    				String plaque = oneData[7];
+    				String marque = oneData[8];
+    				String plaque = oneData[9];
     				Gabarit g = Services.gabaritService.findGabaritByName("g" + oneData[8]);
     				String observationCar = "";
-    				if (oneData.length == 15) {
-    					observationCar = oneData[14];
+    				if (oneData.length == 17) {
+    					observationCar = oneData[16];
     				}
-    				Caravane caravane = new Caravane(plaque, observationCar, g, null);
-    				String camping_str = oneData[9];
+    				Caravane caravane = new Caravane(marque, plaque, observationCar, g, null);
+    				String camping_str = oneData[11];
     				if (camping_str.equals("HIVERNAGE")) {
     					int empl_x;
     					int empl_y;
     					int empl_angle;
-    					String hangar_str = oneData[10];
+    					String hangar_str = oneData[12];
     					try {
-    						empl_x = Integer.parseInt(oneData[11]);
+    						empl_x = Integer.parseInt(oneData[13]);
     					} catch (NumberFormatException e3) {
     						empl_x = 0;
     					}
     					try {
-    						empl_y = Integer.parseInt(oneData[12]);
+    						empl_y = Integer.parseInt(oneData[14]);
     					} catch (NumberFormatException e4) {
     						empl_y = 0;
     					}
     					try {
-    						empl_angle = Integer.parseInt(oneData[13]);
+    						empl_angle = Integer.parseInt(oneData[15]);
     					} catch (NumberFormatException e5) {
     						empl_angle = 180;
     					}
@@ -121,9 +122,9 @@ public class FileManager {
     					Services.caravaneService.putInHangar(caravane, new EmplacementHangar(empl_x, empl_y, (double) empl_angle, hangar));
     				} else {
     					try {
-    						String emplacement = oneData[10];
-    						String entree = oneData[11];
-    						String sortie = oneData[12];
+    						String emplacement = oneData[12];
+    						String entree = oneData[13];
+    						String sortie = oneData[14];
     						Camping camping = Services.campingService.findCampingByName(camping_str);
     						if (camping == null) {
     							camping = new Camping(camping_str, "", "", 0.0d, "");
@@ -145,7 +146,7 @@ public class FileManager {
     				}
     				client = new Client(nom, prenom, adresse, telephone, mail, observation, caravane);
     				if (oneData.length == 16) {
-    					client.setOldClient(oneData[15].equals("0"));
+    					client.setOldClient(oneData[7].equals("0"));
     				}
     				client.addHivernage(new Hivernage(acompte));
     				Services.clientService.create(client);
@@ -174,22 +175,23 @@ public class FileManager {
             file.createNewFile();
             FileWriter fw = new FileWriter(file);
             ArrayList<Client> all_clients = Services.clientService.getAllClient();
-            fw.append("Nom;");
-            fw.append("Prenom;");
-            fw.append("Adresse;");
-            fw.append("Mail;");
-            fw.append("Telephone;");
-            fw.append("Acompte;");
-            fw.append("Observation;");
-            fw.append("Immatriculation;");
-            fw.append("Gabarit;");
-            fw.append("Camping/HIVERNAGE;");
-            fw.append("Emplacement/Hangar;");
-            fw.append("Entrée/X;");
-            fw.append("Sortie/Y;");
-            fw.append("-/Angle;");
-            fw.append("Observation;");
-            fw.append("isOldClient\n");
+            fw.append("Nom;");					//  0
+            fw.append("Prenom;");				//  1 
+            fw.append("Adresse;");				//  2
+            fw.append("Mail;");					//  3
+            fw.append("Telephone;");			//  4
+            fw.append("Acompte;");				//  5
+            fw.append("Observation;");			//  6
+            fw.append("isOldClient;");			//  7
+            fw.append("Marque;");				//  8
+            fw.append("Immatriculation;");		//  9
+            fw.append("Gabarit;");				// 10
+            fw.append("Camping/HIVERNAGE;");	// 11
+            fw.append("Emplacement/Hangar;");	// 12
+            fw.append("Entrée/X;");				// 13
+            fw.append("Sortie/Y;");				// 14
+            fw.append("-/Angle;");				// 15
+            fw.append("Observation\n");			// 16
             Iterator it = all_clients.iterator();
             while (it.hasNext()) {
                 appendClient(fw, (Client) it.next());
@@ -209,8 +211,10 @@ public class FileManager {
             fw.append(client.getTelephone() + SEPARATOR);
             fw.append(client.getCurrentAcompte() + SEPARATOR);
             fw.append(client.getObservation() + SEPARATOR);
+            fw.append( ( (client.isOldClient()) ? "0":"1") + SEPARATOR );
             Caravane caravane = client.getCaravane();
             if (caravane != null) {
+            	fw.append(caravane.getMarque() + SEPARATOR);
                 fw.append(caravane.getPlaque() + SEPARATOR);
                 if (caravane.getGabarit() != null) {
                     fw.append(new StringBuilder(String.valueOf(caravane.getGabarit().getNom().replace("g", ""))).append(SEPARATOR).toString());
@@ -239,8 +243,7 @@ public class FileManager {
                     fw.append(new StringBuilder(String.valueOf(caravane.getEmplacementHangar().getPosY())).append(SEPARATOR).toString());
                     fw.append(new StringBuilder(String.valueOf(caravane.getEmplacementHangar().getAngle())).append(SEPARATOR).toString());
                 }
-                fw.append(caravane.getObservation() + SEPARATOR);
-                fw.append( ( (client.isOldClient()) ? "0":"1") + END_LINE );
+                fw.append(caravane.getObservation() + END_LINE);
             }
         } catch (IOException e) {
             e.printStackTrace();
