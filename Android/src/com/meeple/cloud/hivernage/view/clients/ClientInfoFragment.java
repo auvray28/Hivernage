@@ -1,6 +1,16 @@
 package com.meeple.cloud.hivernage.view.clients;
 
 
+import java.util.ArrayList;
+
+import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.model.Client;
+import com.meeple.cloud.hivernage.model.EmplacementCamping;
+import com.meeple.cloud.hivernage.model.EmplacementHangar;
+import com.meeple.cloud.hivernage.model.Hangar;
+import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.object.MyEditView;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,11 +23,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Client;
-import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.object.MyEditView;
+import android.widget.Toast;
 
 public class ClientInfoFragment extends Fragment implements TextWatcher{
 
@@ -42,8 +48,10 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 	private TextView txt_caravane_gabarit,txt_caravane_label_position, txt_caravane_position;
 	
 	//
-	private Button btn_updateClient, btn_orga_vac;
+	private Button btn_updateClient, btn_orga_vac, btn_delivery;
 	
+	// Hangar
+	private Hangar WAITING;
 	
 	public static ClientInfoFragment newInstance(int clientId) {
 		
@@ -70,6 +78,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
         }
 
         client = Services.clientService.findById(getArguments().getInt("clientId", 0));
+        this.WAITING = Services.hangarService.findHangarByName("Waiting");
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.client_info_layout, container, false); 
@@ -121,6 +130,23 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 				mCallback.displayNewHolidaysView(client.getClientId());
 			}
 		});
+    	
+    	this.btn_delivery = (Button) v.findViewById(R.id.btn_carav_delivery);
+        this.btn_delivery.setOnClickListener(new OnClickListener() {
+			@Override
+		      public void onClick(View v) {
+	            ClientInfoFragment.this.moveCaravane();
+	        }
+        });
+        
+        switch (this.client.getCaravane().getStatus()) {
+            case CAMPING:
+                this.btn_delivery.setText(R.string.take_caravane);
+                return;
+            default:
+                this.btn_delivery.setText(R.string.deliver_caravane);
+                return;
+        }
     }
 	
     @Override
@@ -212,6 +238,29 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 		client.setObservation(txt_client_obs.getText().toString());
 		
 	}
+	
+	
+	private void moveCaravane() {
+        ArrayList<EmplacementCamping> alEmc = this.client.getCaravane().getEmplacementCamping();
+        if (alEmc.size() > 0) {
+            switch (this.client.getCaravane().getStatus()) {
+                case CAMPING:
+                    this.btn_delivery.setText(R.string.take_caravane);
+                    Services.caravaneService.removeFromCamping(this.client.getCaravane());
+                    Services.caravaneService.putInHangar(this.client.getCaravane(), new EmplacementHangar(0, 0, 0.0d, this.WAITING));
+                    Toast.makeText(getActivity(), "Caravane placée dans le hangar WAITING", 0).show();
+                    return;
+                default:
+                    this.btn_delivery.setText(R.string.deliver_caravane);
+                    Services.caravaneService.removeFromHangar(this.client.getCaravane());
+                    EmplacementCamping emc = (EmplacementCamping) alEmc.get(alEmc.size() - 1);
+                    Services.caravaneService.putToCamping(this.client.getCaravane(), emc);
+                    Toast.makeText(getActivity(), "Caravane amenée dans le camping : " + emc.getCamping().getNom(), 0).show();
+                    return;
+            }
+        }
+        Toast.makeText(getActivity(), "Pas de vacances organisé pour ce client", 0).show();
+    }
     
     //////////////// TextWatcher ////////////////
 

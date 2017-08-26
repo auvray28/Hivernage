@@ -90,4 +90,9 @@
     
     <string name="valider">Valider</string>
     
+    <string name="caravane_depose">Caravane livrée</string>
+    <string name="caravane_recup">Caravane récupéré</string>
+    <string name="deliver_caravane">Amener la caravane au camping</string>
+    <string name="take_caravane">Recuperer la caravane du camping</string>
+    
 </resources>
