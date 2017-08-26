@@ -1,8 +1,6 @@
 package com.meeple.cloud.hivernage.view;
 
 import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.db.DbHelper;
-import com.meeple.cloud.hivernage.db.file.FileManager;
 import com.meeple.cloud.hivernage.view.agenda.AgendaListFragment;
 import com.meeple.cloud.hivernage.view.agenda.HolidaysFragment;
 import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment;
@@ -18,10 +16,9 @@ import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInt
 import com.meeple.cloud.hivernage.view.clients.NewClientFragment;
 import com.meeple.cloud.hivernage.view.clients.NewClientFragment.NewClientInterface;
 import com.meeple.cloud.hivernage.view.hangar.HangarMainFragment;
+import com.meeple.cloud.hivernage.view.utils.UtilsFragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -72,6 +69,7 @@ public class MenuActivity extends FragmentActivity implements
 	private ClientListeFragment clientFragment;
 	private CampingListeFragment campingFragment;
 	private AgendaListFragment agendaFragment;
+	private UtilsFragment utilsFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +150,7 @@ public class MenuActivity extends FragmentActivity implements
 		clientFragment = new ClientListeFragment();
 		campingFragment = new CampingListeFragment();
 		agendaFragment = new AgendaListFragment();
+		utilsFragment  = new UtilsFragment();
 
 		// Init Bouton Event
 
@@ -229,51 +228,9 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	private void clickForImpExp() {
-		//switchPanelMode(PanelMode.DOUBLE);
+		switchPanelMode(PanelMode.SIMPLE);
 		onArticleSelected(MenuBarBtn.IMP_EXP);
 		setSelectedBtn(btn_Imp_Exp);
-		
-		// Pop up
-		showImpExpWindows();
-	}
-
-	private void showImpExpWindows() {
-		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-
-		alertDialog.setTitle("Importation/Exportation des données");
-
-		alertDialog.setMessage("Importer ou Exporter ?");
-
-		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Exporter", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.dismiss();
-				Toast.makeText(MenuActivity.this, "Exportation en cours... !", 1).show();
-				FileManager.writeAllCampings(getBaseContext());
-				FileManager.writeAllClients(getBaseContext());
-				Toast.makeText(MenuActivity.this, "Exportation fini !", 0).show();
-			}
-		}); 
-
-		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Importer", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.dismiss();
-				Toast.makeText(MenuActivity.this, "Importation en cours... !", 1).show();
-				DbHelper.instance.isImportingModel = true;
-				FileManager.createAllCampings(getBaseContext());
-				FileManager.createAllClients(getBaseContext());
-				DbHelper.instance.isImportingModel = false;
-				DbHelper.instance.saveModel();
-				Toast.makeText(MenuActivity.this, "Importation fini !", 0).show();
-			}
-		}); 
-
-		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Annuler", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.dismiss();
-			}
-		});
-		
-		alertDialog.show();
 	}
 
 	public void onArticleSelected(MenuBarBtn newMenu) {
@@ -301,8 +258,8 @@ public class MenuActivity extends FragmentActivity implements
 				newFrag = agendaFragment;
 				break;
 			case IMP_EXP:
-				// on ne fait rien
-				return;
+				newFrag = utilsFragment;
+				break;
 			default:
 				newFrag = clientFragment;
 				break;
