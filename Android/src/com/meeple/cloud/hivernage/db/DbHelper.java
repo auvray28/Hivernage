@@ -204,10 +204,6 @@ public class DbHelper /* extends SQLiteOpenHelper */{
 	}
 
 
-
-
-	
-
 	// Chargement du model sauvegardé dans les prefs via JSon
 	//
 	public ArrayList<Camping> parseCampingsFromJson(String paramString)
@@ -359,9 +355,15 @@ public class DbHelper /* extends SQLiteOpenHelper */{
             if (!"".equals(CampingSaved)) {
                 it = parseCampingsFromJson(CampingSaved).iterator();
                 while (it.hasNext()) {
-                    Camping c2 = (Camping) it.next();
-                    if (!DBMock.DB.getCampings().contains(c2)) {
-                        DBMock.DB.getCampings().add(c2);
+                	Boolean addNewCamping = true;
+                	Camping h = (Camping) it.next();
+                    
+                    for (Camping h2 : DBMock.DB.getCampings()) {
+                    	if (h2.getNom().equals(h.getNom())) addNewCamping = false;
+                    }
+                    	
+                    if (addNewCamping) {
+                        DBMock.DB.getCampings().add(h);
                     }
                 }
             }
@@ -370,8 +372,14 @@ public class DbHelper /* extends SQLiteOpenHelper */{
             if (!"".equals(gabaritsSaved)) {
                 it = parseGabarisFromJson(gabaritsSaved).iterator();
                 while (it.hasNext()) {
-                    Gabarit g = (Gabarit) it.next();
-                    if (!DBMock.DB.getGabarits().contains(g)) {
+                	Boolean addNewGabarit = true;
+                	Gabarit g = (Gabarit) it.next();
+                    
+                    for (Gabarit g2 : DBMock.DB.getGabarits()) {
+                    	if (g2.getNom().equals(g.getNom())) addNewGabarit = false;
+                    }
+                    	
+                    if (addNewGabarit) {
                         DBMock.DB.getGabarits().add(g);
                     }
                 }
@@ -381,13 +389,19 @@ public class DbHelper /* extends SQLiteOpenHelper */{
             if (!"".equals(HangarSaved)) {
                 it = parseHangarFromJson(HangarSaved).iterator();
                 while (it.hasNext()) {
+                	Boolean addNewHangar = true;
                     Hangar h = (Hangar) it.next();
-                    if (!DBMock.DB.getHangars().contains(h)) {
+                    
+                    for (Hangar h2 : DBMock.DB.getHangars()) {
+                    	if (h2.getNom().equals(h.getNom())) addNewHangar = false;
+                    }
+                    	
+                    if (addNewHangar) {
                         DBMock.DB.getHangars().add(h);
                     }
                 }
             }
-            Log.i("db", "nb hangrad loaded: " + DBMock.DB.getHangars().size());
+            Log.i("db", "nb hangars loaded: " + DBMock.DB.getHangars().size());
             String idsSaved = this.helper.getIds();
             if (!"".equals(idsSaved)) {
                 DBMock.DB.setLastIds(parseIdsFromJson(idsSaved));
