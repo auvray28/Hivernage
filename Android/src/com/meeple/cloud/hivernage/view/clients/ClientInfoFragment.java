@@ -163,9 +163,11 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
         switch (this.client.getCaravane().getStatus()) {
             case CAMPING:
                 this.btn_delivery.setText(R.string.take_caravane);
+                this.btn_delivery.setBackgroundColor(Color.RED);
                 return;
             default:
                 this.btn_delivery.setText(R.string.deliver_caravane);
+                this.btn_delivery.setBackgroundColor(Color.BLUE);
                 return;
         }
     }
@@ -289,12 +291,14 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
             switch (this.client.getCaravane().getStatus()) {
                 case CAMPING:
                     this.btn_delivery.setText(R.string.take_caravane);
+                    this.btn_delivery.setBackgroundColor(Color.RED);
                     Services.caravaneService.removeFromCamping(this.client.getCaravane());
                     Services.caravaneService.putInHangar(this.client.getCaravane(), new EmplacementHangar(0, 0, 0.0d, this.WAITING));
                     Toast.makeText(getActivity(), "Caravane placée dans le hangar WAITING", 0).show();
                     return;
                 default:
                     this.btn_delivery.setText(R.string.deliver_caravane);
+                    this.btn_delivery.setBackgroundColor(Color.BLUE);
                     Services.caravaneService.removeFromHangar(this.client.getCaravane());
                     EmplacementCamping emc = (EmplacementCamping) alEmc.get(alEmc.size() - 1);
                     Services.caravaneService.putToCamping(this.client.getCaravane(), emc);
