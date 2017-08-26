@@ -103,7 +103,7 @@ public class NewClientFragment extends Fragment {
 		
 	}
 	
-	private String[] getAllHangarName(){
+	public static String[] getAllHangarName(){
 		ArrayList<String> als = new ArrayList<String>();
 		
 		for(Hangar hang : Services.hangarService.getAllHangars()) {

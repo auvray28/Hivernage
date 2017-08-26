@@ -2,6 +2,7 @@ package com.meeple.cloud.hivernage.view.clients;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Client;
@@ -21,7 +22,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +51,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 	// Pour sa caravane
 	private TextView txt_caravane_immatriculation, txt_caravane_obs;
 	private TextView txt_caravane_gabarit,txt_caravane_label_position, txt_caravane_position;
-	
+	private Spinner  spinner_hangar;
 	//
 	private Button btn_updateClient, btn_orga_vac, btn_delivery;
 	
@@ -104,7 +109,23 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	txt_caravane_gabarit         = (TextView) v.findViewById(R.id.caravane_info_gabarit);
     	txt_caravane_label_position  = (TextView) v.findViewById(R.id.caravane_info_label_position);
     	txt_caravane_position        = (TextView) v.findViewById(R.id.caravane_info_position);
+    	spinner_hangar               = (Spinner)  v.findViewById(R.id.show_hangar);
     	txt_caravane_obs             = (TextView) v.findViewById(R.id.caravane_info_obs);
+    	//
+    	spinner_hangar.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.spinner_layout, NewClientFragment.getAllHangarName()));
+    	spinner_hangar.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+				changeHangar(pos);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) { 
+				// Nothing Todo
+			}
+		});
+    	
     	//
     	btn_updateClient             = (Button) v.findViewById(R.id.btn_updateClient);
     	btn_updateClient.setVisibility(View.INVISIBLE);
@@ -149,7 +170,22 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
         }
     }
 	
-    @Override
+    protected void changeHangar(int hangarPos) {
+
+    	String newhangarName = NewClientFragment.getAllHangarName()[hangarPos];
+    	
+		Services.caravaneService.removeFromHangar(this.client.getCaravane());
+		
+		Hangar newHangar = Services.hangarService.findHangarByName(newhangarName);
+		
+		if (newHangar != null) {
+			Services.caravaneService.putInHangar(this.client.getCaravane(), new EmplacementHangar(0, 0, 0.0d, newHangar));
+		}
+	}
+
+
+
+	@Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
@@ -205,11 +241,17 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 			
     		txt_caravane_position.setText(displayClient.getCaravane().getCurrentCamping().getNom());
     		txt_caravane_label_position.setText(R.string.camping);
+    		
+    		spinner_hangar.setVisibility(View.GONE);
     		break;
     	case HANGAR : 
-			txt_caravane_position.setVisibility(View.VISIBLE);
+			txt_caravane_position.setVisibility(View.GONE);
 			txt_caravane_label_position.setVisibility(View.VISIBLE);
     		
+	    	spinner_hangar.setVisibility(View.VISIBLE);
+	    	
+	    	spinner_hangar.setSelection(Arrays.asList(NewClientFragment.getAllHangarName()).indexOf(displayClient.getCaravane().getEmplacementHangar().getHangar().getNom()));
+	    	
     		txt_caravane_position.setText(displayClient.getCaravane().getEmplacementHangar().getHangar().getNom());
     		txt_caravane_label_position.setText(R.string.hangar);
     		break;
@@ -220,6 +262,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 		default : 
 			txt_caravane_position.setVisibility(View.GONE);
 			txt_caravane_label_position.setVisibility(View.GONE);
+			spinner_hangar.setVisibility(View.GONE);
 			break;
     	}
     	

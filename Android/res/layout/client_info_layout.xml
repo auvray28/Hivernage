@@ -278,10 +278,17 @@
 
                         <TextView
                             android:id="@+id/caravane_info_position"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="X"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Spinner
+                            android:id="@+id/show_hangar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
                     </LinearLayout>
                 </LinearLayout>
 
