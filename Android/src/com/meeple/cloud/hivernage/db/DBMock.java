@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import com.google.gson.JsonElement;
+import com.meeple.cloud.hivernage.db.file.FileManager;
 import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Client;
@@ -17,7 +17,6 @@ import com.meeple.cloud.hivernage.model.Hivernage;
 import com.meeple.cloud.hivernage.model.Tranche;
 import com.meeple.cloud.hivernage.model.enums.HivernageStatus;
 import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.object.FileManager;
 
 import android.content.Context;
 
@@ -66,15 +65,6 @@ public class DBMock {
 //		fill();
 	}
 	
-	public void load(Context context) {
-		
-		if (true) {
-			createDefaultObject();
-		
-			FileManager.readCampingsCSV(context);
-			FileManager.readClientsCSV(context);
-		}
-	}
 	
 	
 	public void createDefaultObject() {

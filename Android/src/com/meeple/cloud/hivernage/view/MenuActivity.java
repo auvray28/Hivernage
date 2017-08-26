@@ -1,5 +1,24 @@
 package com.meeple.cloud.hivernage.view;
 
+import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.db.DbHelper;
+import com.meeple.cloud.hivernage.db.file.FileManager;
+import com.meeple.cloud.hivernage.view.agenda.AgendaListFragment;
+import com.meeple.cloud.hivernage.view.agenda.HolidaysFragment;
+import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment;
+import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment.CampingInfoInterface;
+import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
+import com.meeple.cloud.hivernage.view.camping.CampingListeFragment.CampingListInterface;
+import com.meeple.cloud.hivernage.view.camping.NewCampingFragment;
+import com.meeple.cloud.hivernage.view.camping.NewCampingFragment.NewCampingInterface;
+import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
+import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment.ClientInfoInterface;
+import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
+import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInterface;
+import com.meeple.cloud.hivernage.view.clients.NewClientFragment;
+import com.meeple.cloud.hivernage.view.clients.NewClientFragment.NewClientInterface;
+import com.meeple.cloud.hivernage.view.hangar.HangarMainFragment;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,26 +36,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.db.DBMock;
-import com.meeple.cloud.hivernage.db.DbHelper;
-import com.meeple.cloud.hivernage.view.agenda.AgendaListFragment;
-import com.meeple.cloud.hivernage.view.agenda.HolidaysFragment;
-import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment;
-import com.meeple.cloud.hivernage.view.camping.CampingListeFragment;
-import com.meeple.cloud.hivernage.view.camping.CampingInfoFragment.CampingInfoInterface;
-import com.meeple.cloud.hivernage.view.camping.CampingListeFragment.CampingListInterface;
-import com.meeple.cloud.hivernage.view.camping.NewCampingFragment;
-import com.meeple.cloud.hivernage.view.camping.NewCampingFragment.NewCampingInterface;
-import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment;
-import com.meeple.cloud.hivernage.view.clients.ClientInfoFragment.ClientInfoInterface;
-import com.meeple.cloud.hivernage.view.clients.ClientListeFragment;
-import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.ClientListInterface;
-import com.meeple.cloud.hivernage.view.clients.NewClientFragment;
-import com.meeple.cloud.hivernage.view.clients.NewClientFragment.NewClientInterface;
-import com.meeple.cloud.hivernage.view.hangar.HangarMainFragment;
-import com.meeple.cloud.hivernage.view.object.FileManager;
 
 public class MenuActivity extends FragmentActivity implements
 		ClientListInterface, CampingListInterface, ClientInfoInterface, CampingInfoInterface,
@@ -247,18 +246,24 @@ public class MenuActivity extends FragmentActivity implements
 
 		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Exporter", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				FileManager.writeCampingsToCSV(getBaseContext());
-				FileManager.writeClientsToCSV(getBaseContext());
+				dialog.dismiss();
+				Toast.makeText(MenuActivity.this, "Exportation en cours... !", 1).show();
+				FileManager.writeAllCampings(getBaseContext());
+				FileManager.writeAllClients(getBaseContext());
+				Toast.makeText(MenuActivity.this, "Exportation fini !", 0).show();
 			}
 		}); 
 
 		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Importer", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+				Toast.makeText(MenuActivity.this, "Importation en cours... !", 1).show();
 				DbHelper.instance.isImportingModel = true;
-				FileManager.readCampingsCSV(getBaseContext());
-				FileManager.readClientsCSV(getBaseContext());
+				FileManager.createAllCampings(getBaseContext());
+				FileManager.createAllClients(getBaseContext());
 				DbHelper.instance.isImportingModel = false;
 				DbHelper.instance.saveModel();
+				Toast.makeText(MenuActivity.this, "Importation fini !", 0).show();
 			}
 		}); 
 

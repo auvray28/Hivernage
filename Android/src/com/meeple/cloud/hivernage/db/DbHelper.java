@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -203,134 +204,9 @@ public class DbHelper /* extends SQLiteOpenHelper */{
 	}
 
 
-	/* Load JSon via GSon */
 
-	public void load() {
 
-		if (!this.helper.isInitialized()) {
-			Log.i("db", "first init");
-			DBMock.DB.createDefaultObject();
-			saveModel();
-			this.helper.setInitialized();
-		}
-		else {
-			Log.i("db", "load init");
-		
-			HashMap<String, Integer> mapIDs = new HashMap<>();
-			ArrayList<Camping> listCampings = new ArrayList<>();
-			ArrayList<Client>  listClients  = new ArrayList<>();
-			ArrayList<Gabarit> listGabarits = new ArrayList<>();
-			ArrayList<Hangar>  listHangars  = new ArrayList<>();
-			
-			// Clients
-			//
-			String strClients = this.helper.getClients();
-			if (!strClients.equals("") && !strClients.equals("[]")) {
-				listClients = parseClientListFromJson(strClients);
-			}
-			
-			// Campings
-			//
-			String strCampings = this.helper.getCampings();
-			if (!strCampings.equals("") && !strCampings.equals("[]")) {
-				listCampings = parseCampingsFromJson(strClients);
-			}
-			
-			// Gabarits
-			//
-			String strGabarits = this.helper.getGabarits();
-			if (!strGabarits.equals("") && !strGabarits.equals("[]")) {
-				listGabarits = parseGabarisFromJson(strGabarits);
-			}
-			
-			// Hangars
-			//
-			String strHangar = this.helper.getHangars();
-			if (!strHangar.equals("") && !strHangar.equals("[]")) {
-				listHangars = parseHangarFromJson(strHangar);
-			}
-
-			// Ids
-			//
-			String strIds = this.helper.getIds();
-			if (!strIds.equals("") && !strIds.equals("[]")) {
-				mapIDs = parseIdsFromJson(strIds);
-	        }
-			DBMock.DB.setLastIds(mapIDs);
-	        Log.i("db", "ids loaded: " + DBMock.DB.getLastIds());
-	        
-	        for (Gabarit gabarit : listGabarits) {
-	        	if (!DBMock.DB.getGabarits().contains(gabarit)) {
-	        		DBMock.DB.getGabarits().add(gabarit);
-	        	}
-	        }
-			Log.i("db", "nb gabarits loaded: " + DBMock.DB.getGabarits().size());
-	        
-	        for (Client client : listClients) {
-	        	if (client.getCaravane() != null) {
-	        		client.getCaravane().setClient(client);
-	        	}
-	        	
-	        	if (!DBMock.DB.getClients().contains(client)) {
-	        		DBMock.DB.getClients().add(client);
-	        	}
-	        	
-	        	if (client.getCaravane() != null) {
-	        		if (!DBMock.DB.getCaravanes().contains(client.getCaravane())) {
-	        			DBMock.DB.getCaravanes().add(client.getCaravane());
-	        		}
-
-	        		for (EmplacementCamping emplCamp : client.getCaravane().getEmplacementCamping()) {
-	        			int i = emplCamp.getCamping().getCampingId();
-	        			Camping localCamping = Services.campingService.findCampingById(i);
-	        			if (localCamping != null) {
-	        				emplCamp.setCamping(localCamping);
-	        				localCamping.getEmplacements().add(emplCamp);
-	        			}
-	        			else {
-	        				emplCamp.getCamping().getEmplacements().add(emplCamp);
-        					DBMock.DB.getCampings().add(emplCamp.getCamping()); // pas besoin de check sinon on serait pas dans ce "else"
-	        			}
-	        		}
-
-	        		EmplacementHangar emplHang = client.getCaravane().getEmplacementHangar();
-	        		if (emplHang != null) {
-	        			int hangarID = emplHang.getHangar().getHangarId();
-	        			Hangar localHangar = Services.hangarService.findHangarById(hangarID);
-
-	        			if (localHangar != null) {
-	        				localHangar.addCaravane(client.getCaravane());
-	        			}
-	        			else {
-	        				emplHang.getHangar().addCaravane(client.getCaravane());
-	        				if (!DBMock.DB.getHangars().contains(emplHang.getHangar())) {
-	        					DBMock.DB.getHangars().add(emplHang.getHangar());
-	        				}
-	        			}
-	        		}
-	        	}
-	        }
-			Log.i("db", "hangars loaded by user :" + DBMock.DB.getHangars().size());
-			Log.i("db", "nb campings loaded by user : " + DBMock.DB.getCampings().size());
-			Log.i("db", "nb clients loaded : " + DBMock.DB.getClients().size());
-	        
-	        for (Camping camping : listCampings) {
-	        	if (!DBMock.DB.getCampings().contains(camping)) {
-	        		DBMock.DB.getCampings().add(camping);
-	        	}
-	        }
-			Log.i("db", "nb campings loaded: " + DBMock.DB.getCampings().size());
-	        
-	        for (Hangar hangar : listHangars) {
-	        	if (!DBMock.DB.getHangars().contains(hangar)) {
-	        		DBMock.DB.getHangars().add(hangar);
-	        	}
-	        }
-			Log.i("db", "nb Hangar loaded: " + DBMock.DB.getHangars().size());
-			
-	        
-		}
-	}
+	
 
 	// Chargement du model sauvegardé dans les prefs via JSon
 	//
@@ -385,31 +261,6 @@ public class DbHelper /* extends SQLiteOpenHelper */{
 	}
 
 
-
-	// Sauvegarde du model dans les prefs via JSon
-	public void saveModel() {
-		if (!isImportingModel) {
-			this.helper.saveClients(this.gson.toJson(DBMock.DB.getClients()));
-			Log.i("db", "nb clients saved: " + DBMock.DB.getClients().size());
-			
-			this.helper.saveCampings(this.gson.toJson(DBMock.DB.getCampings()));
-			Log.i("db", "nb campings saved: " + DBMock.DB.getCampings().size());
-			
-			this.helper.saveHangars(this.gson.toJson(DBMock.DB.getHangars()));
-			Log.i("db", "nb hangars saved: " + DBMock.DB.getHangars().size());
-			
-			this.helper.saveGabaris(this.gson.toJson(DBMock.DB.getGabarits()));
-			Log.i("db", "nb gabarits saved: " + DBMock.DB.getGabarits().size());
-			
-			this.helper.saveIds(this.gson.toJson(DBMock.DB.getLastIdsForJSon()));
-			Log.i("db", "ids saved: " + this.gson.toJson(DBMock.DB.getLastIds()));
-			Log.i("db", this.helper.getClients());
-			Log.i("db", this.helper.getCampings());
-			Log.i("db", this.helper.getHangars());
-			Log.i("db", this.helper.getGabarits());
-		}
-	}
-
 	public String toJson(Client paramClient) {
 		return this.gson.toJson(paramClient);
 	}
@@ -438,5 +289,116 @@ public class DbHelper /* extends SQLiteOpenHelper */{
 		}
 	}
 
+
+	// Sauvegarde du model dans les prefs via JSon
+	public void saveModel() {
+		if (!isImportingModel) {
+			this.helper.saveClients(this.gson.toJson(DBMock.DB.getClients()));
+			Log.i("db", "nb clients saved: " + DBMock.DB.getClients().size());
+			
+			this.helper.saveCampings(this.gson.toJson(DBMock.DB.getCampings()));
+			Log.i("db", "nb campings saved: " + DBMock.DB.getCampings().size());
+			
+			this.helper.saveHangars(this.gson.toJson(DBMock.DB.getHangars()));
+			Log.i("db", "nb hangars saved: " + DBMock.DB.getHangars().size());
+			
+			this.helper.saveGabaris(this.gson.toJson(DBMock.DB.getGabarits()));
+			Log.i("db", "nb gabarits saved: " + DBMock.DB.getGabarits().size());
+			
+			this.helper.saveIds(this.gson.toJson(DBMock.DB.getLastIdsForJSon()));
+			Log.i("db", "ids saved: " + this.gson.toJson(DBMock.DB.getLastIds()));
+			Log.i("db", this.helper.getClients());
+			Log.i("db", this.helper.getCampings());
+			Log.i("db", this.helper.getHangars());
+			Log.i("db", this.helper.getGabarits());
+		}
+	}
+
+	
+	/* Load JSon via GSon */
+	public void load() {
+        if (this.helper.isInitialized()) {
+            Iterator it;
+            Log.i("db", "load init");
+            String clientsSaved = this.helper.getClients();
+            if (!"".equals(clientsSaved)) {
+                it = parseClientListFromJson(clientsSaved).iterator();
+                while (it.hasNext()) {
+                    Client c = (Client) it.next();
+                    DBMock.DB.getClients().add(c);
+                    DBMock.DB.getCaravanes().add(c.getCaravane());
+                    c.getCaravane().setClient(c);
+                    Iterator it2 = c.getCaravane().getEmplacementCamping().iterator();
+                    while (it2.hasNext()) {
+                        EmplacementCamping ec = (EmplacementCamping) it2.next();
+                        Camping campingSaved = Services.campingService.findCampingById(ec.getCamping().getCampingId());
+                        if (campingSaved != null) {
+                            ec.setCamping(campingSaved);
+                            campingSaved.getEmplacements().add(ec);
+                        } else {
+                            ec.setCaravane(c.getCaravane());
+                            ec.getCamping().getEmplacements().add(ec);
+                            DBMock.DB.getCampings().add(ec.getCamping());
+                        }
+                    }
+                    if (c.getCaravane().getEmplacementHangar() != null) {
+                        Hangar saved = Services.hangarService.findHangarById(c.getCaravane().getEmplacementHangar().getHangar().getHangarId());
+                        if (saved != null) {
+                            c.getCaravane().getEmplacementHangar().setHangar(saved);
+                            saved.addCaravane(c.getCaravane());
+                        } else {
+                            c.getCaravane().getEmplacementHangar().getHangar().addCaravane(c.getCaravane());
+                            DBMock.DB.getHangars().add(c.getCaravane().getEmplacementHangar().getHangar());
+                        }
+                    }
+                }
+            }
+            Log.i("db", "hangard loaded by user:" + DBMock.DB.getHangars());
+            Log.i("db", "nb clients loaded: " + DBMock.DB.getClients().size());
+            String CampingSaved = this.helper.getCampings();
+            if (!"".equals(CampingSaved)) {
+                it = parseCampingsFromJson(CampingSaved).iterator();
+                while (it.hasNext()) {
+                    Camping c2 = (Camping) it.next();
+                    if (!DBMock.DB.getCampings().contains(c2)) {
+                        DBMock.DB.getCampings().add(c2);
+                    }
+                }
+            }
+            Log.i("db", "nb campings loaded: " + DBMock.DB.getCampings().size());
+            String gabaritsSaved = this.helper.getGabarits();
+            if (!"".equals(gabaritsSaved)) {
+                it = parseGabarisFromJson(gabaritsSaved).iterator();
+                while (it.hasNext()) {
+                    Gabarit g = (Gabarit) it.next();
+                    if (!DBMock.DB.getGabarits().contains(g)) {
+                        DBMock.DB.getGabarits().add(g);
+                    }
+                }
+            }
+            Log.i("db", "nb gabarits loaded: " + DBMock.DB.getGabarits().size());
+            String HangarSaved = this.helper.getHangars();
+            if (!"".equals(HangarSaved)) {
+                it = parseHangarFromJson(HangarSaved).iterator();
+                while (it.hasNext()) {
+                    Hangar h = (Hangar) it.next();
+                    if (!DBMock.DB.getHangars().contains(h)) {
+                        DBMock.DB.getHangars().add(h);
+                    }
+                }
+            }
+            Log.i("db", "nb hangrad loaded: " + DBMock.DB.getHangars().size());
+            String idsSaved = this.helper.getIds();
+            if (!"".equals(idsSaved)) {
+                DBMock.DB.setLastIds(parseIdsFromJson(idsSaved));
+            }
+            Log.i("db", "ids loaded: " + DBMock.DB.getLastIds());
+            return;
+        }
+        Log.i("db", "first init");
+        DBMock.DB.createDefaultObject();
+        saveModel();
+        this.helper.setInitialized();
+    }
 
 }
