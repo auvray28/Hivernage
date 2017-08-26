@@ -384,7 +384,7 @@ public class MenuActivity extends FragmentActivity implements
 		}
 
 		this.doubleBackToExitPressedOnce = true;
-		Toast.makeText(this, "Cliquer une deuxi�me fois pour quitter",
+		Toast.makeText(this, "Cliquer une deuxiéme fois pour quitter",
 				Toast.LENGTH_SHORT).show();
 
 		new Handler().postDelayed(new Runnable() {
