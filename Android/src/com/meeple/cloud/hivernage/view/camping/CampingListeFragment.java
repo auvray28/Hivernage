@@ -190,7 +190,9 @@ public class CampingListeFragment extends Fragment implements TextWatcher {
 	    }
 	    
 		public void refreshCamping() {
-	    	listeCampingsAdapter.notifyDataSetChanged();
+			if (listeCampingsAdapter != null) {
+				listeCampingsAdapter.notifyDataSetChanged();
+			}
 		}
 		
 		private void deleteCamping(int paramInt)  {

@@ -226,7 +226,9 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 
 
 	public void refreshClient() {
-    	listeClientAdapter.notifyDataSetChanged();
+		if (listeClientAdapter != null) {
+			listeClientAdapter.notifyDataSetChanged();
+		}
 	}
     
 	
