@@ -220,12 +220,12 @@ public class HolidaysFragment extends Fragment
 			Toast.makeText(getActivity(), R.string.fillAll, Toast.LENGTH_SHORT).show();
 		}
 		else {
-			
 			localCamping = Services.campingService.findCampingByName(this.holyCamping.getSelectedItem().toString());
 			
 			EmplacementCamping localEmplacementCamping = new EmplacementCamping(localCamping, this.edt_emplacement.getText().toString(), this.client.getCaravane());
 			localEmplacementCamping.setEntree(this.beginDate.getTime());
 			localEmplacementCamping.setSortie(this.endDate.getTime());
+			Services.caravaneService.addEmplacementCamping(this.client.getCaravane(), localEmplacementCamping);
 			pushAppointmentsToCalender(getActivity(), "Entrée : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.beginDate.getTimeInMillis());
 			pushAppointmentsToCalender(getActivity(), "Sortie : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.endDate.getTimeInMillis());
 			Toast.makeText(getActivity(), "Date enregistrée pour le client", 0).show();

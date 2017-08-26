@@ -113,8 +113,6 @@ public class CaravaneServiceMock implements ICaravaneService {
 
 	@Override
 	public void removeFromCamping(Caravane caravane) {
-		caravane.getEmplacementHangar().getHangar().removeCaravane(caravane);
-		caravane.setEmplacementHangar(null);
 		caravane.setStatus(CaravaneStatus.SORTIE);
 		DbHelper.instance.saveModel();
 	}
