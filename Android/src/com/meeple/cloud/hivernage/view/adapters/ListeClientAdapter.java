@@ -25,27 +25,38 @@ public class ListeClientAdapter  extends BaseAdapter {
 	private ArrayList<Client> dataListe;
 	
 	private OrderClientBy orderBy;
+	private boolean showOldClient;
 	
 	public ListeClientAdapter(Context ctx, ArrayList<Client> list){
 		this.ctx = ctx;
-		this.viewedListe = list;
+		this.viewedListe = new ArrayList<Client>();
 		
-		dataListe = new ArrayList<Client>();
-		dataListe.addAll(viewedListe);
+		dataListe = list;
+		showOldClient = false;
+		orderBy = OrderClientBy.ALPHABETIC;
 		
-		reorderClientsBy(OrderClientBy.ALPHABETIC);
+		filter("");
 	}	
 	
 	public ListeClientAdapter(Context ctx, ArrayList<Client> list, OrderClientBy newOrder){
 		this.ctx = ctx;
-		this.viewedListe = list;
+		this.viewedListe = new ArrayList<Client>();
 		
-		dataListe = new ArrayList<Client>();
-		dataListe.addAll(viewedListe);
+		dataListe = list;
+		showOldClient = false;
+		orderBy = newOrder;
 		
-		reorderClientsBy(newOrder);
+		filter("");
 	}	
 	
+	public boolean isShowOldClient() {
+		return showOldClient;
+	}
+
+	public void setShowOldClient(boolean showOldClient) {
+		this.showOldClient = showOldClient;
+	}
+
 	@Override
 	public int getCount() {
 		return viewedListe.size();
@@ -145,12 +156,18 @@ public class ListeClientAdapter  extends BaseAdapter {
 		charText = charText.toLowerCase(Locale.getDefault());
 		viewedListe.clear();
 		if (charText.length() == 0) {
-			viewedListe.addAll(dataListe);
+			
+			for (Client c : dataListe) {
+				if ( !(!showOldClient && c.isOldClient()) ) {
+					viewedListe.add(c);
+				}
+			}
 		} else {
 			for (Client c : dataListe) {
-				if (c.getNom().toLowerCase(Locale.getDefault()).contains(charText)
+				if( (c.getNom().toLowerCase(Locale.getDefault()).contains(charText)
 				  || c.getPrenom().toLowerCase(Locale.getDefault()).contains(charText)
-				  || c.getCaravane().getPlaque().toLowerCase(Locale.getDefault()).contains(charText)) {
+				  || c.getCaravane().getPlaque().toLowerCase(Locale.getDefault()).contains(charText))
+				  && !(!showOldClient && c.isOldClient())) {
 					viewedListe.add(c);
 				}
 			}

@@ -32,7 +32,9 @@ public class FileManager {
     private static final String CAMPING_FILENAME = "Campings.csv";
     private static final String CLIENT_FILENAME = "Clients.csv";
     private static final String SEPARATOR = ";";
+    private static final String END_LINE  = "\n";
 
+    // Importation
     public static List<Client> createAllClients(Context ctx) {
     	Client client = null;
     	try {
@@ -142,6 +144,9 @@ public class FileManager {
     					}
     				}
     				client = new Client(nom, prenom, adresse, telephone, mail, observation, caravane);
+    				if (oneData.length == 16) {
+    					client.setOldClient(oneData[15].equals("0"));
+    				}
     				client.addHivernage(new Hivernage(acompte));
     				Services.clientService.create(client);
     				clients.add(client);
@@ -162,6 +167,7 @@ public class FileManager {
         return null;
     }
 
+    // Exportations
     public static void writeAllClients(Context ctx) {
         File file = new File(new StringBuilder(String.valueOf(Environment.getExternalStorageDirectory().toString())).append("/Documents/").append(CLIENT_FILENAME).toString());
         try {
@@ -182,7 +188,8 @@ public class FileManager {
             fw.append("Entrée/X;");
             fw.append("Sortie/Y;");
             fw.append("-/Angle;");
-            fw.append("Observation\n");
+            fw.append("Observation;");
+            fw.append("isOldClient\n");
             Iterator it = all_clients.iterator();
             while (it.hasNext()) {
                 appendClient(fw, (Client) it.next());
@@ -232,7 +239,8 @@ public class FileManager {
                     fw.append(new StringBuilder(String.valueOf(caravane.getEmplacementHangar().getPosY())).append(SEPARATOR).toString());
                     fw.append(new StringBuilder(String.valueOf(caravane.getEmplacementHangar().getAngle())).append(SEPARATOR).toString());
                 }
-                fw.append(caravane.getObservation() + "\n");
+                fw.append(caravane.getObservation() + SEPARATOR);
+                fw.append( ( (client.isOldClient()) ? "0":"1") + END_LINE );
             }
         } catch (IOException e) {
             e.printStackTrace();

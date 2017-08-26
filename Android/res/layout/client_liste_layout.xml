@@ -46,19 +46,34 @@
             android:id="@+id/client_liste_listview"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_above="@+id/btn_addclient"
+            android:layout_above="@+id/qsda"
             android:layout_alignParentTop="true" >
-
         </ListView>
 
-        <Button
-            android:id="@+id/btn_addclient"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/qsda"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:text="@string/ajouter_client" />
+            android:layout_alignParentLeft="true" >
+
+            <Button
+                android:id="@+id/btn_addclient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1"
+                android:text="@string/ajouter_client" />
+
+            <CheckBox
+                android:id="@+id/cb_showOld"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Montrer Ancien Client" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

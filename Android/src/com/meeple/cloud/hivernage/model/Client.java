@@ -27,6 +27,9 @@ public class Client extends Entity<Client>{
 	private String mail;
 	@Column
 	private String observation;
+	@Column
+	private boolean oldClient;
+	
 	
 	@Column(colName="CARAVANE_ID")
 	private Caravane caravane;
@@ -49,6 +52,7 @@ public class Client extends Entity<Client>{
 		this.observation = observation;
 		this.caravane = caravane;
 		this.hivernages = new ArrayList<Hivernage>();
+		this.oldClient  = false;
 		
 		if(caravane != null && caravane.getClient() == null) {
 			this.caravane.setClient(this);
@@ -155,7 +159,18 @@ public class Client extends Entity<Client>{
 	}
 	
 	
-	/********************* Comparators Impl�mentation ****************************/
+	
+	public boolean isOldClient() {
+		return oldClient;
+	}
+
+	public void setOldClient(boolean oldClient) {
+		this.oldClient = oldClient;
+	}
+
+
+
+	/********************* Comparators Implémentation ****************************/
 	
 	public static class Comparators {
         public static Comparator<Client> ALPHABETIC = new Comparator<Client>() {

@@ -27,6 +27,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -75,6 +78,7 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 	
 	private Spinner orderBy;
 	private Button btn_addClient;
+	private CheckBox cb_showOldClient;
 	
 	private ClientListInterface mCallback;
 	
@@ -182,6 +186,17 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 			}
 		});
     	
+    	
+    	cb_showOldClient = (CheckBox) v.findViewById(R.id.cb_showOld);
+    	cb_showOldClient.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				listeClientAdapter.setShowOldClient(isChecked);
+				listeClientAdapter.filter("");
+				listeClientAdapter.notifyDataSetInvalidated();
+			}
+		});
     	
     }
 

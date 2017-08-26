@@ -14,7 +14,6 @@ import com.meeple.cloud.hivernage.service.Services;
 import com.meeple.cloud.hivernage.view.object.MyEditView;
 
 import android.app.Activity;
-import android.app.Service;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +27,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +52,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 					   txt_client_mail, txt_client_obs, txt_caravane_obs, txt_showHolidaysDate,
 					   txt_caravane_immatriculation;
 	private TextView txt_client_acompte;
+	private CheckBox cb_isOldClient;
 	
 	// Pour sa caravane
 	private TextView txt_caravane_label_position, txt_caravane_position;
@@ -106,6 +109,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	txt_client_mail     = (MyEditView) v.findViewById(R.id.client_info_mail);
     	txt_client_acompte  = (TextView) v.findViewById(R.id.client_info_acompte);
     	txt_client_obs      = (MyEditView) v.findViewById(R.id.client_info_obs);
+    	cb_isOldClient         = (CheckBox) v.findViewById(R.id.check_oldclient);
     	//
     	txt_caravane_immatriculation = (MyEditView) v.findViewById(R.id.caravane_info_immat);
     	txt_caravane_label_position  = (TextView) v.findViewById(R.id.caravane_info_label_position);
@@ -114,6 +118,13 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	spinner_gabarit              = (Spinner)  v.findViewById(R.id.caravane_info_gabarit);
     	txt_caravane_obs             = (MyEditView) v.findViewById(R.id.caravane_info_obs);
     	txt_showHolidaysDate         = (MyEditView) v.findViewById(R.id.show_holidaysdate);
+    	//
+    	cb_isOldClient.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				client.setOldClient(arg1);
+			}
+		});
     	//
     	spinner_hangar.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.spinner_layout, NewClientFragment.getAllHangarName()));
     	spinner_hangar.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -259,6 +270,8 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	txt_client_acompte.setTextColor(colorAcompte);
     	
     	txt_client_obs.setOriginalText(displayClient.getObservation());
+    	
+    	cb_isOldClient.setChecked(displayClient.isOldClient());
     	
     	// Caravane
     	txt_caravane_immatriculation.setOriginalText(displayClient.getCaravane().getPlaque());
