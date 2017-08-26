@@ -8,11 +8,13 @@ import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.model.EmplacementCamping;
 import com.meeple.cloud.hivernage.model.EmplacementHangar;
+import com.meeple.cloud.hivernage.model.Gabarit;
 import com.meeple.cloud.hivernage.model.Hangar;
 import com.meeple.cloud.hivernage.service.Services;
 import com.meeple.cloud.hivernage.view.object.MyEditView;
 
 import android.app.Activity;
+import android.app.Service;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -45,13 +47,13 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 	
 	// Pour le client
 	private MyEditView txt_client_nom, txt_client_prenom, txt_client_adresse, txt_client_tel,
-					   txt_client_mail, txt_client_obs, txt_caravane_obs, txt_showHolidaysDate;
+					   txt_client_mail, txt_client_obs, txt_caravane_obs, txt_showHolidaysDate,
+					   txt_caravane_immatriculation;
 	private TextView txt_client_acompte;
 	
 	// Pour sa caravane
-	private TextView txt_caravane_immatriculation;
-	private TextView txt_caravane_gabarit,txt_caravane_label_position, txt_caravane_position;
-	private Spinner  spinner_hangar;
+	private TextView txt_caravane_label_position, txt_caravane_position;
+	private Spinner  spinner_hangar, spinner_gabarit;
 	//
 	private Button btn_updateClient, btn_orga_vac, btn_delivery;
 	
@@ -105,11 +107,11 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	txt_client_acompte  = (TextView) v.findViewById(R.id.client_info_acompte);
     	txt_client_obs      = (MyEditView) v.findViewById(R.id.client_info_obs);
     	//
-    	txt_caravane_immatriculation = (TextView) v.findViewById(R.id.caravane_info_immat);
-    	txt_caravane_gabarit         = (TextView) v.findViewById(R.id.caravane_info_gabarit);
+    	txt_caravane_immatriculation = (MyEditView) v.findViewById(R.id.caravane_info_immat);
     	txt_caravane_label_position  = (TextView) v.findViewById(R.id.caravane_info_label_position);
     	txt_caravane_position        = (TextView) v.findViewById(R.id.caravane_info_position);
     	spinner_hangar               = (Spinner)  v.findViewById(R.id.show_hangar);
+    	spinner_gabarit              = (Spinner)  v.findViewById(R.id.caravane_info_gabarit);
     	txt_caravane_obs             = (MyEditView) v.findViewById(R.id.caravane_info_obs);
     	txt_showHolidaysDate         = (MyEditView) v.findViewById(R.id.show_holidaysdate);
     	//
@@ -126,7 +128,20 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 				// Nothing Todo
 			}
 		});
-    	
+    	//
+    	spinner_gabarit.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.spinner_layout, NewClientFragment.getAllGabaritName()));
+    	spinner_gabarit.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+				changeGabarit(pos);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) { 
+				// Nothing Todo
+			}
+		});
     	//
     	btn_updateClient             = (Button) v.findViewById(R.id.btn_updateClient);
     	btn_updateClient.setVisibility(View.INVISIBLE);
@@ -185,6 +200,19 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 			Services.caravaneService.putInHangar(this.client.getCaravane(), new EmplacementHangar(0, 0, 0.0d, newHangar));
 		}
 	}
+    
+    protected void changeGabarit(int gabaritPos) {
+
+    	String newgabaritName = NewClientFragment.getAllGabaritName()[gabaritPos];
+    	
+		Gabarit newGabarit = Services.gabaritService.findGabaritByName(newgabaritName);
+		
+		if (newGabarit != null) {
+			client.getCaravane().setGabari(newGabarit);
+			Services.caravaneService.update(client.getCaravane());
+		}
+	}
+
 
 
 
@@ -233,9 +261,10 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	txt_client_obs.setOriginalText(displayClient.getObservation());
     	
     	// Caravane
-    	txt_caravane_immatriculation.setText(displayClient.getCaravane().getPlaque());
-    	txt_caravane_gabarit.setText(displayClient.getCaravane().getGabarit().getNom());
+    	txt_caravane_immatriculation.setOriginalText(displayClient.getCaravane().getPlaque());
     	txt_caravane_obs.setOriginalText( displayClient.getCaravane().getObservation());
+    	
+    	spinner_gabarit.setSelection(Arrays.asList(NewClientFragment.getAllGabaritName()).indexOf(displayClient.getCaravane().getGabarit().getNom()));
     	
     	majCaravaneLocation(displayClient);
     	
@@ -293,6 +322,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 		client.setObservation(txt_client_obs.getText().toString());
 		
 		// Sa caravane
+		client.getCaravane().setPlaque(txt_caravane_immatriculation.getText().toString());
 		client.getCaravane().setObservation(txt_caravane_obs.getText().toString());
 	}
 	

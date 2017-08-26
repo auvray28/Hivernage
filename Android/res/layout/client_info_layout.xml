@@ -217,7 +217,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textStyle="bold" />
 
-                <TextView
+                <com.meeple.cloud.hivernage.view.object.MyEditView
                     android:id="@+id/caravane_info_immat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -253,12 +253,11 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textStyle="bold" />
 
-                        <TextView
+                        <Spinner
                             android:id="@+id/caravane_info_gabarit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="X"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
                     </LinearLayout>
 
                     <LinearLayout

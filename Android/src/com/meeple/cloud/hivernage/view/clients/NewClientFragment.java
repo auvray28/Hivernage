@@ -121,7 +121,7 @@ public class NewClientFragment extends Fragment {
 		return als.toArray(new String[]{});
 	}
 	
-	private String[] getAllGabaritName(){
+	public static String[] getAllGabaritName(){
 		ArrayList<String> als = new ArrayList<String>();
 		
 		for(Gabarit gab : Services.gabaritService.getAllGabarits()) {
