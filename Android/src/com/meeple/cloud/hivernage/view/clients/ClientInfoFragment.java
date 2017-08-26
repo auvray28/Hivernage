@@ -45,11 +45,11 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 	
 	// Pour le client
 	private MyEditView txt_client_nom, txt_client_prenom, txt_client_adresse, txt_client_tel,
-					   txt_client_mail, txt_client_obs;
+					   txt_client_mail, txt_client_obs, txt_caravane_obs, txt_showHolidaysDate;
 	private TextView txt_client_acompte;
 	
 	// Pour sa caravane
-	private TextView txt_caravane_immatriculation, txt_caravane_obs;
+	private TextView txt_caravane_immatriculation;
 	private TextView txt_caravane_gabarit,txt_caravane_label_position, txt_caravane_position;
 	private Spinner  spinner_hangar;
 	//
@@ -110,7 +110,8 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	txt_caravane_label_position  = (TextView) v.findViewById(R.id.caravane_info_label_position);
     	txt_caravane_position        = (TextView) v.findViewById(R.id.caravane_info_position);
     	spinner_hangar               = (Spinner)  v.findViewById(R.id.show_hangar);
-    	txt_caravane_obs             = (TextView) v.findViewById(R.id.caravane_info_obs);
+    	txt_caravane_obs             = (MyEditView) v.findViewById(R.id.caravane_info_obs);
+    	txt_showHolidaysDate         = (MyEditView) v.findViewById(R.id.show_holidaysdate);
     	//
     	spinner_hangar.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.spinner_layout, NewClientFragment.getAllHangarName()));
     	spinner_hangar.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -234,8 +235,15 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	// Caravane
     	txt_caravane_immatriculation.setText(displayClient.getCaravane().getPlaque());
     	txt_caravane_gabarit.setText(displayClient.getCaravane().getGabarit().getNom());
-    	txt_caravane_obs.setText(displayClient.getCaravane().getObservation());
+    	txt_caravane_obs.setOriginalText( displayClient.getCaravane().getObservation());
     	
+    	majCaravaneLocation(displayClient);
+    	
+    	addTextWatcher(this);
+	}
+
+	private void majCaravaneLocation(Client displayClient) {
+
     	switch(displayClient.getCaravane().getStatus()) {
     	case CAMPING : 
 			txt_caravane_position.setVisibility(View.VISIBLE);
@@ -268,8 +276,10 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 			break;
     	}
     	
-    	addTextWatcher(this);
+    	txt_showHolidaysDate.setOriginalText(client.getCampingStringDate());
 	}
+
+
 
 	public void setClientWithNewValue() {
 		
@@ -282,6 +292,8 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 		client.setMail(txt_client_mail.getText().toString());
 		client.setObservation(txt_client_obs.getText().toString());
 		
+		// Sa caravane
+		client.getCaravane().setObservation(txt_caravane_obs.getText().toString());
 	}
 	
 	
@@ -290,19 +302,23 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
         if (alEmc.size() > 0) {
             switch (this.client.getCaravane().getStatus()) {
                 case CAMPING:
-                    this.btn_delivery.setText(R.string.take_caravane);
-                    this.btn_delivery.setBackgroundColor(Color.RED);
+                    this.btn_delivery.setText(R.string.deliver_caravane);
+                    this.btn_delivery.setBackgroundColor(Color.BLUE);
                     Services.caravaneService.removeFromCamping(this.client.getCaravane());
                     Services.caravaneService.putInHangar(this.client.getCaravane(), new EmplacementHangar(0, 0, 0.0d, this.WAITING));
                     Toast.makeText(getActivity(), "Caravane placée dans le hangar WAITING", 0).show();
+                    this.btn_delivery.invalidate();
+                    majCaravaneLocation(client);
                     return;
                 default:
-                    this.btn_delivery.setText(R.string.deliver_caravane);
-                    this.btn_delivery.setBackgroundColor(Color.BLUE);
+                    this.btn_delivery.setText(R.string.take_caravane);
+                    this.btn_delivery.setBackgroundColor(Color.RED);
                     Services.caravaneService.removeFromHangar(this.client.getCaravane());
                     EmplacementCamping emc = (EmplacementCamping) alEmc.get(alEmc.size() - 1);
                     Services.caravaneService.putToCamping(this.client.getCaravane(), emc);
                     Toast.makeText(getActivity(), "Caravane amenée dans le camping : " + emc.getCamping().getNom(), 0).show();
+                    this.btn_delivery.invalidate();
+                    majCaravaneLocation(client);
                     return;
             }
         }

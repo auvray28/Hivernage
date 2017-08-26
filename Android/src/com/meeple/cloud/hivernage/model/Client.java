@@ -6,6 +6,9 @@ import java.util.Comparator;
 import com.meeple.cloud.hivernage.db.annotation.Column;
 import com.meeple.cloud.hivernage.db.annotation.Id;
 import com.meeple.cloud.hivernage.db.annotation.OneToMany;
+import com.meeple.cloud.hivernage.model.enums.CaravaneStatus;
+import com.meeple.cloud.hivernage.view.agenda.HolidaysFragment;
+import com.meeple.cloud.hivernage.view.object.MyCalendar;
 
 public class Client extends Entity<Client>{
 
@@ -227,5 +230,23 @@ public class Client extends Entity<Client>{
 		}
 		
 		return getNom() + " " + getPrenom() + caravaneState;
+	}
+
+	public String getCampingStringDate() {
+		
+		if (getCaravane().getStatus() == CaravaneStatus.CAMPING && getCaravane().getCurrentEmplacementCamping() != null && getCaravane().getCurrentEmplacementCamping().getEntree() != null) {
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append("Date d'entrée : ");
+			sb.append(MyCalendar.formatter.format(getCaravane().getCurrentEmplacementCamping().getEntree().getTime()));
+			sb.append("\nDate de sortie : ");
+			sb.append(MyCalendar.formatter.format(getCaravane().getCurrentEmplacementCamping().getSortie().getTime()));
+			sb.append("\n");
+			
+			return sb.toString();
+		}
+		else {
+			return "";
+		}
 	}
 }

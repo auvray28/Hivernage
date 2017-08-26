@@ -315,7 +315,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textStyle="bold" />
 
-                <TextView
+                <com.meeple.cloud.hivernage.view.object.MyEditView
                     android:id="@+id/caravane_info_obs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -324,6 +324,20 @@
                     android:inputType="textPersonName"
                     android:text="X"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <com.meeple.cloud.hivernage.view.object.MyEditView
+                    android:id="@+id/show_holidaysdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="X"
+                    android:textAppearance="?android:attr/textAppearanceMedium" >
+
+                    <requestFocus />
+                </com.meeple.cloud.hivernage.view.object.MyEditView>
+
             </LinearLayout>
         </LinearLayout>
 

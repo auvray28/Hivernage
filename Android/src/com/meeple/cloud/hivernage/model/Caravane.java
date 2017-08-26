@@ -147,7 +147,6 @@ public class Caravane extends Entity<Caravane>{
 		return emplacementCamping;
 	}
 	
-	
 	public Camping getCurrentCamping()
 	{
 		if (getStatus().equals(CaravaneStatus.CAMPING)) {
