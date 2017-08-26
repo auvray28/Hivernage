@@ -1,5 +1,9 @@
 package com.meeple.cloud.hivernage.view.component;
 
+import com.meeple.cloud.hivernage.model.Caravane;
+import com.meeple.cloud.hivernage.model.Gabarit;
+import com.meeple.cloud.hivernage.service.Services;
+
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,9 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout.LayoutParams;
-
-import com.meeple.cloud.hivernage.model.Caravane;
-import com.meeple.cloud.hivernage.model.Gabarit;
 
 public class CaravaneView extends View implements  OnLongClickListener, OnClickListener{
 	
@@ -195,7 +196,7 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 		setAngle(getAngle()+30);
 		Log.d(TAG, "Angle : " + getAngle());
 		invalidate();
-		Services.caravaneService.update(this.caravane_object);
+		Services.caravaneService.update(this.caravane_object);	
 	}
 	
 
