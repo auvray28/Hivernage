@@ -3,71 +3,77 @@ package com.meeple.cloud.hivernage.view.object;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MyCalendar implements Comparable<MyCalendar>{
+public class MyCalendar implements Comparable<MyCalendar> {
+    public static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+    private String calendar_id;
+    private String camping;
+    private String description;
+    private Date endDate;
+    private Date startDate;
+    private String title;
 
-	private String calendar_id;
-	private String title, description;
-	private Date startDate, endDate;
-	
-	public static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-	
-	public MyCalendar() {}
+    public String getCalendar_id() {
+        return this.calendar_id;
+    }
 
-	public String getCalendar_id() {
-		return calendar_id;
-	}
+    public void setCalendar_id(String calendar_id) {
+        this.calendar_id = calendar_id;
+    }
 
-	public void setCalendar_id(String calendar_id) {
-		this.calendar_id = calendar_id;
-	}
+    public String getTitle() {
+        return this.title;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getCamping() {
+        return this.camping;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setCamping(String camping) {
+        this.camping = camping;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return this.description;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public Date getStartDate() {
+        return this.startDate;
+    }
 
-	public Date getEndDate() {
-		return endDate;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public Date getEndDate() {
+        return this.endDate;
+    }
 
-	@Override
-	public int compareTo(MyCalendar another) {
-		return getStartDate().compareTo(another.getStartDate());
-	}
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
-	public String getStrStartDate() {
-		return MyCalendar.formatter.format(startDate);
-	}
+    public int compareTo(MyCalendar another) {
+        return getStartDate().compareTo(another.getStartDate());
+    }
 
-	public String getStrEndDate() {
-		return MyCalendar.formatter.format(endDate);
-	}
-	
-	public boolean isSameDay() {
-		return startDate.equals(endDate);
-	}
-	
+    public String getStrStartDate() {
+        return formatter.format(this.startDate);
+    }
+
+    public String getStrEndDate() {
+        return formatter.format(this.endDate);
+    }
+
+
+    public boolean isSameDay() {
+        return this.startDate.equals(this.endDate);
+    }
 }

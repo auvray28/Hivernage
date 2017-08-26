@@ -13,6 +13,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/tx_camping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <LinearLayout
         android:id="@+id/ll_StartDate"
         android:layout_width="match_parent"
@@ -31,10 +38,9 @@
             android:id="@+id/tx_startDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
             android:text="X"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -54,10 +60,9 @@
             android:id="@+id/tx_endDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
             android:text="X"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
     </LinearLayout>
 
     <TextView

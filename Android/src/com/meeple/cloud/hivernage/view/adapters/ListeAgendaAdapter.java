@@ -2,6 +2,7 @@ package com.meeple.cloud.hivernage.view.adapters;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,6 +54,7 @@ public class ListeAgendaAdapter  extends BaseAdapter {
 		public LinearLayout ll_EndDate;
 		
 		public TextView txt_title;
+		public TextView txt_camping;
 		public TextView txt_startDate;
 		public TextView txt_endDate;
 		public TextView txt_startStr;
@@ -71,6 +73,7 @@ public class ListeAgendaAdapter  extends BaseAdapter {
 			holder.ll_EndDate  = (LinearLayout) convertView.findViewById(R.id.ll_endDate);
 			
 			holder.txt_title       = (TextView) convertView.findViewById(R.id.tx_tittle);
+			holder.txt_camping     = (TextView) convertView.findViewById(R.id.tx_camping);
 			holder.txt_startDate   = (TextView) convertView.findViewById(R.id.tx_startDate);
 			holder.txt_endDate     = (TextView) convertView.findViewById(R.id.tx_endDate);
 			holder.txt_startStr    = (TextView) convertView.findViewById(R.id.tx_debStr);
@@ -85,6 +88,7 @@ public class ListeAgendaAdapter  extends BaseAdapter {
 		MyCalendar myCal = getItem(position);
 		
 		holder.txt_title.setText(myCal.getTitle());
+		holder.txt_camping.setText(myCal.getCamping());
 		holder.txt_startDate.setText(myCal.getStrStartDate());
 		holder.txt_description.setText(myCal.getDescription());
 		
@@ -108,22 +112,21 @@ public class ListeAgendaAdapter  extends BaseAdapter {
 
 	
 	// Filter Class
-	public void filter(String charText) {
-		charText = charText.toLowerCase(Locale.getDefault());
-		viewedListe.clear();
-		if (charText.length() == 0) {
-			viewedListe.addAll(dataListe);
-		} else {
-			for (MyCalendar c : dataListe) {
-//				if (c.getNom().toLowerCase(Locale.getDefault()).contains(charText) ) {
-//					viewedListe.add(c);
-//				}
-			}
-		}
-		
-//		Collections.sort(viewedListe, orderBy.getComparator());
-		
-		notifyDataSetChanged();
-	}
+   public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        this.viewedListe.clear();
+        if (charText.length() == 0) {
+            this.viewedListe.addAll(this.dataListe);
+        } else {
+            Iterator it = this.dataListe.iterator();
+            while (it.hasNext()) {
+                MyCalendar c = (MyCalendar) it.next();
+                if (c.getTitle().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    this.viewedListe.add(c);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 	
 }

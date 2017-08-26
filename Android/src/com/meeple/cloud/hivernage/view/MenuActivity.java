@@ -224,7 +224,7 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	private void clickForAgendaView() {
-		switchPanelMode(PanelMode.DOUBLE);
+		switchPanelMode(PanelMode.SIMPLE);
 		onArticleSelected(MenuBarBtn.AGENDA);
 		setSelectedBtn(btn_Agenda);
 	}

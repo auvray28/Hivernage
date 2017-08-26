@@ -8,11 +8,11 @@ import java.util.Iterator;
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Camping;
 import com.meeple.cloud.hivernage.model.Client;
+import com.meeple.cloud.hivernage.model.EmplacementCamping;
 import com.meeple.cloud.hivernage.service.Services;
 import com.meeple.cloud.hivernage.view.object.MyCalendar;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.net.Uri;
@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class HolidaysFragment extends Fragment
 {
@@ -109,7 +110,7 @@ public class HolidaysFragment extends Fragment
 			}
 		});
 		this.holyCamping = ((Spinner)paramView.findViewById(R.id.holidays_select_camping));
-		this.holyCamping.setAdapter(new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, getAllCampingName()));
+		this.holyCamping.setAdapter(new ArrayAdapter(getActivity().getApplicationContext(), R.layout.spinner_layout, getAllCampingName()));
 	}
 	
 	
@@ -183,62 +184,53 @@ public class HolidaysFragment extends Fragment
 
 	public void planifierVacances()
 	{
-		//TODO
-		/*
+		Boolean error = false;
 		Camping localCamping;
-		int i = 1;
-		if (this.txt_beginDate.getText().toString().equals("X"))
-		{
-			i = 0;
-			this.txt_beginDate.setError("Choisir une date de d�but");
-			if (!this.txt_endDate.getText().toString().equals("X")) {
-				break label164;
-			}
-			i = 0;
-			this.txt_endDate.setError("Choisir une date de fin");
-			label66:
-				if (!this.holyCamping.getSelectedItem().toString().equals("Aucun")) {
-					break label175;
-				}
-			i = 0;
+		
+		if (this.holyCamping.getSelectedItem().toString().equals("Aucun")) {
 			((TextView)this.holyCamping.getSelectedView()).setError("Choisir un camping");
-			label102:
-				if (!this.edt_emplacement.getText().toString().equals("")) {
-					break label192;
-				}
-			i = 0;
-			this.edt_emplacement.setError("Mettre un emplacement du camping");
+			error = true;
 		}
-		for (;;)
-		{
-			if (i != 0) {
-				break label203;
-			}
-			Toast.makeText(getActivity(), 2131034148, 0).show();
-			return;
+		else {
+			((TextView)this.holyCamping.getSelectedView()).setError(null);
+		}
+		if (this.edt_emplacement.getText().toString().equals("X")) {
+			this.edt_emplacement.setError("Choisir un emplacement");
+			error = true;
+		}
+		else {
+			this.edt_emplacement.setError(null);
+		}
+		if (this.txt_beginDate.getText().toString().equals("X")) {
+			this.txt_beginDate.setError("Choisir une date de début");
+			error = true;
+		}
+		else {
 			this.txt_beginDate.setError(null);
-			break;
-			label164:
-				this.txt_endDate.setError(null);
-			break label66;
-			label175:
-				((TextView)this.holyCamping.getSelectedView()).setError(null);
-			break label102;
-			label192:
-				this.edt_emplacement.setError(null);
 		}
-		label203:
+		if (this.txt_endDate.getText().toString().equals("X")) {
+			this.txt_endDate.setError("Choisir une date de fin");
+			error = true;
+		}
+		else {
+			this.txt_endDate.setError(null);
+		}
+		
+		if (error) {
+			Toast.makeText(getActivity(), R.string.fillAll, Toast.LENGTH_SHORT).show();
+		}
+		else {
+			
 			localCamping = Services.campingService.findCampingByName(this.holyCamping.getSelectedItem().toString());
-		EmplacementCamping localEmplacementCamping = new EmplacementCamping(this.edt_emplacement.getText().toString(), this.client.getCaravane());
-		localEmplacementCamping.setCamping(localCamping);
-		localEmplacementCamping.setEntree(this.beginDate.getTime());
-		localEmplacementCamping.setSortie(this.endDate.getTime());
-		Services.caravaneService.addEmplacementCamping(this.client.getCaravane(), localEmplacementCamping);
-		pushAppointmentsToCalender(getActivity(), "Entr�e : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.beginDate.getTimeInMillis());
-		pushAppointmentsToCalender(getActivity(), "Sortie : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.endDate.getTimeInMillis());
-		Toast.makeText(getActivity(), "Date enregistr� pour le client", 0).show();
-		cleanAllFields();
-		*/
+			
+			EmplacementCamping localEmplacementCamping = new EmplacementCamping(localCamping, this.edt_emplacement.getText().toString(), this.client.getCaravane());
+			localEmplacementCamping.setEntree(this.beginDate.getTime());
+			localEmplacementCamping.setSortie(this.endDate.getTime());
+			pushAppointmentsToCalender(getActivity(), "Entrée : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.beginDate.getTimeInMillis());
+			pushAppointmentsToCalender(getActivity(), "Sortie : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.endDate.getTimeInMillis());
+			Toast.makeText(getActivity(), "Date enregistrée pour le client", 0).show();
+			cleanAllFields();
+		}
 	}
 
 	public long pushAppointmentsToCalender(Activity paramActivity, String paramString1, String paramString2, String paramString3, int paramInt, long paramLong)

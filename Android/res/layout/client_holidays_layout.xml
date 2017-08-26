@@ -73,8 +73,9 @@
 
             <Spinner
                 android:id="@+id/holidays_select_camping"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -91,7 +92,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold" />
 
-            <com.meeple.cloud.hivernage.view.object.MyEditView
+            <EditText
                 android:id="@+id/holidays_empl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,7 +158,6 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/end_holidays_datepicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/date_fin"
@@ -171,7 +171,7 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/end_vacances_datepicker"
+                android:id="@+id/end_holidays_datepicker"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="9"
