@@ -94,7 +94,7 @@ public class MenuActivity extends FragmentActivity implements
 			}
 
 			// TODO First Page
-			clickForHangarView();
+			clickForClientView();
 
 			getWindow().setSoftInputMode(
 					WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
