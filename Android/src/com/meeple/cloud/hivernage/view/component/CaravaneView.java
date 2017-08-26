@@ -195,6 +195,7 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 		setAngle(getAngle()+30);
 		Log.d(TAG, "Angle : " + getAngle());
 		invalidate();
+		Services.caravaneService.update(this.caravane_object);
 	}
 	
 
