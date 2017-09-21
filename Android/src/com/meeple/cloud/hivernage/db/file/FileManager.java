@@ -87,7 +87,7 @@ public class FileManager {
     				String observation = oneData[6];
     				String marque = oneData[8];
     				String plaque = oneData[9];
-    				Gabarit g = Services.gabaritService.findGabaritByName("g" + oneData[8]);
+    				Gabarit g = Services.gabaritService.findGabaritByName("g" + oneData[10]);
     				String observationCar = "";
     				if (oneData.length == 17) {
     					observationCar = oneData[16];
