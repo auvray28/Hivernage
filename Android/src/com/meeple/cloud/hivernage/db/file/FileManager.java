@@ -145,9 +145,8 @@ public class FileManager {
     					}
     				}
     				client = new Client(nom, prenom, adresse, telephone, mail, observation, caravane);
-    				if (oneData.length == 16) {
-    					client.setOldClient(oneData[7].equals("0"));
-    				}
+    				client.setOldClient(oneData[7].equals("0"));
+    				
     				client.addHivernage(new Hivernage(acompte));
     				Services.clientService.create(client);
     				clients.add(client);
