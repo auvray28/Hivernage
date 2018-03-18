@@ -107,5 +107,15 @@ public class Hangar extends Entity<Hangar>{
 	public String toString() {
 		return getNom() + " : " + getCaravanes().size();
 	}
+
+	// Déplace TOUTES les caravanes dans le hangar passé en parametre
+	public void relocateCaravanes(Hangar toMove) {
+		Iterator<Caravane> it = caravanes.iterator();
+		while(it.hasNext()) {
+			Caravane c = it.next();
+			it.remove();
+			toMove.addCaravane(c);
+		}
+	}
 	
 }

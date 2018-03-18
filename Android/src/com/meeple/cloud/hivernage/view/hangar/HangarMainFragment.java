@@ -1,12 +1,19 @@
 package com.meeple.cloud.hivernage.view.hangar;
 
+import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.model.Caravane;
+import com.meeple.cloud.hivernage.model.EmplacementHangar;
+import com.meeple.cloud.hivernage.model.Hangar;
+import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.component.CaravaneView;
+import com.meeple.cloud.hivernage.view.component.DragAndDropRelativeLayout;
+import com.meeple.cloud.hivernage.view.component.HangarView;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,17 +26,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Caravane;
-import com.meeple.cloud.hivernage.model.EmplacementHangar;
-import com.meeple.cloud.hivernage.model.Hangar;
-import com.meeple.cloud.hivernage.service.ICaravaneService;
-import com.meeple.cloud.hivernage.service.IHangarService;
-import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.component.CaravaneView;
-import com.meeple.cloud.hivernage.view.component.DragAndDropRelativeLayout;
-import com.meeple.cloud.hivernage.view.component.DragAndDropRelativeLayout.onDropListener;
-import com.meeple.cloud.hivernage.view.component.HangarView;
 
 
 
@@ -153,32 +149,71 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 	
 	
 
-	public boolean onOptionsItemSelected(MenuItem paraMenu)
-	{
+	public boolean onOptionsItemSelected(MenuItem paraMenu) {
+		
 		AlertDialog.Builder paramMenuItem;
 
 		paramMenuItem = new AlertDialog.Builder(getActivity());
-		final EditText localEditText = new EditText(getActivity());
-		paramMenuItem.setMessage("Nom du nouveau hangar");
-		paramMenuItem.setTitle("Ajouter un nouveau hangar");
-		paramMenuItem.setView(localEditText);
-		paramMenuItem.setPositiveButton("Ajouter", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+		
+		switch( paraMenu.getItemId()) {
+		case R.id.new_hangar :
+			
+			final EditText localEditText = new EditText(getActivity());
+			paramMenuItem.setTitle("Ajouter un nouveau hangar");
+			paramMenuItem.setMessage("Nom du nouveau hangar");
+			paramMenuItem.setView(localEditText);
+			paramMenuItem.setPositiveButton("Ajouter", new DialogInterface.OnClickListener()
 			{
-				HangarMainFragment.this.hideKeyboard(localEditText);
-				String newName = localEditText.getText().toString();
-				Services.hangarService.createHangar(new Hangar(newName, 0, 0));
-			}
-		});
-		paramMenuItem.setNegativeButton("Annuler", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+				public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+				{
+					HangarMainFragment.this.hideKeyboard(localEditText);
+					String newName = localEditText.getText().toString();
+					Services.hangarService.createHangar(new Hangar(newName, 0, 0));
+				}
+			});
+			paramMenuItem.setNegativeButton("Annuler", new DialogInterface.OnClickListener()
 			{
-				paramAnonymousDialogInterface.dismiss();
-				HangarMainFragment.this.hideKeyboard(localEditText);
-			}
-		});
+				public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+				{
+					paramAnonymousDialogInterface.dismiss();
+					HangarMainFragment.this.hideKeyboard(localEditText);
+				}
+			});
+			
+			break;
+		case R.id.remove_hangar :
+			
+			
+			paramMenuItem.setTitle("Suppression d'un hangar");
+			paramMenuItem.setMessage("Voulez-vous supprimé : "+ currentHangar.getNom() + "\nToutes les caravanes seront transferé dans Waiting");
+			paramMenuItem.setPositiveButton("Supprimer", new DialogInterface.OnClickListener()
+			{
+				public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+				{
+					Hangar hangarToDelete = currentHangar;
+					showPrevHangar();
+					if (currentHangar != hangarToDelete) {
+						hangarToDelete.relocateCaravanes(WAITING);
+						refreshHangar();
+						Services.hangarService.removeHangar(hangarToDelete);
+						refreshHangar();
+					}
+				}
+			});
+			
+			paramMenuItem.setNegativeButton("Annuler", new DialogInterface.OnClickListener()
+			{
+				public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+				{
+					paramAnonymousDialogInterface.dismiss();
+				}
+			});
+			
+			break;
+		}
+
+
+		
 		paramMenuItem.show();
 		return true;
 	}
@@ -257,13 +292,17 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 		WAITING = Services.hangarService.findHangarByName("Waiting");
 		if(hangarToWait != null) {
 			hangarToWait.removeAllViews();
+			hangarToWait.invalidate();
 			hangarToWait.loadHangar(WAITING);
+			hangarToWait.invalidate();
 		}
 		
 		LAVAGE  = Services.hangarService.findHangarByName("Lavage");
 		if(hangarToWash != null) {
 			hangarToWash.removeAllViews();
+			hangarToWash.invalidate();
 			hangarToWash.loadHangar(LAVAGE);
+			hangarToWash.invalidate();
 		}
 
 
