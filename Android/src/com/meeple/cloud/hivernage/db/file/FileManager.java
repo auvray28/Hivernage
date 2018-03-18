@@ -38,8 +38,9 @@ public class FileManager {
     public static List<Client> createAllClients(Context ctx) {
     	Client client = null;
     	try {
-
-    		InputStream fileInputStream = new FileInputStream(new File(new StringBuilder(String.valueOf(Environment.getExternalStorageDirectory().toString())).append("/Documents/").append(CLIENT_FILENAME).toString()));
+    		File file = new File(new StringBuilder(String.valueOf(Environment.getExternalStorageDirectory().toString())).append("/Documents/").append(CLIENT_FILENAME).toString());
+    		Log.e("Hivernage", "writeAllClients file : " + file.getAbsolutePath());
+    		InputStream fileInputStream = new FileInputStream(file);
     		Reader inputStreamReader = new InputStreamReader(fileInputStream);
     		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
     		List<String[]> data = new ArrayList();
@@ -168,8 +169,10 @@ public class FileManager {
     }
 
     // Exportations
-    public static void writeAllClients(Context ctx) {
+    public static int writeAllClients(Context ctx) {
+    	int result = 0;
         File file = new File(new StringBuilder(String.valueOf(Environment.getExternalStorageDirectory().toString())).append("/Documents/").append(CLIENT_FILENAME).toString());
+        Log.e("Hivernage", "writeAllClients file : " + file.getAbsolutePath());
         try {
             file.createNewFile();
             FileWriter fw = new FileWriter(file);
@@ -198,7 +201,10 @@ public class FileManager {
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
+            result = -1;
         }
+        
+        return result;
     }
 
     public static void appendClient(FileWriter fw, Client client) {
@@ -252,7 +258,9 @@ public class FileManager {
 
     public static List<Camping> createAllCampings(Context ctx) {
         try {
-            InputStream fileInputStream = new FileInputStream(new File(new StringBuilder(String.valueOf(Environment.getExternalStorageDirectory().toString())).append("/Documents/").append(CAMPING_FILENAME).toString()));
+        	File file = new File(new StringBuilder(String.valueOf(Environment.getExternalStorageDirectory().toString())).append("/Documents/").append(CAMPING_FILENAME).toString());
+            Log.e("Hivernage", "createAllCampings file : " + file.getAbsolutePath());
+            InputStream fileInputStream = new FileInputStream(file);
             Reader inputStreamReader = new InputStreamReader(fileInputStream);
             BufferedReader buffreader = new BufferedReader(inputStreamReader);
             List<String[]> data = new ArrayList();
@@ -305,8 +313,10 @@ public class FileManager {
         }
     }
 
-    public static void writeAllCampings(Context ctx) {
+    public static int writeAllCampings(Context ctx) {
+    	int result = 0;
         File file = new File(new StringBuilder(String.valueOf(Environment.getExternalStorageDirectory().toString())).append("/Documents/").append(CAMPING_FILENAME).toString());
+        Log.e("Hivernage", "writeAllCampings file : " + file.getAbsolutePath());
         try {
             file.createNewFile();
             FileWriter fw = new FileWriter(file);
@@ -323,7 +333,10 @@ public class FileManager {
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
+            result = -1;
         }
+        
+        return result;
     }
 
     private static void appendCamping(FileWriter fw, Camping camping) {

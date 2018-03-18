@@ -50,23 +50,30 @@ public class UtilsFragment extends Fragment {
 		btn_importer.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity(), "Importation en cours... !", 1).show();
+				boolean result = true;
+				Toast.makeText(getActivity(), "Importation en cours... !", Toast.LENGTH_SHORT).show();
 				DbHelper.instance.isImportingModel = true;
-				FileManager.createAllCampings(getActivity());
-				FileManager.createAllClients(getActivity());
+				result = FileManager.createAllCampings(getActivity()) != null;
+				if(!result) Toast.makeText(getActivity(), "Echec de l'exportation des Campings!", Toast.LENGTH_LONG).show();
+				result = FileManager.createAllClients(getActivity()) != null;
+				if(!result) Toast.makeText(getActivity(), "Echec de l'exportation des Campings!", Toast.LENGTH_LONG).show();
+				else             Toast.makeText(getActivity(), "Importation reussi !", Toast.LENGTH_SHORT).show();
 				DbHelper.instance.isImportingModel = false;
 				DbHelper.instance.saveModel();
-				Toast.makeText(getActivity(), "Importation fini !", 0).show();
+				
 			}
 		});
 
 		btn_exporter.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity(), "Exportation en cours... !", 1).show();
-				FileManager.writeAllCampings(getActivity());
-				FileManager.writeAllClients(getActivity());
-				Toast.makeText(getActivity(), "Exportation fini !", 0).show();
+				int result = 0;
+				Toast.makeText(getActivity(), "Exportation en cours... !", Toast.LENGTH_SHORT).show();
+				result = FileManager.writeAllCampings(getActivity());
+				if(result == -1) Toast.makeText(getActivity(), "Echec de l'exportation des Campings!", Toast.LENGTH_LONG).show();
+				result = FileManager.writeAllClients(getActivity());
+				if(result == -1) Toast.makeText(getActivity(), "Echec de l'exportation des Clients!", Toast.LENGTH_LONG).show();
+				else             Toast.makeText(getActivity(), "Exportation réussi !", Toast.LENGTH_SHORT).show();
 			}
 		});
 		
