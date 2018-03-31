@@ -1,9 +1,11 @@
 package com.meeple.cloud.hivernage.view.component;
 
 import com.meeple.cloud.hivernage.model.Caravane;
+import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.model.Gabarit;
 import com.meeple.cloud.hivernage.service.Services;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,15 +13,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
-public class CaravaneView extends View implements  OnLongClickListener, OnClickListener{
+public class CaravaneView extends View {
 	
 	private static final String TAG = "hivernage";
 	
@@ -40,6 +42,8 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 	
 	private Caravane caravane_object;
 	
+	private GestureDetector gestureDetector;
+	
 	public CaravaneView(Context context, Caravane caravane) {
 		super(context);
 		
@@ -57,8 +61,7 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 	}
 	
 	private void initView() {
-		setOnClickListener(this);
-		setOnLongClickListener(this);
+		gestureDetector = new GestureDetector(getContext(), new GestureListener());
 		
 		left   = 10;
 		top    = 5;
@@ -72,6 +75,42 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 		
 		setRotation(angle);
 	}
+	
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return gestureDetector.onTouchEvent(event);
+	}
+
+	private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+		@Override
+		public boolean onDown(MotionEvent e) {
+			return true;
+		}
+
+		@Override
+		public boolean onSingleTapConfirmed(MotionEvent e) {
+			onSingleClick();
+			return super.onSingleTapConfirmed(e);
+		}
+
+
+		@Override
+		public void onLongPress(MotionEvent e) {
+			super.onLongPress(e);
+			onLongClick();
+		}
+
+		
+		@Override
+		public boolean onDoubleTap(MotionEvent e) {
+
+			onDoubleClick();
+			return true;
+		}
+	}
+	
 	
     @Override
     public void onDraw(Canvas canvas) {
@@ -150,23 +189,22 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
     }
 	
 
-	@Override
-	public void onClick(View v) {
+	public void onSingleClick() {
 		setAngle(getAngle()+30);
 		Log.d(TAG, "Angle : " + getAngle());
 		invalidate();
 		Services.caravaneService.update(this.caravane_object);	
 	}
 	
-
-	@Override
-	public boolean onLongClick(final View view) {
+//	@Override
+//	public boolean onLongClick(final View view) {
+	public boolean onLongClick() {
+		final View view = this;
 		
 		ClipData data = ClipData.newPlainText("", "");
-//		DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 		
-		// pour �tre franc j'ai copi� coll� un truc du net et le resultat est pas mal...
-		// j'ai meme pas regarder les maths qu'il y a derriere mais dois pas etre bien compliqu�s...
+		// pour etre franc j'ai copier coller un truc du net et le resultat est pas mal...
+		// j'ai meme pas regarder les maths qu'il y a derriere mais dois pas etre bien compliques...
 		//
 		double rotationRad = Math.toRadians(view.getRotation());
 	    final int w = (int) (view.getWidth() * view.getScaleX());
@@ -202,7 +240,28 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 		return true;
 	}
 	
-	
+	public void onDoubleClick() {
+		AlertDialog.Builder popShowClient;
+		Client tapClient     = caravane_object.getClient();
+		StringBuilder clientInfo = new StringBuilder();
+		TextView localTextView   = new TextView(this.getContext());
+
+		clientInfo.append("\tAdresse\t\t: " + tapClient.getAdresse() + "\n");
+		clientInfo.append("\tTelephone\t: " + tapClient.getTelephone() + "\n");
+		clientInfo.append("\tMail\t\t\t: " + tapClient.getMail() + "\n");
+		clientInfo.append("\tAcompte\t\t: " + tapClient.getCurrentAcompte() + "\n");
+		clientInfo.append("\tObservation\t: " + tapClient.getObservation() + "\n");
+		
+		//
+		localTextView.setText(clientInfo.toString());
+		//
+		popShowClient = new AlertDialog.Builder(this.getContext());
+		popShowClient.setTitle("Info Client : " + tapClient.getFullName());
+		popShowClient.setView(localTextView);
+		popShowClient.show();
+		
+		
+	}
 
 	private int getColorForGabarit(Gabarit g) {
 		
@@ -307,16 +366,7 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
     		v.addView(cv);
     	}
     }
-    
-    
-//    public static void addCaravane(ViewGroup v, int backgroundColor) {
-//    	CaravaneView cv = new CaravaneView(v.getContext(), backgroundColor);
-//    	v.addView(cv);
-//    }
-    
-//    public static void addCaravaneAt(ViewGroup v, int backgroundColor, int left, int top) {
-//    	CaravaneView c = new CaravaneView(v.getContext(), backgroundColor, left, top);
-//    	v.addView(c);
-//    }
 
+	
+	
 }
