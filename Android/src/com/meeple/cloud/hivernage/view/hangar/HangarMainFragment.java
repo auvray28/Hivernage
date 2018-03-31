@@ -88,8 +88,8 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 
 				paramAnonymousView = new AlertDialog.Builder(HangarMainFragment.this.getActivity());
 				final EditText localEditText = new EditText(HangarMainFragment.this.getActivity());
-				paramAnonymousView.setMessage("Changer le nom du hangar");
 				paramAnonymousView.setTitle("Nouveau nom du hangar");
+				paramAnonymousView.setMessage("Changer le nom de "+ currentHangar.getNom());
 				paramAnonymousView.setView(localEditText);
 				paramAnonymousView.setPositiveButton("Changer", new DialogInterface.OnClickListener()
 				{
