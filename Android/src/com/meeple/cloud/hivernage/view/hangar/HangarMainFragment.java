@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 
@@ -97,9 +98,14 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 					{
 						HangarMainFragment.this.hideKeyboard(localEditText);
 						String newName = localEditText.getText().toString();
-						HangarMainFragment.this.currentHangar.setNom(newName);
-						HangarMainFragment.this.tv_HangarName.setText(newName);
-						Services.hangarService.updateHangar(HangarMainFragment.this.currentHangar);
+						if (newName.trim().length() > 0) {
+							HangarMainFragment.this.currentHangar.setNom(newName);
+							HangarMainFragment.this.tv_HangarName.setText(newName);
+							Services.hangarService.updateHangar(HangarMainFragment.this.currentHangar);
+						}
+						else {
+							Toast.makeText(getActivity(), "Erreur : nom vide", Toast.LENGTH_SHORT).show();
+						}
 					}
 				});
 				paramAnonymousView.setNegativeButton("Annuler", new DialogInterface.OnClickListener()
