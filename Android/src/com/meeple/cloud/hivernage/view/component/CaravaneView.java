@@ -127,20 +127,24 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
         paint.setTextSize(18);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         
+        int marge = 7;
+        
         if (getAngle() >= 90 && getAngle() < 270) {
         	canvas.rotate(180, 0, 0);
-        	canvas.drawText( caravane_object.getPlaque(), -(right-5), -(top + 10), paint);
+        	canvas.drawText( caravane_object.getPlaque(), -(right-marge), -(top + 10), paint);
+        	canvas.drawText( caravane_object.getMarque(), -(right-marge), -(top + 27), paint);
         	
             paint.setTextSize(15);
-        	canvas.drawText( caravane_object.getClient().getNom(), -(right-10), - (bottom - 20), paint);
-        	canvas.drawText( caravane_object.getClient().getPrenom(), -(right-10), -(bottom - 35), paint);
+        	canvas.drawText( caravane_object.getClient().getNom(), -(right-marge), - (bottom - 20), paint);
+        	canvas.drawText( caravane_object.getClient().getPrenom(), -(right-marge), -(bottom - 35), paint);
         }
         else {
-        	canvas.drawText( caravane_object.getPlaque(), left+5, bottom - 10, paint);
+        	canvas.drawText( caravane_object.getPlaque(), left+marge, bottom - 10, paint);
+        	canvas.drawText( caravane_object.getMarque(), left+marge, bottom - 27, paint);
         	
             paint.setTextSize(15);
-        	canvas.drawText( caravane_object.getClient().getNom(), left+10, top + 20, paint);
-        	canvas.drawText( caravane_object.getClient().getPrenom(), left+10, top + 35, paint);
+        	canvas.drawText( caravane_object.getClient().getNom(), left+marge, top + 20, paint);
+        	canvas.drawText( caravane_object.getClient().getPrenom(), left+marge, top + 35, paint);
         }
         
     }
