@@ -82,7 +82,7 @@ public class DBMock {
 	    Services.trancheService.createTranche(new Tranche(3, 311, 1000, 400.0D));
 	    // hangar par defaut
 	    Services.hangarService.createHangar(new Hangar("Porcherie", 0, 0));
-	    Services.hangarService.createHangar(new Hangar("Lavage", 1, 1));
+	    //Services.hangarService.createHangar(new Hangar("Lavage", 1, 1));
 	    Services.hangarService.createHangar(new Hangar("Waiting", 1, 1));
 	    
 	    DbHelper.instance.isImportingModel = false;
@@ -149,13 +149,13 @@ public class DBMock {
 //		Services.caravaneService.putInHangar(caravane4, porch4);
 
 		
-		Services.hangarService.createHangar(new Hangar("Lavage", 1, 1));
+		//Services.hangarService.createHangar(new Hangar("Lavage", 1, 1));
 		Services.hangarService.createHangar(new Hangar("Waiting", 1, 1));
 		
-		Hangar lavage = Services.hangarService.findHangarByName("Lavage");
+//		Hangar lavage = Services.hangarService.findHangarByName("Lavage");
 		
-		EmplacementHangar empLavage = new EmplacementHangar(10, 110, 0,  lavage);
-		Services.caravaneService.putInHangar(caravane5, empLavage);
+//		EmplacementHangar empLavage = new EmplacementHangar(10, 110, 0,  lavage);
+//		Services.caravaneService.putInHangar(caravane5, empLavage);
 		
 		Hangar waiting = Services.hangarService.findHangarByName("Waiting");
 		

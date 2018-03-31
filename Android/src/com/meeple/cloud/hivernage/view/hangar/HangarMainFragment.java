@@ -33,10 +33,10 @@ import android.widget.Toast;
 public class HangarMainFragment extends Fragment implements DragAndDropRelativeLayout.onDropListener
 {
 	private Hangar currentHangar;
-	private Hangar LAVAGE, WAITING;
+	private Hangar WAITING;
 
 	//	private View listeHangar;
-	private HangarView  hangarToWash, hangarToWait;
+	private HangarView  hangarToWait;
 	private HangarView currentHangarView;
 
 	private ImageButton btn_prevHangar, btn_nextHangar;
@@ -65,10 +65,6 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 		currentHangarView = (HangarView) v.findViewById(R.id.hangar_current_hangar_view);
 		currentHangarView.setBackColor(Color.WHITE); 
 		currentHangarView.setOnDropListener(this);
-
-		hangarToWash = (HangarView)v.findViewById(R.id.hangar_to_wash);
-		hangarToWash.setBackColor(Color.argb(170, 30, 144, 255)); //#aa1e90ff
-		hangarToWash.setOnDropListener(this);
 
 		hangarToWait = (HangarView)v.findViewById(R.id.hangar_to_wait);
 		hangarToWait.setBackColor(Color.rgb(236, 236, 236));
@@ -232,7 +228,7 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 
 		Hangar h = Services.hangarService.getAllHangars().get(indexH);
 
-		if(h.getNom().equals("Lavage") || h.getNom().equals("Waiting")) {
+		if(h.getNom().equals("Waiting")) {
 			currentHangar = h;
 			showNextHangar();
 		}
@@ -249,7 +245,7 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 
 		Hangar h = Services.hangarService.getAllHangars().get(indexH);
 
-		if(h.getNom().equals("Lavage") || h.getNom().equals("Waiting")) {
+		if(h.getNom().equals("Waiting")) {
 			currentHangar = h;
 			showPrevHangar();
 		}
@@ -303,15 +299,6 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 			hangarToWait.invalidate();
 		}
 		
-		LAVAGE  = Services.hangarService.findHangarByName("Lavage");
-		if(hangarToWash != null) {
-			hangarToWash.removeAllViews();
-			hangarToWash.invalidate();
-			hangarToWash.loadHangar(LAVAGE);
-			hangarToWash.invalidate();
-		}
-
-
 		if(currentHangar != null && currentHangarView != null) {
 			currentHangarView.removeAllViews();
 			currentHangarView.loadHangar(currentHangar);

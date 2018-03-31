@@ -2,24 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="3" >
+    android:orientation="horizontal" >
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:weightSum="3" >
-
-        <com.meeple.cloud.hivernage.view.component.HangarView
-            android:id="@+id/hangar_to_wash"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:background="#aa1e90ff"
-            android:orientation="horizontal" >
-        </com.meeple.cloud.hivernage.view.component.HangarView>
+        android:orientation="vertical" >
 
         <com.meeple.cloud.hivernage.view.component.HangarView
             android:id="@+id/hangar_to_wait"
@@ -34,7 +23,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="5"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -84,7 +73,7 @@
             android:id="@+id/hangar_current_hangar_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9"
+            android:layout_weight="13"
             android:background="@android:color/white"
             android:orientation="horizontal" >
 

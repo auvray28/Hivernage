@@ -57,7 +57,7 @@ public class HangarView extends DragAndDropRelativeLayout {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-		if ((this.hangar != null) && ((this.hangar.getNom().equals("Lavage")) || (this.hangar.getNom().equals("Waiting"))))
+		if ((this.hangar != null) && (this.hangar.getNom().equals("Waiting")))
 		{
 			this.paint.setColor(Color.rgb(127, 127, 127));
 			this.paint.setAlpha(85);
