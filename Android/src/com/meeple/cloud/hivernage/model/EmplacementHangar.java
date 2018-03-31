@@ -69,6 +69,8 @@ public class EmplacementHangar extends Entity<EmplacementHangar>{
 		this.hangar = hangar;
 	}
 	
-	
+	public String toString() {
+		return hangar.getNom() + " : x("+posX+") y(" +posY+") angle("+angle+")";
+	}
 	
 }
