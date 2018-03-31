@@ -33,20 +33,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/menu_lavage"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
-
-        <TextView
-            android:id="@+id/txt_lavage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Lavage" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/menu_camping"
         android:layout_width="match_parent"
         android:layout_height="0dp"

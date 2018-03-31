@@ -39,7 +39,7 @@ public class MenuActivity extends FragmentActivity implements
 		NewClientInterface, NewCampingInterface {
 
 	private enum MenuBarBtn {
-		CLIENT, HANGAR, LAVAGE, CAMPING, AGENDA, IMP_EXP;
+		CLIENT, HANGAR, CAMPING, AGENDA, IMP_EXP;
 	}
 
 	private enum PanelMode {
@@ -54,9 +54,9 @@ public class MenuActivity extends FragmentActivity implements
 
 	boolean doubleBackToExitPressedOnce = false;
 
-	private View btn_Client, btn_Hangar, btn_Lavage, btn_Camping, btn_Agenda,
+	private View btn_Client, btn_Hangar, btn_Camping, btn_Agenda,
 			btn_Imp_Exp;
-	private TextView txt_Client, txt_Hangar, txt_Lavage, txt_Camping,
+	private TextView txt_Client, txt_Hangar, txt_Camping,
 			txt_Agenda, txt_Imp_Exp;
 
 	private LinearLayout one_panel, two_panel;
@@ -64,11 +64,17 @@ public class MenuActivity extends FragmentActivity implements
 
 	private PanelMode currentPanelMode = PanelMode.DOUBLE;
 	private MenuBarBtn currentMenu;
+	private Fragment currentFrag;
 
+	// Pas besoin de garder les instance des fragments,
+	// au contraire on veux les mettre a jour en permanence 
+	// sauf utils, pas besoin vu le contenu
+	/*
 	private HangarMainFragment hangarFragment;
 	private ClientListeFragment clientFragment;
 	private CampingListeFragment campingFragment;
 	private AgendaListFragment agendaFragment;
+	*/
 	private UtilsFragment utilsFragment;
 
 	@Override
@@ -119,16 +125,13 @@ public class MenuActivity extends FragmentActivity implements
 		//
 		btn_Client = findViewById(R.id.menu_client);
 		btn_Hangar = findViewById(R.id.menu_hangar);
-		btn_Lavage = findViewById(R.id.menu_lavage);
 		btn_Camping = findViewById(R.id.menu_camping);
 		btn_Agenda = findViewById(R.id.menu_agenda);
 		btn_Imp_Exp = findViewById(R.id.menu_imp_exp);
 		//btn_Imp_Exp.setVisibility(View.GONE);
-		btn_Lavage.setVisibility(View.GONE);
 
 		txt_Client = (TextView) findViewById(R.id.txt_client);
 		txt_Hangar = (TextView) findViewById(R.id.txt_hangar);
-		txt_Lavage = (TextView) findViewById(R.id.txt_lavage);
 		txt_Camping = (TextView) findViewById(R.id.txt_camping);
 		txt_Agenda = (TextView) findViewById(R.id.txt_agenda);
 		txt_Imp_Exp = (TextView) findViewById(R.id.txt_imp_exp);
@@ -145,11 +148,12 @@ public class MenuActivity extends FragmentActivity implements
 		only_frame = (FrameLayout) findViewById(R.id.only_frame);
 
 		// Initialisation des fragments
-
+		/*
 		hangarFragment = new HangarMainFragment();
 		clientFragment = new ClientListeFragment();
 		campingFragment = new CampingListeFragment();
 		agendaFragment = new AgendaListFragment();
+		*/
 		utilsFragment  = new UtilsFragment();
 
 		// Init Bouton Event
@@ -165,13 +169,6 @@ public class MenuActivity extends FragmentActivity implements
 			@Override
 			public void onClick(View arg0) {
 				clickForHangarView();
-			}
-		});
-
-		btn_Lavage.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				clickForLavageView();
 			}
 		});
 
@@ -209,12 +206,6 @@ public class MenuActivity extends FragmentActivity implements
 		setSelectedBtn(btn_Hangar);
 	}
 
-	private void clickForLavageView() {
-		switchPanelMode(PanelMode.DOUBLE);
-		onArticleSelected(MenuBarBtn.LAVAGE);
-		setSelectedBtn(btn_Lavage);
-	}
-
 	private void clickForCampingView() {
 		switchPanelMode(PanelMode.DOUBLE);
 		onArticleSelected(MenuBarBtn.CAMPING);
@@ -237,33 +228,33 @@ public class MenuActivity extends FragmentActivity implements
 
 		if (currentMenu != newMenu) {
 
-			Fragment newFrag;
+			
 
 			currentMenu = newMenu;
 
 			// TODO faudra regarder le new instance de tes Fragments a Diagonal
 			//
 			switch (newMenu) {
-			case CLIENT:
-				newFrag = clientFragment;
-				break;// pas bon a changer
 			case HANGAR:
-				newFrag = hangarFragment;
+//				newFrag = hangarFragment
+				currentFrag = new HangarMainFragment();
 				break;
-			case LAVAGE:
 			case CAMPING:
-				newFrag = campingFragment;
+//				newFrag = campingFragment;
+				currentFrag = new CampingListeFragment();
 				break;
 			case AGENDA:
-				newFrag = agendaFragment;
+//				newFrag = agendaFragment;
+				currentFrag = new AgendaListFragment();
 				break;
 			case IMP_EXP:
-				newFrag = utilsFragment;
+				currentFrag = utilsFragment;
 				break;
 			default:
-				newFrag = clientFragment;
+			case CLIENT:
+				//newFrag = clientFragment;
+				currentFrag = new ClientListeFragment();
 				break;
-
 			}
 
 			/*
@@ -282,9 +273,9 @@ public class MenuActivity extends FragmentActivity implements
 			// and add the transaction to the back stack so the user can
 			// navigate back
 			if (currentPanelMode == PanelMode.DOUBLE) {
-				transaction.replace(R.id.little_frame, newFrag);
+				transaction.replace(R.id.little_frame, currentFrag);
 			} else {
-				transaction.replace(R.id.only_frame, newFrag);
+				transaction.replace(R.id.only_frame, currentFrag);
 			}
 			// transaction.addToBackStack(null);
 
@@ -292,8 +283,8 @@ public class MenuActivity extends FragmentActivity implements
 			transaction.commit();
 			
 			
-			if (newFrag.equals(hangarFragment)) {
-				hangarFragment.refreshHangar();
+			if (currentFrag instanceof HangarMainFragment) {
+				((HangarMainFragment) currentFrag).refreshHangar();
 			}
 		}
 	}
@@ -304,13 +295,11 @@ public class MenuActivity extends FragmentActivity implements
 		btn_Camping.setBackgroundColor(defaultMenuBarBtn);
 		btn_Hangar.setBackgroundColor(defaultMenuBarBtn);
 		btn_Imp_Exp.setBackgroundColor(defaultMenuBarBtn);
-		btn_Lavage.setBackgroundColor(defaultMenuBarBtn);
 
 		txt_Agenda.setTextColor(defaultMenuBarTxt);
 		txt_Client.setTextColor(defaultMenuBarTxt);
 		txt_Camping.setTextColor(defaultMenuBarTxt);
 		txt_Hangar.setTextColor(defaultMenuBarTxt);
-		txt_Lavage.setTextColor(defaultMenuBarTxt);
 		txt_Imp_Exp.setTextColor(defaultMenuBarTxt);
 
 		btnSelected.setBackgroundColor(selectedMenuBarBtn);
@@ -492,9 +481,13 @@ public class MenuActivity extends FragmentActivity implements
 
 	@Override
 	public void refreshList() {
-		clientFragment.refreshClient();
+		if (currentFrag instanceof ClientListeFragment) {
+			((ClientListeFragment) currentFrag).refreshClient();
+		}
 		
-		campingFragment.refreshCamping();
+		if (currentFrag instanceof CampingListeFragment) {
+			((CampingListeFragment) currentFrag).refreshCamping();
+		}
 	}
 	
 	@Override
