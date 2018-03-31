@@ -95,7 +95,7 @@ public class NewClientFragment extends Fragment {
 					emptyAllEdt();
 				}
 				else {
-					Toast.makeText(getActivity(), R.string.fillAll, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), R.string.fillRequiredClientField, Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -165,11 +165,12 @@ public class NewClientFragment extends Fragment {
 	
 	public boolean isAllEditFill() {
 		if( (edt_nom.getText().toString().length() == 0)  
-			|| (edt_prenom.getText().toString().length() == 0)
-			|| (edt_adresse.getText().toString().length() == 0)
-			|| (edt_mail.getText().toString().length() == 0)
-			|| (edt_tel.getText().toString().length() == 0)
-			|| (edt_acompte.getText().toString().length() == 0)
+			//|| (edt_prenom.getText().toString().length() == 0)
+			//|| (edt_adresse.getText().toString().length() == 0)
+			//|| (edt_mail.getText().toString().length() == 0)
+			//|| (edt_tel.getText().toString().length() == 0)
+			//|| (edt_acompte.getText().toString().length() == 0)
+			|| (edt_marque.getText().toString().length() == 0)
 			|| (edt_immat.getText().toString().length() == 0)) {
 			return false;
 		}

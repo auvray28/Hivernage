@@ -57,6 +57,7 @@
     <string name="acompte">"- Acompte : "</string>
     
     <string name="fillAll">Remplissez tous les champs ! \n(Les Observations peuvent rester vide)</string>
+    <string name="fillRequiredClientField">Remplissez les champs minimum requis ! \n(Nom du client, marque et immatriculation de la caravane)</string>
     
     <string name="confirmNewClient">le client a bien été créé</string>
     
