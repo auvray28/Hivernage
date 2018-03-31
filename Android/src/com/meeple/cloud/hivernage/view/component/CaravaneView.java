@@ -23,14 +23,11 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 	
 	private static final String TAG = "hivernage";
 	
-	private final static int CARAVANE_VIEW_WIDTH  = 100; 
-	private final static int CARAVANE_VIEW_HEIGHT = 70;
+	private final static int BASE_CARAVANE_VIEW_WIDTH  = 110; 
+	private final static int BASE_CARAVANE_VIEW_HEIGHT = 80;
 	private final static int MARGIN = 10;
 	
-	private int left   = 10;
-	private int top    = 5;
-	private int right  = left + CARAVANE_VIEW_WIDTH;
-	private int bottom = top + CARAVANE_VIEW_HEIGHT;
+	private int left,top, right, bottom;
 			
 	private int position_X = 0;
 	private int position_Y = 0;
@@ -43,30 +40,6 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 	
 	private Caravane caravane_object;
 	
-	public CaravaneView(Context context) {
-		super(context);
-		initView();
-	}
-	
-	public CaravaneView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		initView();
-	}
-
-
-	public CaravaneView(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
-		initView();
-	}
-
-//	public CaravaneView(Context context, int color) {
-//		super(context);
-//		
-//		this.caravaneColor = color;
-//		
-//		initView();
-//	}
-	
 	public CaravaneView(Context context, Caravane caravane) {
 		super(context);
 		
@@ -78,39 +51,21 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 			this.position_X = caravane_object.getEmplacementHangar().getPosX();
 			this.position_Y = caravane_object.getEmplacementHangar().getPosY();
 			this.angle      = (float)caravane_object.getEmplacementHangar().getAngle();
-			
-			switch(caravane_object.getGabarit().getNom()){
-			case "g1": caravaneColor = Color.YELLOW;
-				break;
-			case "g2": caravaneColor = Color.CYAN;
-				break;
-			case "g3": caravaneColor = Color.GREEN;
-				break;
-				default : break;
-				
-			}
 		}
 		
 		initView();
 	}
 	
-//	public CaravaneView(Context context, int color, int left, int top) {
-//		super(context);
-//		
-//		this.caravaneColor = color;
-//		
-//		this.position_X = left;
-//		this.position_Y = top;
-//		this.angle      = 0;
-//		
-//		initView();
-//	}
-	
 	private void initView() {
 		setOnClickListener(this);
 		setOnLongClickListener(this);
 		
-		lp = new LayoutParams(CARAVANE_VIEW_WIDTH + MARGIN, CARAVANE_VIEW_HEIGHT + MARGIN);
+		left   = 10;
+		top    = 5;
+		right  = left + BASE_CARAVANE_VIEW_WIDTH + getAdditionalWidthWithGabarit(caravane_object.getGabarit());
+		bottom = top + BASE_CARAVANE_VIEW_HEIGHT;
+		
+		lp = new LayoutParams(BASE_CARAVANE_VIEW_WIDTH + MARGIN + getAdditionalWidthWithGabarit(caravane_object.getGabarit()), BASE_CARAVANE_VIEW_HEIGHT + MARGIN);
 		lp.setMargins(position_X, position_Y, 0, 0);
 		
 		setLayoutParams(lp); // 10 pour les marges
@@ -123,7 +78,7 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
     	super.onDraw(canvas);
     	
     	boolean gauche = true;
-    	if (canvas.getWidth() != (CARAVANE_VIEW_WIDTH + MARGIN) || canvas.getHeight() != (CARAVANE_VIEW_HEIGHT + MARGIN)) {
+    	if (canvas.getWidth() != (BASE_CARAVANE_VIEW_WIDTH + MARGIN + getAdditionalWidthWithGabarit(caravane_object.getGabarit())) || canvas.getHeight() != (BASE_CARAVANE_VIEW_HEIGHT + MARGIN)) {
     		try {
     			setLayoutParams(lp);
     		}
@@ -141,10 +96,10 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
         // Test pour l'orientation
         // le petit carr�
         if (gauche)  { // gauche
-        	canvas.drawRect(left-8, CARAVANE_VIEW_HEIGHT/2 -3, left, CARAVANE_VIEW_HEIGHT/2 + 13, paint);
+        	canvas.drawRect(left-8, BASE_CARAVANE_VIEW_HEIGHT/2 -3, left, BASE_CARAVANE_VIEW_HEIGHT/2 + 13, paint);
         }
         else { //droite
-        	canvas.drawRect(right, CARAVANE_VIEW_HEIGHT/2 -3, right+8, CARAVANE_VIEW_HEIGHT/2 + 13, paint);
+        	canvas.drawRect(right, BASE_CARAVANE_VIEW_HEIGHT/2 -3, right+8, BASE_CARAVANE_VIEW_HEIGHT/2 + 13, paint);
         }
         
         
@@ -160,10 +115,10 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
         canvas.drawRect(left +3, top + 3, right - 3, bottom - 3, paint );
         // La couleur du petit carr� qui indique l'orientation
         if (gauche)  { // gauche
-        	canvas.drawRect( left-5, CARAVANE_VIEW_HEIGHT/2, left, CARAVANE_VIEW_HEIGHT/2 + 10, paint );
+        	canvas.drawRect( left-5, BASE_CARAVANE_VIEW_HEIGHT/2, left, BASE_CARAVANE_VIEW_HEIGHT/2 + 10, paint );
         }
         else { //droite
-        	canvas.drawRect( right, CARAVANE_VIEW_HEIGHT/2, right +5, CARAVANE_VIEW_HEIGHT/2 + 10, paint );
+        	canvas.drawRect( right, BASE_CARAVANE_VIEW_HEIGHT/2, right +5, BASE_CARAVANE_VIEW_HEIGHT/2 + 10, paint );
         }
         
         // La plaque d'immatriculation + nom du client au milieu
@@ -246,15 +201,57 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 	
 
 	private int getColorForGabarit(Gabarit g) {
-		return Color.BLUE;
+		
+		if(caravane_object != null && caravane_object.getGabarit() != null) {
+			switch(caravane_object.getGabarit().getNom()){
+			case "g1": 
+				return Color.YELLOW;
+			case "g2": 
+				return Color.CYAN;
+			case "g3": 
+				return Color.GREEN;
+			case "g4":
+				return Color.BLUE;
+			case "g5":
+				return Color.MAGENTA;
+			default  : 
+				return Color.WHITE;
+			}
+		}
+		else {
+			return Color.WHITE;
+		}
+	}
+	
+	private int getAdditionalWidthWithGabarit(Gabarit g) {
+		
+		if(caravane_object != null && caravane_object.getGabarit() != null) {
+			switch(caravane_object.getGabarit().getNom()){
+			case "g1": 
+				return 0;
+			case "g2": 
+				return 10;
+			case "g3": 
+				return 20;
+			case "g4":
+				return 30;
+			case "g5":
+				return 40;
+			default  : 
+				return 0;
+			}
+		}
+		else {
+			return 0;
+		}
 	}
 	
 	public int getCaravaneViewWidth(){
-		return CARAVANE_VIEW_WIDTH + MARGIN;
+		return BASE_CARAVANE_VIEW_WIDTH + MARGIN + getAdditionalWidthWithGabarit(caravane_object.getGabarit());
 	}
 
 	public int getCaravaneViewHeight(){
-		return CARAVANE_VIEW_HEIGHT + MARGIN;
+		return BASE_CARAVANE_VIEW_HEIGHT + MARGIN;
 	}
 
 	public int getPosition_X() {
