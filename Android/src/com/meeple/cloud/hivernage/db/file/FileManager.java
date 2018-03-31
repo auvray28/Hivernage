@@ -98,7 +98,7 @@ public class FileManager {
     				if (camping_str.equals("HIVERNAGE")) {
     					int empl_x;
     					int empl_y;
-    					int empl_angle;
+    					double empl_angle;
     					String hangar_str = oneData[12];
     					try {
     						empl_x = Integer.parseInt(oneData[13]);
@@ -111,7 +111,7 @@ public class FileManager {
     						empl_y = 0;
     					}
     					try {
-    						empl_angle = Integer.parseInt(oneData[15]);
+    						empl_angle = Double.parseDouble(oneData[15]);
     					} catch (NumberFormatException e5) {
     						empl_angle = 180;
     					}
@@ -120,7 +120,7 @@ public class FileManager {
     						hangar = new Hangar(hangar_str, 0, 0);
     						Services.hangarService.createHangar(hangar);
     					}
-    					Services.caravaneService.putInHangar(caravane, new EmplacementHangar(empl_x, empl_y, (double) empl_angle, hangar));
+    					Services.caravaneService.putInHangar(caravane, new EmplacementHangar(empl_x, empl_y, empl_angle, hangar));
     				} else {
     					try {
     						String emplacement = oneData[12];
