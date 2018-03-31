@@ -140,7 +140,13 @@ public class NewClientFragment extends Fragment {
 		String tel     = edt_tel.getText().toString();
 		String obs     = edt_observation.getText().toString();
 		
-		int acompte   = Integer.parseInt(edt_acompte.getText().toString());
+		int acompte = 0;
+		try {
+			acompte  = Integer.parseInt(edt_acompte.getText().toString());
+		}
+		catch (Exception e) {}
+		
+		
 		HivernageStatus hStatus = HivernageStatus.PAYE;
 		if( acompte < 0) hStatus = HivernageStatus.IMPAYE;
 		else if( acompte > 0) hStatus = HivernageStatus.ACCOMPTE;
