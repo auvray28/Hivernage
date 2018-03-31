@@ -158,7 +158,7 @@ public class ListeClientAdapter  extends BaseAdapter {
 		if (charText.length() == 0) {
 			
 			for (Client c : dataListe) {
-				if ( !(!showOldClient && c.isOldClient()) ) {
+				if ( !(!showOldClient && c.isEuropeenClient()) ) {
 					viewedListe.add(c);
 				}
 			}
@@ -167,7 +167,7 @@ public class ListeClientAdapter  extends BaseAdapter {
 				if( (c.getNom().toLowerCase(Locale.getDefault()).contains(charText)
 				  || c.getPrenom().toLowerCase(Locale.getDefault()).contains(charText)
 				  || c.getCaravane().getPlaque().toLowerCase(Locale.getDefault()).contains(charText))
-				  && !(!showOldClient && c.isOldClient())) {
+				  && !(!showOldClient && c.isEuropeenClient())) {
 					viewedListe.add(c);
 				}
 			}

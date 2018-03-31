@@ -28,7 +28,7 @@ public class Client extends Entity<Client>{
 	@Column
 	private String observation;
 	@Column
-	private boolean oldClient;
+	private boolean europeenClient;
 	
 	
 	@Column(colName="CARAVANE_ID")
@@ -52,7 +52,7 @@ public class Client extends Entity<Client>{
 		this.observation = observation;
 		this.caravane = caravane;
 		this.hivernages = new ArrayList<Hivernage>();
-		this.oldClient  = false;
+		this.europeenClient  = false;
 		
 		if(caravane != null && caravane.getClient() == null) {
 			this.caravane.setClient(this);
@@ -160,12 +160,12 @@ public class Client extends Entity<Client>{
 	
 	
 	
-	public boolean isOldClient() {
-		return oldClient;
+	public boolean isEuropeenClient() {
+		return europeenClient;
 	}
 
-	public void setOldClient(boolean oldClient) {
-		this.oldClient = oldClient;
+	public void setEuropeenClient(boolean europeenClient) {
+		this.europeenClient = europeenClient;
 	}
 
 

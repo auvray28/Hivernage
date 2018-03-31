@@ -123,7 +123,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	cb_isOldClient.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-				client.setOldClient(arg1);
+				client.setEuropeenClient(arg1);
 			}
 		});
     	//
@@ -273,7 +273,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	
     	txt_client_obs.setOriginalText(displayClient.getObservation());
     	
-    	cb_isOldClient.setChecked(displayClient.isOldClient());
+    	cb_isOldClient.setChecked(displayClient.isEuropeenClient());
     	
     	// Caravane
     	txt_caravane_marque.setOriginalText(displayClient.getCaravane().getMarque());

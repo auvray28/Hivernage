@@ -301,8 +301,10 @@ public class CaravaneView extends View implements  OnLongClickListener, OnClickL
 	}
 	
     public static void addCaravane(ViewGroup v, Caravane c) {
-    	CaravaneView cv = new CaravaneView(v.getContext(), c);
-    	v.addView(cv);
+    	if (!c.getClient().isEuropeenClient()) {
+    		CaravaneView cv = new CaravaneView(v.getContext(), c);
+    		v.addView(cv);
+    	}
     }
     
     

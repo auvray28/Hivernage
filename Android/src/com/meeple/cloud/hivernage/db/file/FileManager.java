@@ -146,7 +146,7 @@ public class FileManager {
     					}
     				}
     				client = new Client(nom, prenom, adresse, telephone, mail, observation, caravane);
-    				client.setOldClient(oneData[7].equals("0"));
+    				client.setEuropeenClient(oneData[7].equals("0"));
     				
     				client.addHivernage(new Hivernage(acompte));
     				Services.clientService.create(client);
@@ -216,7 +216,7 @@ public class FileManager {
             fw.append(client.getTelephone() + SEPARATOR);
             fw.append(client.getCurrentAcompte() + SEPARATOR);
             fw.append(client.getObservation() + SEPARATOR);
-            fw.append( ( (client.isOldClient()) ? "0":"1") + SEPARATOR );
+            fw.append( ( (client.isEuropeenClient()) ? "0":"1") + SEPARATOR );
             Caravane caravane = client.getCaravane();
             if (caravane != null) {
             	fw.append(caravane.getMarque() + SEPARATOR);

@@ -77,7 +77,7 @@
                 android:layout_alignBaseline="@+id/check_oldclient"
                 android:layout_alignBottom="@+id/check_oldclient"
                 android:layout_toLeftOf="@+id/check_oldclient"
-                android:text="Ancien"
+                android:text="Européen"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </RelativeLayout>
