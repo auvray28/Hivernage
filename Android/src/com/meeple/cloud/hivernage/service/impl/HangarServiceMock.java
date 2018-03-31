@@ -1,6 +1,8 @@
 package com.meeple.cloud.hivernage.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import com.meeple.cloud.hivernage.db.DBMock;
 import com.meeple.cloud.hivernage.db.DbHelper;
@@ -55,6 +57,15 @@ public class HangarServiceMock implements IHangarService {
 
 	@Override
 	public ArrayList<Hangar> getAllHangars() {
+		
+		// on try dans l'ordre alphabetic la liste des hangars
+        Collections.sort(DBMock.DB.getHangars(), new Comparator<Hangar>() {
+            @Override
+            public int compare(Hangar hangarOne, Hangar hangarTwo) {
+                return hangarOne.getNom().compareTo(hangarTwo.getNom());
+            }
+        }); 
+		
 		return DBMock.DB.getHangars();
 	}
 
