@@ -89,6 +89,10 @@ public class FileManager {
     				String marque = oneData[8];
     				String plaque = oneData[9];
     				Gabarit g = Services.gabaritService.findGabaritByName("g" + oneData[10]);
+    				if (g == null) {
+    					g = Services.gabaritService.findGabaritByName("g1");
+    				}
+    				
     				String observationCar = "";
     				if (oneData.length == 17) {
     					observationCar = oneData[16];
@@ -224,7 +228,7 @@ public class FileManager {
                 if (caravane.getGabarit() != null) {
                     fw.append(new StringBuilder(String.valueOf(caravane.getGabarit().getNom().replace("g", ""))).append(SEPARATOR).toString());
                 } else {
-                    fw.append(" ;");
+                    fw.append("1;");
                 }
                 if (caravane.getCurrentEmplacementCamping() != null) {
                     EmplacementCamping emplCamp = caravane.getCurrentEmplacementCamping();
