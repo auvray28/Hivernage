@@ -1,5 +1,6 @@
 package com.meeple.cloud.hivernage.view.component;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.util.AttributeSet;
 
 import java.util.Locale;
 
+import com.meeple.cloud.hivernage.HivernageApplication;
 import com.meeple.cloud.hivernage.model.Caravane;
 import com.meeple.cloud.hivernage.model.Hangar;
 
@@ -44,9 +46,11 @@ public class HangarView extends DragAndDropRelativeLayout {
 	public void loadHangar(Hangar h) {
 		this.hangar = h;
 
+		boolean showUEClient = getContext().getSharedPreferences(HivernageApplication.TAG_PREFS, Activity.MODE_PRIVATE).getBoolean("showUEClient", false);
+		
 		if (hangar != null) {
 			for (Caravane c : this.hangar.getCaravanes()) {
-				CaravaneView.addCaravane(this,c);
+				CaravaneView.addCaravane(this,c, showUEClient);
 			}
 			this.invalidate();
 		}

@@ -360,8 +360,8 @@ public class CaravaneView extends View {
 		return caravane_object;
 	}
 	
-    public static void addCaravane(ViewGroup v, Caravane c) {
-    	if (!c.getClient().isEuropeenClient()) {
+    public static void addCaravane(ViewGroup v, Caravane c, boolean showUE) {
+    	if (! (c.getClient().isEuropeenClient() && !showUE )) {
     		CaravaneView cv = new CaravaneView(v.getContext(), c);
     		v.addView(cv);
     	}
