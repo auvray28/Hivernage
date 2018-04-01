@@ -5,17 +5,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import com.meeple.cloud.hivernage.HivernageApplication;
+import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.model.Client;
+import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.OrderClientBy;
+
+import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Client;
-import com.meeple.cloud.hivernage.view.clients.ClientListeFragment.OrderClientBy;
 
 
 public class ListeClientAdapter  extends BaseAdapter {	
@@ -25,14 +26,16 @@ public class ListeClientAdapter  extends BaseAdapter {
 	private ArrayList<Client> dataListe;
 	
 	private OrderClientBy orderBy;
-	private boolean showOldClient;
+	private boolean showUEClient;
+	
+	private String lastFilter ="";;
 	
 	public ListeClientAdapter(Context ctx, ArrayList<Client> list){
 		this.ctx = ctx;
 		this.viewedListe = new ArrayList<Client>();
 		
 		dataListe = list;
-		showOldClient = false;
+		showUEClient = ctx.getSharedPreferences(HivernageApplication.TAG_PREFS, Activity.MODE_PRIVATE).getBoolean("showUEClient", false);
 		orderBy = OrderClientBy.ALPHABETIC;
 		
 		filter("");
@@ -43,18 +46,18 @@ public class ListeClientAdapter  extends BaseAdapter {
 		this.viewedListe = new ArrayList<Client>();
 		
 		dataListe = list;
-		showOldClient = false;
+		showUEClient = ctx.getSharedPreferences(HivernageApplication.TAG_PREFS, Activity.MODE_PRIVATE).getBoolean("showUEClient", false);
 		orderBy = newOrder;
 		
 		filter("");
 	}	
 	
 	public boolean isShowOldClient() {
-		return showOldClient;
+		return showUEClient;
 	}
 
-	public void setShowOldClient(boolean showOldClient) {
-		this.showOldClient = showOldClient;
+	public void setShowUEClient(boolean showUEClient) {
+		this.showUEClient = showUEClient;
 	}
 
 	@Override
@@ -153,21 +156,21 @@ public class ListeClientAdapter  extends BaseAdapter {
 	
 	// Filter Class
 	public void filter(String charText) {
-		charText = charText.toLowerCase(Locale.getDefault());
+		lastFilter = charText.toLowerCase(Locale.getDefault());
 		viewedListe.clear();
-		if (charText.length() == 0) {
+		if (lastFilter.length() == 0) {
 			
 			for (Client c : dataListe) {
-				if ( !(!showOldClient && c.isEuropeenClient()) ) {
+				if ( !(!showUEClient && c.isEuropeenClient()) ) {
 					viewedListe.add(c);
 				}
 			}
 		} else {
 			for (Client c : dataListe) {
-				if( (c.getNom().toLowerCase(Locale.getDefault()).contains(charText)
-				  || c.getPrenom().toLowerCase(Locale.getDefault()).contains(charText)
-				  || c.getCaravane().getPlaque().toLowerCase(Locale.getDefault()).contains(charText))
-				  && !(!showOldClient && c.isEuropeenClient())) {
+				if( (c.getNom().toLowerCase(Locale.getDefault()).contains(lastFilter)
+				  || c.getPrenom().toLowerCase(Locale.getDefault()).contains(lastFilter)
+				  || c.getCaravane().getPlaque().toLowerCase(Locale.getDefault()).contains(lastFilter))
+				  && !(!showUEClient && c.isEuropeenClient())) {
 					viewedListe.add(c);
 				}
 			}
@@ -177,4 +180,11 @@ public class ListeClientAdapter  extends BaseAdapter {
 		
 		notifyDataSetChanged();
 	}
+	
+	
+	public void doLastFilter() {
+		filter(lastFilter);
+	}
+	
+	
 }
