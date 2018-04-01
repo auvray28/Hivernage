@@ -3,6 +3,7 @@ package com.meeple.cloud.hivernage.view.clients;
 import java.util.Comparator;
 import java.util.Locale;
 
+import com.meeple.cloud.hivernage.HivernageApplication;
 import com.meeple.cloud.hivernage.R;
 import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.service.Services;
@@ -11,6 +12,7 @@ import com.meeple.cloud.hivernage.view.adapters.ListeClientAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -71,6 +73,7 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 		public void displayNewClientView();
 	}
 	
+	private SharedPreferences sharedpref;
 	
 	private EditText searchClients;
 	private ListView listeClients;
@@ -101,6 +104,9 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
     }
     
     private void initView(View v){
+    	sharedpref = getActivity().getSharedPreferences(HivernageApplication.TAG_PREFS, Activity.MODE_PRIVATE);
+    	
+    	
     	searchClients = (EditText) v.findViewById(R.id.client_liste_edittexte);
     	searchClients.addTextChangedListener(this);
     	
@@ -229,6 +235,8 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 
 	public void refreshClient() {
 		if (listeClientAdapter != null) {
+			listeClientAdapter.setShowUEClient(sharedpref.getBoolean("showUEClient", false));
+			listeClientAdapter.doLastFilter();
 			listeClientAdapter.notifyDataSetChanged();
 		}
 	}
