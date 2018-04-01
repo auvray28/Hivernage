@@ -1,14 +1,16 @@
 package com.meeple.cloud.hivernage;
 
 
-import android.app.Application;
-
-import com.meeple.cloud.hivernage.db.DBMock;
 import com.meeple.cloud.hivernage.db.DbHelper;
 import com.meeple.cloud.hivernage.model.tools.SharedPreferenceHelper;
 
+import android.app.Application;
+
 public class HivernageApplication extends Application {
 
+	public static final String TAG_PREFS = "hivernage_prefs";
+	
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
