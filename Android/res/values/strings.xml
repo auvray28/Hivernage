@@ -97,5 +97,13 @@
     <string name="deliver_caravane">Amener la caravane au camping</string>
     <string name="take_caravane">Recuperer la caravane du camping</string>
     <string name="marque">Marque :</string>
+    <string name="nbtotal">"Nombre de Clients total : "</string>
+    <string name="nb_bygabarit">Nombre de Client par Gabarit :</string>
+    <string name="g1">- G1 : </string>
+    <string name="g2">- G2 : </string>
+    <string name="g3">- G3 : </string>
+    <string name="g4">- G4 : </string>
+    <string name="g5">- G5 : </string>
+    <string name="withPrice">avec le prix :</string>
     
 </resources>

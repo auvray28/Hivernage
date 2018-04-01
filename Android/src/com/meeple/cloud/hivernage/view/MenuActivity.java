@@ -286,6 +286,9 @@ public class MenuActivity extends FragmentActivity implements
 			if (currentFrag instanceof HangarMainFragment) {
 				((HangarMainFragment) currentFrag).refreshHangar();
 			}
+			if (currentFrag.equals(utilsFragment)) {
+				utilsFragment.resetView();
+			}
 		}
 	}
 
