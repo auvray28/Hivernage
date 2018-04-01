@@ -78,7 +78,6 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 	
 	private Spinner orderBy;
 	private Button btn_addClient;
-	private CheckBox cb_showOldClient;
 	
 	private ClientListInterface mCallback;
 	
@@ -183,18 +182,6 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
 			@Override
 			public void onClick(View v) {
 				mCallback.displayNewClientView();
-			}
-		});
-    	
-    	
-    	cb_showOldClient = (CheckBox) v.findViewById(R.id.cb_showOld);
-    	cb_showOldClient.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				listeClientAdapter.setShowOldClient(isChecked);
-				listeClientAdapter.filter("");
-				listeClientAdapter.notifyDataSetInvalidated();
 			}
 		});
     	
