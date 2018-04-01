@@ -1,7 +1,10 @@
 package com.meeple.cloud.hivernage.view.camping;
 
+import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.model.Camping;
+import com.meeple.cloud.hivernage.service.Services;
+
 import android.app.Activity;
-import android.app.Service;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,10 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Camping;
-import com.meeple.cloud.hivernage.service.Services;
 
 public class NewCampingFragment extends Fragment {
 
