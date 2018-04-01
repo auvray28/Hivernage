@@ -59,5 +59,7 @@ public class Gabarit extends Entity<Gabarit>{
 		this.largeur = largeur;
 	}
 	
-	
+	public String toString() {
+		return nom;
+	}
 }
