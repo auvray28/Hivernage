@@ -105,5 +105,7 @@
     <string name="g4">- G4 : </string>
     <string name="g5">- G5 : </string>
     <string name="withPrice">avec le prix :</string>
+    <string name="contact_1">- Contact 1 :</string>
+    <string name="contact2">- Contact 2 :</string>
     
 </resources>

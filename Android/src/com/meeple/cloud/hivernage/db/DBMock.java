@@ -170,24 +170,24 @@ public class DBMock {
 		Caravane caravane8 = createCaravane(8);
 		Caravane caravane9 = createCaravane(9);
 		
-		Camping ca = new Camping("Antibes", "antibes@gmail.com", "0102030405", 2000, "observations");
+//		Camping ca = new Camping("Antibes", "antibes@gmail.com", "0102030405", 2000, "observations");
 		
 		Date d = new Date(2016,1,31);
 		Date d2 = new Date(2016,2,24);
 		
-		EmplacementCamping em1 = new EmplacementCamping(ca, "Antibes_1", caravane6);em1.setEntree(d); em1.setSortie(d2);
-		EmplacementCamping em2 = new EmplacementCamping(ca, "Antibes_2", caravane7);em2.setEntree(d); em2.setSortie(d2);
-		EmplacementCamping em3 = new EmplacementCamping(ca, "Antibes_3", caravane8);em3.setEntree(d); em3.setSortie(d2);
-		EmplacementCamping em4 = new EmplacementCamping(ca, "Antibes_4", caravane9);em4.setEntree(d); em4.setSortie(d2);
+//		EmplacementCamping em1 = new EmplacementCamping(ca, "Antibes_1", caravane6);em1.setEntree(d); em1.setSortie(d2);
+//		EmplacementCamping em2 = new EmplacementCamping(ca, "Antibes_2", caravane7);em2.setEntree(d); em2.setSortie(d2);
+//		EmplacementCamping em3 = new EmplacementCamping(ca, "Antibes_3", caravane8);em3.setEntree(d); em3.setSortie(d2);
+//		EmplacementCamping em4 = new EmplacementCamping(ca, "Antibes_4", caravane9);em4.setEntree(d); em4.setSortie(d2);
 		
-		ArrayList<EmplacementCamping> alec = new ArrayList<EmplacementCamping>();
-		alec.add(em1);alec.add(em2);alec.add(em3);alec.add(em4);
-		ca.setEmplacements(alec);
+//		ArrayList<EmplacementCamping> alec = new ArrayList<EmplacementCamping>();
+//		alec.add(em1);alec.add(em2);alec.add(em3);alec.add(em4);
+//		ca.setEmplacements(alec);
 		
-		Services.campingService.createCamping(ca);
-		Services.campingService.createCamping(new Camping("Chartres", "chartres@gmail.com", "0237341425", 1000, "observations1"));
-		Services.campingService.createCamping(new Camping("Paris", "paris@gmail.com", "0681623914", 500, "observations2"));
-		Services.campingService.createCamping(new Camping("Nice", "nice@gmail.com", "0985647526", 100, "observations3"));
+//		Services.campingService.createCamping(ca);
+//		Services.campingService.createCamping(new Camping("Chartres", "chartres@gmail.com", "0237341425", 1000, "observations1"));
+//		Services.campingService.createCamping(new Camping("Paris", "paris@gmail.com", "0681623914", 500, "observations2"));
+//		Services.campingService.createCamping(new Camping("Nice", "nice@gmail.com", "0985647526", 100, "observations3"));
 		
 
 	}

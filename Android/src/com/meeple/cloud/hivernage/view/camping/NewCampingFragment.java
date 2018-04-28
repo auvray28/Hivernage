@@ -35,7 +35,7 @@ public class NewCampingFragment extends Fragment {
 	}
 	
 	private EditText edt_nom, edt_adresse, edt_tel, edt_mail, edt_prix, edt_obs;
-	
+	private EditText edt_contact_nom1, edt_contact_tel1, edt_contact_nom2, edt_contact_tel2;
 	//
 	private Button btn_createCamping;
 	
@@ -59,6 +59,12 @@ public class NewCampingFragment extends Fragment {
 		edt_adresse = (EditText) v.findViewById(R.id.edt_adresse);
 		edt_tel     = (EditText) v.findViewById(R.id.edt_tel);
 		edt_mail    = (EditText) v.findViewById(R.id.edt_mail);
+		//
+		edt_contact_nom1 = (EditText) v.findViewById(R.id.edt_contact_nom1);
+		edt_contact_tel1 = (EditText) v.findViewById(R.id.edt_contact_tel1);
+		edt_contact_nom2 = (EditText) v.findViewById(R.id.edt_contact_nom2);
+		edt_contact_tel2 = (EditText) v.findViewById(R.id.edt_contact_tel2);
+		//
 		edt_prix    = (EditText) v.findViewById(R.id.edt_prix);
 		edt_obs     = (EditText) v.findViewById(R.id.edt_observation);
 		
@@ -88,10 +94,16 @@ public class NewCampingFragment extends Fragment {
 		String adresse = edt_adresse.getText().toString();
 		String mail    = edt_mail.getText().toString();
 		String tel     = edt_tel.getText().toString();
+		//
+		String contact_nom1 = edt_contact_nom1.getText().toString();
+		String contact_tel1 = edt_contact_tel1.getText().toString();
+		String contact_nom2 = edt_contact_nom2.getText().toString(); 
+		String contact_tel2 = edt_contact_tel2.getText().toString();
+		//
 		Double prix    = Double.parseDouble(edt_prix.getText().toString());
 		String obs     = edt_obs.getText().toString();
 		 
-		 Camping camp = new Camping(nom, mail, tel, prix, obs);
+		 Camping camp = new Camping(nom, mail, tel, contact_nom1, contact_tel1, contact_nom2, contact_tel2, prix, obs);
 		 
 		 Services.campingService.createCamping(camp);
 	}

@@ -20,6 +20,14 @@ public class Camping extends Entity<Camping>{
 	@Column
 	private String tel;
 	@Column
+	private String contact_nom_1;
+	@Column
+	private String contact_nom_2;
+	@Column
+	private String contact_tel_1;
+	@Column
+	private String contact_tel_2;
+	@Column
 	private double prix;
 	@Column
 	private String observations;
@@ -33,10 +41,14 @@ public class Camping extends Entity<Camping>{
 		this.emplacements = new ArrayList<EmplacementCamping>();
 	}
 	
-	public Camping(String nom, String mail, String tel, double prix, String observations) {
+	public Camping(String nom, String mail, String tel, String contact_nom1, String contact_tel1, String contact_nom2, String contact_tel2, double prix, String observations) {
 		this.nom = nom;
 		this.mail = mail;
 		this.tel = tel;
+		this.contact_nom_1 = contact_nom1;
+		this.contact_tel_1 = contact_tel1;
+		this.contact_nom_2 = contact_nom2;
+		this.contact_tel_2 = contact_tel2;
 		this.prix = prix;
 		this.observations = observations;
 		this.emplacements = new ArrayList<EmplacementCamping>();
@@ -78,6 +90,38 @@ public class Camping extends Entity<Camping>{
 
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+	
+	public String getContact_nom_1() {
+		return contact_nom_1;
+	}
+
+	public void setContact_nom_1(String contact_nom_1) {
+		this.contact_nom_1 = contact_nom_1;
+	}
+
+	public String getContact_nom_2() {
+		return contact_nom_2;
+	}
+
+	public void setContact_nom_2(String contact_nom_2) {
+		this.contact_nom_2 = contact_nom_2;
+	}
+
+	public String getContact_tel_1() {
+		return contact_tel_1;
+	}
+
+	public void setContact_tel_1(String contact_tel_1) {
+		this.contact_tel_1 = contact_tel_1;
+	}
+
+	public String getContact_tel_2() {
+		return contact_tel_2;
+	}
+
+	public void setContact_tel_2(String contact_tel_2) {
+		this.contact_tel_2 = contact_tel_2;
 	}
 
 	public double getPrix() {
@@ -138,8 +182,10 @@ public class Camping extends Entity<Camping>{
     }
 
 	public String getCSVString() {
-		//NOM;Tel;Mail;Prix;Observation;
-		return getNom() + ";" + getTel() + ";" + getMail() + ";" + getPrix() + ";" + getObservations() + "\n";
+		//NOM;Tel;Contact_1;Contact_tel_1; Contact_2;Contact_tel_2;Mail;Prix;Observation;
+		return  getNom() + ";" + getTel() + ";" + getContact_nom_1() + ";" + getContact_tel_1() 
+				+ ";" +getContact_nom_2()+ ";" + getContact_tel_2() + ";"  + getMail() + ";" 
+				+ getPrix() + ";" + getObservations() + "\n";
 	}
 	
 	public String toString() {

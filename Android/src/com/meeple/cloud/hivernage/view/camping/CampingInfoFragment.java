@@ -29,7 +29,7 @@ public class CampingInfoFragment extends Fragment {
 	
 	private Camping camping;
 	
-	private TextView camping_name, camping_phone, camping_mail, camping_info;
+	private TextView camping_name, camping_phone, camping_mail, camping_contact_name1, camping_contact_name2, camping_contact_tel1, camping_contact_tel2,camping_info;
 	private TextView emplacement_str, emplacement_client_name, emplacement_entree, emplacement_sortie;
 	private ListView caravanes_liste;
 	
@@ -79,6 +79,12 @@ public class CampingInfoFragment extends Fragment {
 		camping_mail  = (TextView) v.findViewById(R.id.camping_mail);
 		camping_info  = (TextView) v.findViewById(R.id.camping_details);
 		
+		camping_contact_name1 = (TextView) v.findViewById(R.id.txt_camp_contact_name1);
+		camping_contact_tel1  = (TextView) v.findViewById(R.id.txt_camp_contact_tel1);
+		camping_contact_name2 = (TextView) v.findViewById(R.id.txt_camp_contact_name2);
+		camping_contact_tel2  = (TextView) v.findViewById(R.id.txt_camp_contact_tel2);
+		
+		
 		caravanes_liste = (ListView) v.findViewById(R.id.camping_liste_caravanes_inside);
 		
 		emplacement_str         = (TextView) v.findViewById(R.id.camping_liste_emplacement_str);
@@ -101,7 +107,10 @@ public class CampingInfoFragment extends Fragment {
 		camping_mail.setText(camping2.getMail());
 		camping_info.setText("Prix : " + camping2.getPrix());
 		
-		
+		camping_contact_name1.setText(camping2.getContact_nom_1());
+		camping_contact_tel1.setText(camping2.getContact_tel_1());
+		camping_contact_name2.setText(camping2.getContact_nom_2());
+		camping_contact_tel2.setText(camping2.getContact_tel_2());
 
 		lca = new ListeEmplacementCampingAdapter(getActivity(), camping.getEmplacements());
 		caravanes_liste.setAdapter(lca);

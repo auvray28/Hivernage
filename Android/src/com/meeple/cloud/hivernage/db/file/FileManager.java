@@ -43,7 +43,7 @@ public class FileManager {
     		InputStream fileInputStream = new FileInputStream(file);
     		Reader inputStreamReader = new InputStreamReader(fileInputStream);
     		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-    		List<String[]> data = new ArrayList();
+    		List<String[]> data = new ArrayList<String[]>();
     		int i = 0;
     		while (true) {
     			String allLine = bufferedReader.readLine();
@@ -71,7 +71,7 @@ public class FileManager {
     		bufferedReader.close();
     		inputStreamReader.close();
     		fileInputStream.close();
-    		List<Client> clients = new ArrayList();
+    		List<Client> clients = new ArrayList<Client>();
     		Client client2 = null;
     		for (String[] oneData : data) {
     			int acompte = 0;
@@ -132,7 +132,7 @@ public class FileManager {
     						String sortie = oneData[14];
     						Camping camping = Services.campingService.findCampingByName(camping_str);
     						if (camping == null) {
-    							camping = new Camping(camping_str, "", "", 0.0d, "");
+    							camping = new Camping(camping_str, "", "", "", "", "", "", 0.0d, "");
     							Services.campingService.createCamping(camping);
     						}
     						EmplacementCamping emplacementCamping = new EmplacementCamping(camping, emplacement, caravane);
@@ -198,7 +198,7 @@ public class FileManager {
             fw.append("Sortie/Y;");				// 14
             fw.append("-/Angle;");				// 15
             fw.append("Observation\n");			// 16
-            Iterator it = all_clients.iterator();
+            Iterator<Client> it = all_clients.iterator();
             while (it.hasNext()) {
                 appendClient(fw, (Client) it.next());
             }
@@ -267,7 +267,7 @@ public class FileManager {
             InputStream fileInputStream = new FileInputStream(file);
             Reader inputStreamReader = new InputStreamReader(fileInputStream);
             BufferedReader buffreader = new BufferedReader(inputStreamReader);
-            List<String[]> data = new ArrayList();
+            List<String[]> data = new ArrayList<String[]>();
             int i = 0;
             while (true) {
                 String allLine = buffreader.readLine();
@@ -289,22 +289,28 @@ public class FileManager {
             buffreader.close();
             inputStreamReader.close();
             fileInputStream.close();
-            List<Camping> campings = new ArrayList();
+            List<Camping> campings = new ArrayList<Camping>();
             for (String[] oneData : data) {
                 double prix = 0.0d;
                 String camping_name = oneData[0];
                 if (Services.campingService.findCampingByName(camping_name) == null) {
                     String telephone = oneData[1];
-                    String mail = oneData[2];
-                    String prix_str = oneData[3];
+                    //
+                    String contact_nom_1 = oneData[2];
+                    String contact_tel_1 = oneData[3];
+                    String contact_nom_2 = oneData[4];
+                    String contact_tel_2 = oneData[5];
+                    //
+                    String mail = oneData[6];
+                    String prix_str = oneData[7];
                     if (prix_str.trim().length() > 0) {
                         prix = Double.parseDouble(prix_str);
                     }
                     String observation = "";
-                    if (oneData.length == 5) {
-                        observation = oneData[4];
+                    if (oneData.length == 9) {
+                        observation = oneData[8];
                     }
-                    Services.campingService.createCamping(new Camping(camping_name, mail, telephone, prix, observation));
+                    Services.campingService.createCamping(new Camping(camping_name, mail, telephone, contact_nom_1, contact_tel_1, contact_nom_2, contact_tel_2, prix, observation));
                 }
             }
             return campings;
@@ -327,10 +333,14 @@ public class FileManager {
             ArrayList<Camping> all_campings = Services.campingService.getAllCampings();
             fw.append("Nom;");
             fw.append("Telephone;");
+            fw.append("Contact_1;");
+            fw.append("Tel_1;");
+            fw.append("Contact_2;");
+            fw.append("Tel_2;");
             fw.append("Mail;");
             fw.append("Prix;");
             fw.append("Observation\n");
-            Iterator it = all_campings.iterator();
+            Iterator<Camping> it = all_campings.iterator();
             while (it.hasNext()) {
                 appendCamping(fw, (Camping) it.next());
             }
@@ -347,6 +357,10 @@ public class FileManager {
         try {
             fw.append(camping.getNom() + SEPARATOR);
             fw.append(camping.getTel() + SEPARATOR);
+            fw.append(camping.getContact_nom_1() + SEPARATOR);
+            fw.append(camping.getContact_tel_1() + SEPARATOR);
+            fw.append(camping.getContact_nom_2() + SEPARATOR);
+            fw.append(camping.getContact_tel_2() + SEPARATOR);
             fw.append(camping.getMail() + SEPARATOR);
             fw.append(camping.getPrix() + SEPARATOR);
             fw.append(camping.getObservations() + "\n");
