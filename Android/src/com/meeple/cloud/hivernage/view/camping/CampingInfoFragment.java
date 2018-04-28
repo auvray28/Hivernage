@@ -1,8 +1,24 @@
 package com.meeple.cloud.hivernage.view.camping;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import com.meeple.cloud.hivernage.R;
+import com.meeple.cloud.hivernage.model.Camping;
+import com.meeple.cloud.hivernage.model.EmplacementCamping;
+import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.adapters.ListeEmplacementCampingAdapter;
+import com.meeple.cloud.hivernage.view.adapters.SlidingImageAdapter;
+import com.meeple.cloud.hivernage.view.object.MyCalendar;
+import com.viewpagerindicator.CirclePageIndicator;
+
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +26,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.meeple.cloud.hivernage.R;
-import com.meeple.cloud.hivernage.model.Camping;
-import com.meeple.cloud.hivernage.model.EmplacementCamping;
-import com.meeple.cloud.hivernage.service.Services;
-import com.meeple.cloud.hivernage.view.adapters.ListeEmplacementCampingAdapter;
-import com.meeple.cloud.hivernage.view.camping.CampingListeFragment.CampingListInterface;
-import com.meeple.cloud.hivernage.view.object.MyCalendar;
 
 public class CampingInfoFragment extends Fragment {
 
@@ -34,6 +42,12 @@ public class CampingInfoFragment extends Fragment {
 	private ListView caravanes_liste;
 	
 	private ListeEmplacementCampingAdapter lca;
+	
+	// Gallery image camping
+    private ViewPager mPager;
+    CirclePageIndicator indicator;
+    private ArrayList<Bitmap> images_liste = new ArrayList<Bitmap>();
+	
 	
 	public static CampingInfoFragment newInstance(int campingId) {
 		
@@ -97,6 +111,11 @@ public class CampingInfoFragment extends Fragment {
 		emplacement_entree.setVisibility(View.INVISIBLE);
 		emplacement_sortie.setVisibility(View.INVISIBLE);
 		
+		
+		mPager = (ViewPager) v.findViewById(R.id.pager);
+		indicator = (CirclePageIndicator) v.findViewById(R.id.indicator);
+        //Set circle indicator radius
+        indicator.setRadius(6 * getResources().getDisplayMetrics().density);
 	} 
 	
 
@@ -121,6 +140,22 @@ public class CampingInfoFragment extends Fragment {
 				fillEmplacementInformation(lca.getItem(position));
 			}
 		});
+		
+		
+		images_liste.clear();
+		File folder = new File(Environment.getExternalStorageDirectory().toString()+"/Documents/Camping_photos");
+		if (folder.exists() && folder.isDirectory()) {
+			for(File pics : folder.listFiles()) {
+				
+				if (pics.getName().contains(camping2.getNom().trim())) {
+				    Bitmap myBitmap = BitmapFactory.decodeFile(pics.getAbsolutePath());
+				    images_liste.add(myBitmap);
+				}
+			}
+			
+			mPager.setAdapter(new SlidingImageAdapter(getActivity(), images_liste));
+	        indicator.setViewPager(mPager);
+		}
 		
 	}
 
