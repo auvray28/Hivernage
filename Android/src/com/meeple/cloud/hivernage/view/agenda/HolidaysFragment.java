@@ -10,6 +10,7 @@ import com.meeple.cloud.hivernage.model.Client;
 import com.meeple.cloud.hivernage.model.EmplacementCamping;
 import com.meeple.cloud.hivernage.service.Services;
 import com.meeple.cloud.hivernage.view.object.MyCalendar;
+import com.meeple.cloud.hivernage.view.object.MyEditView;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -44,6 +45,8 @@ public class HolidaysFragment extends Fragment
 	private TextView txt_client_nom;
 	private TextView txt_client_prenom;
 	private TextView txt_endDate;
+	
+	private EditText edt_note_begin, edt_note_end;
 
 
 	public static HolidaysFragment newInstance(int paramInt)
@@ -77,6 +80,10 @@ public class HolidaysFragment extends Fragment
 		this.txt_client_prenom.setText(this.client.getPrenom());
 		this.txt_beginDate = ((TextView)paramView.findViewById(R.id.begin_holidays_datepicker));
 		this.txt_endDate = ((TextView)paramView.findViewById(R.id.end_holidays_datepicker));
+		
+		this.edt_note_begin = ((EditText)paramView.findViewById(R.id.holidays_note_begin));
+		this.edt_note_end   = ((EditText)paramView.findViewById(R.id.holidays_note_end));
+		
 		this.edt_emplacement = ((EditText)paramView.findViewById(R.id.holidays_empl));
 		this.btn_planifier = ((Button)paramView.findViewById(R.id.btn_confirm_holidays));
 		this.btn_planifier.setOnClickListener(new View.OnClickListener()
@@ -109,10 +116,12 @@ public class HolidaysFragment extends Fragment
 	
 	private void cleanAllFields()
 	{
-		this.edt_emplacement.setText("");
+		this.edt_emplacement.setText("X");
 		this.holyCamping.setSelection(0);
 		this.txt_beginDate.setText("X");
 		this.txt_endDate.setText("X");
+		this.edt_note_begin.setText("X");
+		this.edt_note_end.setText("X");
 		getView().invalidate();
 	}
 
@@ -219,6 +228,15 @@ public class HolidaysFragment extends Fragment
 		}
 		
 		
+		// Notes 
+		String note_begin = "";
+		String note_end   = "";
+		
+		if (!this.edt_note_begin.getText().toString().equals("X")) { note_begin = this.edt_note_begin.getText().toString();}
+		if (!this.edt_note_end.getText().toString().equals("X"))   { note_end   = this.edt_note_end.getText().toString();}
+		
+		
+		
 		if (error) {
 			Toast.makeText(getActivity(), R.string.fillAll, Toast.LENGTH_SHORT).show();
 		}
@@ -232,26 +250,26 @@ public class HolidaysFragment extends Fragment
 			//
 			Services.caravaneService.addEmplacementCamping(this.client.getCaravane(), localEmplacementCamping);
 			//
-			if(isBeginSet) pushAppointmentsToCalender(getActivity(), "Entrée : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.beginDate.getTimeInMillis());
-			if(isEndSet)   pushAppointmentsToCalender(getActivity(), "Sortie : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.endDate.getTimeInMillis());
+			if(isBeginSet) pushAppointmentsToCalender(getActivity(), "Entrée : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement : " + this.edt_emplacement.getText().toString() + "\n"+note_begin, "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.beginDate.getTimeInMillis());
+			if(isEndSet)   pushAppointmentsToCalender(getActivity(), "Sortie : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement : " + this.edt_emplacement.getText().toString() + "\n"+note_end, "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.endDate.getTimeInMillis());
 			//
 			Toast.makeText(getActivity(), "Date enregistrée pour le client", Toast.LENGTH_SHORT).show();
 			cleanAllFields();
 		}
 	}
 
-	public long pushAppointmentsToCalender(Activity paramActivity, String paramString1, String paramString2, String paramString3, int paramInt, long paramLong)
+	public long pushAppointmentsToCalender(Activity paramActivity, String title, String description, String location, int status, long durée)
 	{
 		ContentValues localContentValues = new ContentValues();
-		localContentValues.put("calendar_id", Integer.valueOf(2));
-		localContentValues.put("title", paramString1);
-		localContentValues.put("description", paramString2);
-		localContentValues.put("eventLocation", paramString3);
-		localContentValues.put("dtstart", Long.valueOf(paramLong));
-		localContentValues.put("dtend", Long.valueOf(paramLong + 3600000L));
-		localContentValues.put("eventStatus", Integer.valueOf(paramInt));
+		localContentValues.put("calendar_id", 2);
+		localContentValues.put("title", title);
+		localContentValues.put("description", description);
+		localContentValues.put("eventLocation", location);
+		localContentValues.put("dtstart", durée);
+		localContentValues.put("dtend", Long.valueOf(durée + 3600000L));
+		localContentValues.put("eventStatus", status);
 		localContentValues.put("eventTimezone", "UTC/GMT +2:00");
-		localContentValues.put("hasAlarm", Integer.valueOf(1));
+		localContentValues.put("hasAlarm", 1);
 		return Long.parseLong(paramActivity.getApplicationContext().getContentResolver().insert(Uri.parse("content://com.android.calendar/events"), localContentValues).getLastPathSegment());
 	}
 }
