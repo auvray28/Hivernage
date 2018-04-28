@@ -357,7 +357,7 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
                     this.btn_delivery.setBackgroundColor(Color.BLUE);
                     Services.caravaneService.removeFromCamping(this.client.getCaravane());
                     Services.caravaneService.putInHangar(this.client.getCaravane(), new EmplacementHangar(0, 0, 0.0d, this.WAITING));
-                    Toast.makeText(getActivity(), "Caravane placée dans le hangar WAITING", 0).show();
+                    Toast.makeText(getActivity(), "Caravane placée dans le hangar WAITING", Toast.LENGTH_SHORT).show();
                     this.btn_delivery.invalidate();
                     majCaravaneLocation(client);
                     return;
@@ -367,13 +367,13 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
                     Services.caravaneService.removeFromHangar(this.client.getCaravane());
                     EmplacementCamping emc = (EmplacementCamping) alEmc.get(alEmc.size() - 1);
                     Services.caravaneService.putToCamping(this.client.getCaravane(), emc);
-                    Toast.makeText(getActivity(), "Caravane amenée dans le camping : " + emc.getCamping().getNom(), 0).show();
+                    Toast.makeText(getActivity(), "Caravane amenée dans le camping : " + emc.getCamping().getNom(), Toast.LENGTH_SHORT).show();
                     this.btn_delivery.invalidate();
                     majCaravaneLocation(client);
                     return;
             }
         }
-        Toast.makeText(getActivity(), "Pas de vacances organisé pour ce client", 0).show();
+        Toast.makeText(getActivity(), "Pas de vacances organisé pour ce client", Toast.LENGTH_SHORT).show();
     }
     
     //////////////// TextWatcher ////////////////

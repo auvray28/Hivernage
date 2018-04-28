@@ -303,6 +303,7 @@
                         android:orientation="horizontal" >
 
                         <TextView
+                            android:id="@+id/caravane_info_label_position"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/hangar"
