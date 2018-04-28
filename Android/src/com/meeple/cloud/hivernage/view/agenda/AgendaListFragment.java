@@ -34,8 +34,8 @@ import android.widget.Spinner;
 
 public class AgendaListFragment extends Fragment implements TextWatcher {
     private static /* synthetic */ int[] f5xa1c01707;
-//    private static String MAIL = "pechmajou24@gmail.com";
-    private static String MAIL = "vallejo.thibaut@gmail.com";
+    private static String MAIL = "pechmajou24@gmail.com";
+    //private static String MAIL = "vallejo.thibaut@gmail.com";
     private Drawable IMG_CLEAR;
     private EditText edt_agenda;
     private ListeAgendaAdapter list_adapter;
