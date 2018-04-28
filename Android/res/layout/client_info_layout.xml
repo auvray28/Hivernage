@@ -204,6 +204,7 @@
         android:layout_height="match_parent" >
 
         <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -262,7 +263,6 @@
                     android:inputType="textPersonName"
                     android:text="X"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -370,6 +370,17 @@
                 </com.meeple.cloud.hivernage.view.object.MyEditView>
             </LinearLayout>
         </LinearLayout>
+
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_updateClient"
+            android:layout_below="@+id/linearLayout1"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            layout="@layout/gallery_pager" />
 
         <Button
             android:id="@+id/btn_updateClient"

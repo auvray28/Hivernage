@@ -1,6 +1,7 @@
 package com.meeple.cloud.hivernage.view.clients;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,12 +12,18 @@ import com.meeple.cloud.hivernage.model.EmplacementHangar;
 import com.meeple.cloud.hivernage.model.Gabarit;
 import com.meeple.cloud.hivernage.model.Hangar;
 import com.meeple.cloud.hivernage.service.Services;
+import com.meeple.cloud.hivernage.view.adapters.SlidingImageAdapter;
 import com.meeple.cloud.hivernage.view.object.MyEditView;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -62,6 +69,11 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 	
 	// Hangar
 	private Hangar WAITING;
+	
+	// Gallery
+    private ViewPager mPager;
+    CirclePageIndicator indicator;
+    private ArrayList<Bitmap> images_liste = new ArrayList<Bitmap>();
 	
 	public static ClientInfoFragment newInstance(int clientId) {
 		
@@ -196,12 +208,18 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
             case CAMPING:
                 this.btn_delivery.setText(R.string.take_caravane);
                 this.btn_delivery.setBackgroundColor(Color.RED);
-                return;
+                break;
             default:
                 this.btn_delivery.setText(R.string.deliver_caravane);
                 this.btn_delivery.setBackgroundColor(Color.BLUE);
-                return;
+                break;
         }
+        
+        // Gallery
+		mPager = (ViewPager) v.findViewById(R.id.pager);
+		indicator = (CirclePageIndicator) v.findViewById(R.id.indicator);
+        //Set circle indicator radius
+        indicator.setRadius(6 * getResources().getDisplayMetrics().density);
     }
 	
     protected void changeHangar(int hangarPos) {
@@ -289,6 +307,24 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
     	majCaravaneLocation(displayClient);
     	
     	addTextWatcher(this);
+    	
+    	
+    	//Gallery 
+		images_liste.clear();
+		File folder = new File(Environment.getExternalStorageDirectory().toString()+"/Documents/Client_photos");
+		if (folder.exists() && folder.isDirectory()) {
+			for(File pics : folder.listFiles()) {
+				
+				if (pics.getName().contains(displayClient.getNom().trim()) && pics.getName().contains(displayClient.getPrenom().trim())) {
+				    Bitmap myBitmap = BitmapFactory.decodeFile(pics.getAbsolutePath());
+				    images_liste.add(myBitmap);
+				}
+			}
+			
+			mPager.setAdapter(new SlidingImageAdapter(getActivity(), images_liste));
+	        indicator.setViewPager(mPager);
+		}
+    	
 	}
 
 	private void majCaravaneLocation(Client displayClient) {
