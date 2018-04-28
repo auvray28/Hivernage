@@ -1,7 +1,6 @@
 package com.meeple.cloud.hivernage.view.agenda;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
@@ -33,9 +32,6 @@ import android.widget.Toast;
 
 public class HolidaysFragment extends Fragment
 {
-	private static final String AUCUN = "Aucun";
-	private static final int BEGIN = 0;
-	private static final int END = 1;
 	private GregorianCalendar beginDate;
 	private ImageButton btn_beginDate;
 	private ImageButton btn_endDate;
@@ -48,8 +44,6 @@ public class HolidaysFragment extends Fragment
 	private TextView txt_client_nom;
 	private TextView txt_client_prenom;
 	private TextView txt_endDate;
-
-	private Calendar calendar = Calendar.getInstance();        
 
 
 	public static HolidaysFragment newInstance(int paramInt)
@@ -67,7 +61,6 @@ public class HolidaysFragment extends Fragment
 
 		this.client = Services.clientService.findById(getArguments().getInt("clientId", 0));
 		
-		// TODO faire le holidays layout
 		View v = inflater.inflate(R.layout.client_holidays_layout, container, false); 
 
 		initView(v);
@@ -120,13 +113,14 @@ public class HolidaysFragment extends Fragment
 		this.holyCamping.setSelection(0);
 		this.txt_beginDate.setText("X");
 		this.txt_endDate.setText("X");
+		getView().invalidate();
 	}
 
 	private ArrayList<String> getAllCampingName()
 	{
-		ArrayList localArrayList = new ArrayList();
+		ArrayList<String> localArrayList = new ArrayList<String>();
 		localArrayList.add("Aucun");
-		Iterator localIterator = Services.campingService.getAllCampings().iterator();
+		Iterator<Camping> localIterator = Services.campingService.getAllCampings().iterator();
 		for (;;)
 		{
 			if (!localIterator.hasNext()) {
@@ -184,7 +178,9 @@ public class HolidaysFragment extends Fragment
 
 	public void planifierVacances()
 	{
-		Boolean error = false;
+		Boolean error      = false;
+		Boolean isBeginSet = false;
+		Boolean isEndSet   = false;
 		Camping localCamping;
 		
 		if (this.holyCamping.getSelectedItem().toString().equals("Aucun")) {
@@ -201,20 +197,27 @@ public class HolidaysFragment extends Fragment
 		else {
 			this.edt_emplacement.setError(null);
 		}
+		
 		if (this.txt_beginDate.getText().toString().equals("X")) {
 			this.txt_beginDate.setError("Choisir une date de début");
-			error = true;
 		}
 		else {
 			this.txt_beginDate.setError(null);
+			isBeginSet = true;
 		}
+		
 		if (this.txt_endDate.getText().toString().equals("X")) {
 			this.txt_endDate.setError("Choisir une date de fin");
-			error = true;
 		}
 		else {
 			this.txt_endDate.setError(null);
+			isEndSet = true;
 		}
+		
+		if (!isBeginSet && !isEndSet) {
+			error = true;
+		}
+		
 		
 		if (error) {
 			Toast.makeText(getActivity(), R.string.fillAll, Toast.LENGTH_SHORT).show();
@@ -223,12 +226,16 @@ public class HolidaysFragment extends Fragment
 			localCamping = Services.campingService.findCampingByName(this.holyCamping.getSelectedItem().toString());
 			
 			EmplacementCamping localEmplacementCamping = new EmplacementCamping(localCamping, this.edt_emplacement.getText().toString(), this.client.getCaravane());
-			localEmplacementCamping.setEntree(this.beginDate.getTime());
-			localEmplacementCamping.setSortie(this.endDate.getTime());
+			//
+			if(isBeginSet) localEmplacementCamping.setEntree(this.beginDate.getTime());
+			if(isEndSet)   localEmplacementCamping.setSortie(this.endDate.getTime());
+			//
 			Services.caravaneService.addEmplacementCamping(this.client.getCaravane(), localEmplacementCamping);
-			pushAppointmentsToCalender(getActivity(), "Entrée : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.beginDate.getTimeInMillis());
-			pushAppointmentsToCalender(getActivity(), "Sortie : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.endDate.getTimeInMillis());
-			Toast.makeText(getActivity(), "Date enregistrée pour le client", 0).show();
+			//
+			if(isBeginSet) pushAppointmentsToCalender(getActivity(), "Entrée : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.beginDate.getTimeInMillis());
+			if(isEndSet)   pushAppointmentsToCalender(getActivity(), "Sortie : " + this.client.getFullName().toString(), "Caravane : " + this.client.getCaravane().getPlaque() + " \nEmplacement " + this.edt_emplacement.getText().toString(), "Camping : " + this.holyCamping.getSelectedItem().toString(), 1, this.endDate.getTimeInMillis());
+			//
+			Toast.makeText(getActivity(), "Date enregistrée pour le client", Toast.LENGTH_SHORT).show();
 			cleanAllFields();
 		}
 	}
