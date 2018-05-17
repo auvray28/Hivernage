@@ -71,6 +71,7 @@ public class CaravaneServiceMock implements ICaravaneService {
 	@Override
 	public void delete(Caravane caravane) {
 		Caravane c = findById(caravane.getCaravaneId());
+		removeFromHangar(caravane);
 		DBMock.DB.getCaravanes().remove(c);
 		DbHelper.instance.saveModel();
 	}

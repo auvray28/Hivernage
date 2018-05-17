@@ -199,9 +199,8 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
     protected void deleteClient(int index) {
     	Client localClient = (Client)this.listeClientAdapter.getViewedList().get(index);
     	if (this.listeClientAdapter.getDataList().contains(localClient)) {
-    		this.listeClientAdapter.getDataList().remove(localClient);
+    		// on ne supprime pas de getDataList() car c'est la meme liste que clientService (pointeur tous ça)
     		this.listeClientAdapter.getViewedList().remove(localClient);
-    		
         	Services.clientService.delete(localClient);
         	this.listeClientAdapter.notifyDataSetChanged();
     	}

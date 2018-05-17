@@ -63,6 +63,7 @@ public class ClientServiceMock implements IClientService {
 	@Override
 	public void delete(Client client) {
 		Client c = findById(client.getClientId());
+		Services.caravaneService.delete(c.getCaravane());
 		DBMock.DB.getClients().remove(c);
 		DbHelper.instance.saveModel();
 	}
