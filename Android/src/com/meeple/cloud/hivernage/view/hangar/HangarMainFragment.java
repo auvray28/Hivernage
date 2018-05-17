@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -41,9 +42,6 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 
 	private ImageButton btn_prevHangar, btn_nextHangar;
 	private TextView    tv_HangarName;
-
-	// TODO FRANCOIS Mettre un bouton save dans le Menu
-
 
 	@Override
 	public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup container, Bundle savedInstanceState)
@@ -115,6 +113,42 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 				paramAnonymousView.show();
 			}
 		});
+		
+		
+		tv_HangarName.setOnLongClickListener(new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View arg0) {
+				AlertDialog.Builder paramMenuItem = new AlertDialog.Builder(getActivity());
+				paramMenuItem.setTitle("Suppression d'un hangar");
+				paramMenuItem.setMessage("Voulez-vous supprimé : "+ currentHangar.getNom() + "\nToutes les caravanes seront transferé dans Waiting");
+				paramMenuItem.setPositiveButton("Supprimer", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+					{
+						Hangar hangarToDelete = currentHangar;
+						showPrevHangar();
+						if (currentHangar != hangarToDelete) {
+							hangarToDelete.relocateCaravanes(WAITING);
+							refreshHangar();
+							Services.hangarService.removeHangar(hangarToDelete);
+							refreshHangar();
+						}
+					}
+				});
+				
+				paramMenuItem.setNegativeButton("Annuler", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+					{
+						paramAnonymousDialogInterface.dismiss();
+					}
+				});
+				paramMenuItem.show();
+				
+				return true;
+			}
+		});
 
 		btn_nextHangar.setOnClickListener(new OnClickListener() {
 			@Override
@@ -183,37 +217,7 @@ public class HangarMainFragment extends Fragment implements DragAndDropRelativeL
 			});
 			
 			break;
-		case R.id.remove_hangar :
-			
-			
-			paramMenuItem.setTitle("Suppression d'un hangar");
-			paramMenuItem.setMessage("Voulez-vous supprimé : "+ currentHangar.getNom() + "\nToutes les caravanes seront transferé dans Waiting");
-			paramMenuItem.setPositiveButton("Supprimer", new DialogInterface.OnClickListener()
-			{
-				public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
-				{
-					Hangar hangarToDelete = currentHangar;
-					showPrevHangar();
-					if (currentHangar != hangarToDelete) {
-						hangarToDelete.relocateCaravanes(WAITING);
-						refreshHangar();
-						Services.hangarService.removeHangar(hangarToDelete);
-						refreshHangar();
-					}
-				}
-			});
-			
-			paramMenuItem.setNegativeButton("Annuler", new DialogInterface.OnClickListener()
-			{
-				public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
-				{
-					paramAnonymousDialogInterface.dismiss();
-				}
-			});
-			
-			break;
 		}
-
 
 		
 		paramMenuItem.show();

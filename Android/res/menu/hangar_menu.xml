@@ -6,10 +6,5 @@
         android:icon="@android:drawable/ic_input_add"
         android:showAsAction="ifRoom"
         android:title="@string/new_hangar"/>
-    <item
-        android:id="@+id/remove_hangar"
-        android:icon="@android:drawable/ic_input_delete"
-        android:showAsAction="ifRoom"
-        android:title="@string/remove_hangar"/>
 
 </menu>
