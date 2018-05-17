@@ -25,7 +25,7 @@ public class CaravaneView extends View {
 	
 	private static final String TAG = "hivernage";
 	
-	private final static int BASE_CARAVANE_VIEW_WIDTH  = 110; 
+	private final static int BASE_CARAVANE_VIEW_WIDTH  = 100; 
 	private final static int BASE_CARAVANE_VIEW_HEIGHT = 80;
 	private final static int MARGIN = 10;
 	
