@@ -161,9 +161,12 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
     	listeClients.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+				
+				Client localClient = (Client) listeClientAdapter.getViewedList().get(pos);
+				
 				new AlertDialog.Builder(ClientListeFragment.this.getActivity())
 				.setTitle("Supprimer Client")
-				.setMessage("Êtes-vous sûre de vouloir supprimer ce client ?")
+				.setMessage("Êtes-vous sûre de vouloir supprimer "+ localClient.getFullName() +" ?")
 				.setPositiveButton(R.string.valider, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int)
 					{
@@ -197,9 +200,12 @@ public class ClientListeFragment extends Fragment implements TextWatcher{
     	Client localClient = (Client)this.listeClientAdapter.getViewedList().get(index);
     	if (this.listeClientAdapter.getDataList().contains(localClient)) {
     		this.listeClientAdapter.getDataList().remove(localClient);
+    		this.listeClientAdapter.getViewedList().remove(localClient);
+    		
+        	Services.clientService.delete(localClient);
+        	this.listeClientAdapter.notifyDataSetChanged();
     	}
-    	Services.clientService.delete(localClient);
-    	this.listeClientAdapter.notifyDataSetChanged();
+
     }
 
 	@Override
