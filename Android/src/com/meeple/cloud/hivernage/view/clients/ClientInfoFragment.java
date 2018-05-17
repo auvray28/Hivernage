@@ -226,13 +226,15 @@ public class ClientInfoFragment extends Fragment implements TextWatcher{
 
     	String newhangarName = NewClientFragment.getAllHangarName()[hangarPos];
     	
-		Services.caravaneService.removeFromHangar(this.client.getCaravane());
-		
-		Hangar newHangar = Services.hangarService.findHangarByName(newhangarName);
-		
-		if (newHangar != null) {
-			Services.caravaneService.putInHangar(this.client.getCaravane(), new EmplacementHangar(0, 0, 0.0d, newHangar));
-		}
+    	if (!newhangarName.equals(this.client.getCaravane().getEmplacementHangar().getHangar().getNom())) {
+    	
+			Hangar newHangar = Services.hangarService.findHangarByName(newhangarName);
+			
+			if (newHangar != null) {
+				Services.caravaneService.removeFromHangar(this.client.getCaravane());
+				Services.caravaneService.putInHangar(this.client.getCaravane(), new EmplacementHangar(0, 0, 0.0d, newHangar));
+			}
+    	}
 	}
     
     protected void changeGabarit(int gabaritPos) {
